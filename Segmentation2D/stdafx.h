@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <tchar.h>
 
-#define vtkRenderingCore_AUTOINIT 2(vtkInteractionStyle, vtkRenderingOpenGL2)
+#define vtkRenderingCore_AUTOINIT 2(vtkInteractionStyle, vtkRenderingOpenGL)
 #include <algorithm>
 #include <iostream>
 #include "vtkSmartPointer.h"

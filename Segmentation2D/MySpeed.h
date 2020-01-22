@@ -27,7 +27,7 @@ class MySpeed :
 public:
 
 	typedef TFeatureImageType      FeatureImageType;
-	typedef double    PixelRealType;
+	typedef double  PixelRealType;
 
 	typedef MySpeed Self;
 	typedef itk::ThresholdSegmentationLevelSetFunction< TImageType, TFeatureImageType > Superclass;
@@ -36,30 +36,29 @@ public:
 	itkNewMacro(Self);
 	itkTypeMacro(MySpeed, itk::ThresholdSegmentationLevelSetFunction);
 
-	void CalculateSpeedImage() override;
-	virtual const FeatureImageType * GetFeatureImage() const
+	MySpeed() {}
+	~MySpeed() {}
+
+	virtual void CalculateSpeedImage() override;
+	/*virtual const FeatureImageType * GetFeatureImage() const
 	{
 		return m_FeatureImage.GetPointer();
 	}
-	ImageType * GetSpeedImage()
+	virtual ImageType * GetSpeedImage()
 	{
 		return m_SpeedImage.GetPointer();
-	}
+	}*/
 
 
 
-private:
+protected:
 
-	MySpeed() {}
-	~MySpeed() {}
+
 	MySpeed(const Self &) ITK_DELETE_FUNCTION;
 	itkStaticConstMacro(ImageDimension, unsigned int, ImageType::ImageDimension);
-	//typedef double                        PixelRealType;
-	//PixelRealType m_ScaleCoefficients[ImageDimension];
 
-	ScalarValueType max_scale;
-	PixelType th, lap;
-
+	Superclass::ScalarValueType max_scale;
+	Superclass::PixelType th, lap;
 
 };
 
@@ -69,7 +68,7 @@ inline void MySpeed<TImageType, TFeatureImageType>::CalculateSpeedImage()
 
 	cout << "\n\n" << "MySpeed is on" << "\n\n";
 
-	typedef itk::GradientAnisotropicDiffusionImageFilter<TFeatureImageType, TFeatureImageType >  GradientType;
+	typename typedef itk::GradientAnisotropicDiffusionImageFilter<TFeatureImageType, TFeatureImageType >  GradientType;
 	GradientType::Pointer diffusion = GradientType::New();
 
 	typedef itk::LaplacianImageFilter<TFeatureImageType, TFeatureImageType >  LaplacianType;
