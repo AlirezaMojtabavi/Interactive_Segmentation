@@ -36,12 +36,12 @@ public:
 	itkNewMacro(Self);
 	itkTypeMacro(MySpeed, itk::ThresholdSegmentationLevelSetFunction);
 
-	virtual void CalculateSpeedImage() override;
+	void CalculateSpeedImage() override;
 	virtual const FeatureImageType * GetFeatureImage() const
 	{
 		return m_FeatureImage.GetPointer();
 	}
-	virtual ImageType * GetSpeedImage()
+	ImageType * GetSpeedImage()
 	{
 		return m_SpeedImage.GetPointer();
 	}
