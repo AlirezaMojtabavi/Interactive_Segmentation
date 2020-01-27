@@ -33,18 +33,18 @@ public:
 	typedef itk::ThresholdSegmentationLevelSetFunction< TImageType, TFeatureImageType > Superclass;
 	typedef itk::SmartPointer< Self >       Pointer;
 	typedef itk::SmartPointer< const Self > ConstPointer;
-	typename InternalImageType::ConstPointer m_FeatureImage;
-	typename InternalImageType::Pointer m_SpeedImage;
+	typename FeatureImageType::ConstPointer m_FeatureImage;
+	typename FeatureImageType::Pointer m_SpeedImage;
 	
 	itkNewMacro(Self);
 	itkTypeMacro(SpeedFunction2D, itk::ThresholdSegmentationLevelSetFunction);
 
 	 void CalculateSpeedImage() override;
-	const FeatureImageType* GetFeatureImage() const
+	virtual const FeatureImageType* GetFeatureImage() const
 	{
 		return m_FeatureImage.GetPointer();
 	}
-	InternalImageType* GetSpeedImage()
+	virtual TImageType* GetSpeedImage()
 	{
 		return m_SpeedImage.GetPointer();
 	}
@@ -56,7 +56,7 @@ protected:
 	SpeedFunction2D() {}
 	~SpeedFunction2D() {}
 	SpeedFunction2D(const Self&) ITK_DELETE_FUNCTION;
-	itkStaticConstMacro(ImageDimension, unsigned int, InternalImageType::ImageDimension);
+	itkStaticConstMacro(ImageDimension, unsigned int, ImageType::ImageDimension);
 
 	typename Superclass::ScalarValueType  max_scale;
 	typename Superclass::PixelType th, lap;
@@ -81,7 +81,7 @@ inline void SpeedFunction2D<TImageType, TFeatureImageType>::CalculateSpeedImage(
 	typedef itk::LaplacianImageFilter<TFeatureImageType, TFeatureImageType >  LaplacianType;
 	typename LaplacianType::Pointer laplacian = LaplacianType::New();
 
-	typedef itk::MinimumMaximumImageCalculator <InternalImageType> ImageCalculatorFilterType;
+	typedef itk::MinimumMaximumImageCalculator <FeatureImageType> ImageCalculatorFilterType;
 	typename ImageCalculatorFilterType::Pointer imageCalculatorFilter
 		= ImageCalculatorFilterType::New();
 	imageCalculatorFilter->SetImage(this->GetFeatureImage());
@@ -100,7 +100,7 @@ inline void SpeedFunction2D<TImageType, TFeatureImageType>::CalculateSpeedImage(
 	itk::ImageRegionIterator< FeatureImageType > lit;
 	itk::ImageRegionConstIterator< FeatureImageType >
 		fit(this->GetFeatureImage(), this->GetFeatureImage()->GetRequestedRegion());
-	itk::ImageRegionIterator< InternalImageType >
+	itk::ImageRegionIterator< TImageType >
 		sit(this->GetSpeedImage(), this->GetFeatureImage()->GetRequestedRegion());
 
 
