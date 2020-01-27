@@ -18,23 +18,16 @@
 #include <algorithm> 
 
 #include "Canvas2D.h"
-#include "MySpeed.h"
+#include "SpeedFunction2D.h"
+#include "ImageTypeDetails2D.h"
 
 
 //-------------------------Type Of Images--------------------------
 //-----------------------------------------------------------------
 
-const  unsigned int  Dimension = 2;
-typedef itk::Image < unsigned short, Dimension > ImageType;
-
-typedef  float  InternalPixelType;
-typedef itk::Image< InternalPixelType, Dimension >  InternalImageType;
-
-typedef unsigned short OutputPixelType;
-typedef itk::Image< OutputPixelType, Dimension > OutputImageType;
 
 typedef  itk::ImageFileWriter<  OutputImageType  > WriterType;
-typedef MySpeed< InternalImageType, InternalImageType > MySpeedType;
+typedef SpeedFunction2D< InternalImageType, InternalImageType > MySpeedType;
 
 //-----------------------------------------------------------------
 //-------------------------Alorithm--------------------------------
@@ -54,11 +47,11 @@ typedef itk::CastImageFilter<InternalImageType, OutputImageType> InternalImageTy
 typedef itk::CastImageFilter<OutputImageType, InternalImageType> OutputImageType_2_InternalImageType;
 
 
-class Algorithm
+class Algorithm2D
 {
 public:
 
-	Algorithm();
+	Algorithm2D();
 	void set_Canvas(Canvas2D*);
 	void set_reader(itk::SmartPointer<InternalImageType >);
 
@@ -68,16 +61,16 @@ public:
 	void Level_Set(double edge, double weight);
 
 	int WriteImage(std::string output1);
-	
+
 	InternalImageType* Get_FastMarching();
-	OutputImageType*  Get_thresholder();
+	OutputImageType* Get_thresholder();
 
 
 private:
 
 	InternalImageType::Pointer reader = InternalImageType::New();
 	WriterType::Pointer writer1 = WriterType::New();
-	
+
 	Canvas2D* diagram;
 	MySpeedType::Pointer my_function = MySpeedType::New();
 

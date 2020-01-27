@@ -58,15 +58,14 @@ int MyCanvas3D::paint(int x, int y, int z)
 	if (z != this->GetCurrentSlice())
 		return EXIT_FAILURE;
 
-	VTK_CREATE(vtkRegularPolygonSource, polygonSource);
+	auto polygonSource = vtkSmartPointer<vtkRegularPolygonSource>::New();
 	polygonSource->SetNumberOfSides(50);
 	polygonSource->SetRadius(1);
 	polygonSource->SetCenter(x, y, z);
-
-	VTK_CREATE(vtkPolyDataMapper, mapper);
+	auto mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
 	mapper->SetInputConnection(polygonSource->GetOutputPort());
 
-	VTK_CREATE(vtkActor, actor);
+	auto actor = vtkSmartPointer<vtkActor>::New();
 	actor->SetMapper(mapper);
 	actor->GetProperty()->SetColor(0, 0, 1);
 	ActorList.push_back(actor);

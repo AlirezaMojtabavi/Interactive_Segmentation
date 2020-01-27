@@ -11,6 +11,7 @@
 #include "vtkRenderWindow.h"
 #include <vtkProperty.h>
 #include "MyInteractionStyle3D.h"
+#include "ImageTypeDetails.h"
 
 
 struct coordinate3D
@@ -47,7 +48,8 @@ public:
 	void MouseWheelBackward();
 
 private:
-	VTK_CREATE(vtkImageData, data);
+
+	vtkSmartPointer<vtkImageData> data = vtkSmartPointer<vtkImageData>::New();
 	vtkImageReslice* IS_ResliceDicom3D ;
 	std::vector<coordinate3D>PointList;
 	MyInteractionStyle3D* style;

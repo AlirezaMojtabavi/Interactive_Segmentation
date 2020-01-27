@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -19,36 +19,36 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>15.0</VCProjectVersion>
-    <ProjectGuid>{1BD66839-41A6-4935-AB59-1425628BAF1E}</ProjectGuid>
+    <VCProjectVersion>16.0</VCProjectVersion>
+    <ProjectGuid>{F2DE184D-59E9-46DD-98C9-3E11C13FB7BC}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>Segmentation2D</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -70,6 +70,9 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
   </PropertyGroup>
@@ -79,15 +82,32 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
-  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;CMAKE_INTDIR="Release";_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;ITK_IO_FACTORY_REGISTER_MANAGER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalOptions />
+      <PrecompiledHeaderOutputFile />
+      <PrecompiledHeader>Create</PrecompiledHeader>
+      <AdditionalIncludeDirectories>F:\VTK_Release\include\vtk-8.1;F:\ITK_Release\include\ITK-4.13;F:\Build_ITK_Release\Examples\ITKFactoryRegistration</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>%(AdditionalDependencies);opengl32.lib;WS2_32.lib;Rpcrt4.lib;F:\VTK_Release\lib\vtkalglib-8.1.lib;F:\VTK_Release\lib\vtkChartsCore-8.1.lib;F:\VTK_Release\lib\vtkCommonColor-8.1.lib;F:\VTK_Release\lib\vtkCommonComputationalGeometry-8.1.lib;F:\VTK_Release\lib\vtkCommonCore-8.1.lib;F:\VTK_Release\lib\vtkCommonDataModel-8.1.lib;F:\VTK_Release\lib\vtkCommonExecutionModel-8.1.lib;F:\VTK_Release\lib\vtkCommonMath-8.1.lib;F:\VTK_Release\lib\vtkCommonMisc-8.1.lib;F:\VTK_Release\lib\vtkCommonSystem-8.1.lib;F:\VTK_Release\lib\vtkCommonTransforms-8.1.lib;F:\VTK_Release\lib\vtkDICOMParser-8.1.lib;F:\VTK_Release\lib\vtkDomainsChemistry-8.1.lib;F:\VTK_Release\lib\vtkexoIIc-8.1.lib;F:\VTK_Release\lib\vtkexpat-8.1.lib;F:\VTK_Release\lib\vtkFiltersAMR-8.1.lib;F:\VTK_Release\lib\vtkFiltersCore-8.1.lib;F:\VTK_Release\lib\vtkFiltersExtraction-8.1.lib;F:\VTK_Release\lib\vtkFiltersFlowPaths-8.1.lib;F:\VTK_Release\lib\vtkFiltersGeneral-8.1.lib;F:\VTK_Release\lib\vtkFiltersGeneric-8.1.lib;F:\VTK_Release\lib\vtkFiltersGeometry-8.1.lib;F:\VTK_Release\lib\vtkFiltersHybrid-8.1.lib;F:\VTK_Release\lib\vtkFiltersHyperTree-8.1.lib;F:\VTK_Release\lib\vtkFiltersImaging-8.1.lib;F:\VTK_Release\lib\vtkFiltersModeling-8.1.lib;F:\VTK_Release\lib\vtkFiltersParallel-8.1.lib;F:\VTK_Release\lib\vtkFiltersParallelImaging-8.1.lib;F:\VTK_Release\lib\vtkFiltersPoints-8.1.lib;F:\VTK_Release\lib\vtkFiltersProgrammable-8.1.lib;F:\VTK_Release\lib\vtkFiltersSelection-8.1.lib;F:\VTK_Release\lib\vtkFiltersSMP-8.1.lib;F:\VTK_Release\lib\vtkFiltersSources-8.1.lib;F:\VTK_Release\lib\vtkFiltersStatistics-8.1.lib;F:\VTK_Release\lib\vtkFiltersTexture-8.1.lib;F:\VTK_Release\lib\vtkFiltersTopology-8.1.lib;F:\VTK_Release\lib\vtkFiltersVerdict-8.1.lib;F:\VTK_Release\lib\vtkfreetype-8.1.lib;F:\VTK_Release\lib\vtkGeovisCore-8.1.lib;F:\VTK_Release\lib\vtkgl2ps-8.1.lib;F:\VTK_Release\lib\vtkhdf5-8.1.lib;F:\VTK_Release\lib\vtkhdf5_hl-8.1.lib;F:\VTK_Release\lib\vtkImagingColor-8.1.lib;F:\VTK_Release\lib\vtkImagingCore-8.1.lib;F:\VTK_Release\lib\vtkImagingFourier-8.1.lib;F:\VTK_Release\lib\vtkImagingGeneral-8.1.lib;F:\VTK_Release\lib\vtkImagingHybrid-8.1.lib;F:\VTK_Release\lib\vtkImagingMath-8.1.lib;F:\VTK_Release\lib\vtkImagingMorphological-8.1.lib;F:\VTK_Release\lib\vtkImagingSources-8.1.lib;F:\VTK_Release\lib\vtkImagingStatistics-8.1.lib;F:\VTK_Release\lib\vtkImagingStencil-8.1.lib;F:\VTK_Release\lib\vtkInfovisCore-8.1.lib;F:\VTK_Release\lib\vtkInfovisLayout-8.1.lib;F:\VTK_Release\lib\vtkInteractionImage-8.1.lib;F:\VTK_Release\lib\vtkInteractionStyle-8.1.lib;F:\VTK_Release\lib\vtkInteractionWidgets-8.1.lib;F:\VTK_Release\lib\vtkIOAMR-8.1.lib;F:\VTK_Release\lib\vtkIOCore-8.1.lib;F:\VTK_Release\lib\vtkIOEnSight-8.1.lib;F:\VTK_Release\lib\vtkIOExodus-8.1.lib;F:\VTK_Release\lib\vtkIOExport-8.1.lib;F:\VTK_Release\lib\vtkIOExportOpenGL-8.1.lib;F:\VTK_Release\lib\vtkIOGeometry-8.1.lib;F:\VTK_Release\lib\vtkIOImage-8.1.lib;F:\VTK_Release\lib\vtkIOImport-8.1.lib;F:\VTK_Release\lib\vtkIOInfovis-8.1.lib;F:\VTK_Release\lib\vtkIOLegacy-8.1.lib;F:\VTK_Release\lib\vtkIOLSDyna-8.1.lib;F:\VTK_Release\lib\vtkIOMINC-8.1.lib;F:\VTK_Release\lib\vtkIOMovie-8.1.lib;F:\VTK_Release\lib\vtkIONetCDF-8.1.lib;F:\VTK_Release\lib\vtkIOParallel-8.1.lib;F:\VTK_Release\lib\vtkIOParallelXML-8.1.lib;F:\VTK_Release\lib\vtkIOPLY-8.1.lib;F:\VTK_Release\lib\vtkIOSQL-8.1.lib;F:\VTK_Release\lib\vtkIOTecplotTable-8.1.lib;F:\VTK_Release\lib\vtkIOVideo-8.1.lib;F:\VTK_Release\lib\vtkIOXML-8.1.lib;F:\VTK_Release\lib\vtkIOXMLParser-8.1.lib;F:\VTK_Release\lib\vtkjpeg-8.1.lib;F:\VTK_Release\lib\vtkjsoncpp-8.1.lib;F:\VTK_Release\lib\vtklibharu-8.1.lib;F:\VTK_Release\lib\vtklibxml2-8.1.lib;F:\VTK_Release\lib\vtkLocalExample-8.1.lib;F:\VTK_Release\lib\vtklz4-8.1.lib;F:\VTK_Release\lib\vtkmetaio-8.1.lib;F:\VTK_Release\lib\vtkNetCDF-8.1.lib;F:\VTK_Release\lib\vtknetcdfcpp-8.1.lib;F:\VTK_Release\lib\vtkoggtheora-8.1.lib;F:\VTK_Release\lib\vtkParallelCore-8.1.lib;F:\VTK_Release\lib\vtkpng-8.1.lib;F:\VTK_Release\lib\vtkproj4-8.1.lib;F:\VTK_Release\lib\vtkRenderingAnnotation-8.1.lib;F:\VTK_Release\lib\vtkRenderingContext2D-8.1.lib;F:\VTK_Release\lib\vtkRenderingContextOpenGL-8.1.lib;F:\VTK_Release\lib\vtkRenderingCore-8.1.lib;F:\VTK_Release\lib\vtkRenderingFreeType-8.1.lib;F:\VTK_Release\lib\vtkRenderingGL2PS-8.1.lib;F:\VTK_Release\lib\vtkRenderingImage-8.1.lib;F:\VTK_Release\lib\vtkRenderingLabel-8.1.lib;F:\VTK_Release\lib\vtkRenderingLIC-8.1.lib;F:\VTK_Release\lib\vtkRenderingLOD-8.1.lib;F:\VTK_Release\lib\vtkRenderingOpenGL-8.1.lib;F:\VTK_Release\lib\vtkRenderingVolume-8.1.lib;F:\VTK_Release\lib\vtkRenderingVolumeOpenGL-8.1.lib;F:\VTK_Release\lib\vtksqlite-8.1.lib;F:\VTK_Release\lib\vtksys-8.1.lib;F:\VTK_Release\lib\vtktiff-8.1.lib;F:\VTK_Release\lib\vtkverdict-8.1.lib;F:\VTK_Release\lib\vtkViewsContext2D-8.1.lib;F:\VTK_Release\lib\vtkViewsCore-8.1.lib;F:\VTK_Release\lib\vtkViewsInfovis-8.1.lib;F:\VTK_Release\lib\vtkzlib-8.1.lib;F:\ITK_Release\lib\ITKBiasCorrection-4.13.lib;F:\ITK_Release\lib\ITKBioCell-4.13.lib;F:\ITK_Release\lib\ITKCommon-4.13.lib;F:\ITK_Release\lib\ITKDICOMParser-4.13.lib;F:\ITK_Release\lib\itkdouble-conversion-4.13.lib;F:\ITK_Release\lib\ITKEXPAT-4.13.lib;F:\ITK_Release\lib\ITKFEM-4.13.lib;F:\ITK_Release\lib\itkgdcmcharls-4.13.lib;F:\ITK_Release\lib\itkgdcmCommon-4.13.lib;F:\ITK_Release\lib\itkgdcmDICT-4.13.lib;F:\ITK_Release\lib\itkgdcmDSED-4.13.lib;F:\ITK_Release\lib\itkgdcmIOD-4.13.lib;F:\ITK_Release\lib\itkgdcmjpeg12-4.13.lib;F:\ITK_Release\lib\itkgdcmjpeg16-4.13.lib;F:\ITK_Release\lib\itkgdcmjpeg8-4.13.lib;F:\ITK_Release\lib\itkgdcmMEXD-4.13.lib;F:\ITK_Release\lib\itkgdcmMSFF-4.13.lib;F:\ITK_Release\lib\itkgdcmopenjp2-4.13.lib;F:\ITK_Release\lib\itkgdcmsocketxx-4.13.lib;F:\ITK_Release\lib\ITKgiftiio-4.13.lib;F:\ITK_Release\lib\ITKIOBioRad-4.13.lib;F:\ITK_Release\lib\ITKIOBMP-4.13.lib;F:\ITK_Release\lib\ITKIOBruker-4.13.lib;F:\ITK_Release\lib\ITKIOCSV-4.13.lib;F:\ITK_Release\lib\ITKIOGDCM-4.13.lib;F:\ITK_Release\lib\ITKIOGE-4.13.lib;F:\ITK_Release\lib\ITKIOGIPL-4.13.lib;F:\ITK_Release\lib\ITKIOHDF5-4.13.lib;F:\ITK_Release\lib\ITKIOImageBase-4.13.lib;F:\ITK_Release\lib\ITKIOIPL-4.13.lib;F:\ITK_Release\lib\ITKIOJPEG-4.13.lib;F:\ITK_Release\lib\ITKIOLSM-4.13.lib;F:\ITK_Release\lib\ITKIOMesh-4.13.lib;F:\ITK_Release\lib\ITKIOMeta-4.13.lib;F:\ITK_Release\lib\ITKIOMINC-4.13.lib;F:\ITK_Release\lib\ITKIOMRC-4.13.lib;F:\ITK_Release\lib\ITKIONIFTI-4.13.lib;F:\ITK_Release\lib\ITKIONRRD-4.13.lib;F:\ITK_Release\lib\ITKIOPNG-4.13.lib;F:\ITK_Release\lib\ITKIOSiemens-4.13.lib;F:\ITK_Release\lib\ITKIOSpatialObjects-4.13.lib;F:\ITK_Release\lib\ITKIOStimulate-4.13.lib;F:\ITK_Release\lib\ITKIOTIFF-4.13.lib;F:\ITK_Release\lib\ITKIOTransformBase-4.13.lib;F:\ITK_Release\lib\ITKIOTransformHDF5-4.13.lib;F:\ITK_Release\lib\ITKIOTransformInsightLegacy-4.13.lib;F:\ITK_Release\lib\ITKIOTransformMatlab-4.13.lib;F:\ITK_Release\lib\ITKIOVTK-4.13.lib;F:\ITK_Release\lib\ITKIOXML-4.13.lib;F:\ITK_Release\lib\itkjpeg-4.13.lib;F:\ITK_Release\lib\ITKKLMRegionGrowing-4.13.lib;F:\ITK_Release\lib\ITKLabelMap-4.13.lib;F:\ITK_Release\lib\itklbfgs-4.13.lib;F:\ITK_Release\lib\ITKMesh-4.13.lib;F:\ITK_Release\lib\ITKMetaIO-4.13.lib;F:\ITK_Release\lib\itkminc2-4.13.lib;F:\ITK_Release\lib\itknetlib-4.13.lib;F:\ITK_Release\lib\itkNetlibSlatec-4.13.lib;F:\ITK_Release\lib\ITKniftiio-4.13.lib;F:\ITK_Release\lib\ITKNrrdIO-4.13.lib;F:\ITK_Release\lib\ITKOptimizers-4.13.lib;F:\ITK_Release\lib\ITKOptimizersv4-4.13.lib;F:\ITK_Release\lib\ITKPath-4.13.lib;F:\ITK_Release\lib\itkpng-4.13.lib;F:\ITK_Release\lib\ITKPolynomials-4.13.lib;F:\ITK_Release\lib\ITKQuadEdgeMesh-4.13.lib;F:\ITK_Release\lib\ITKSpatialObjects-4.13.lib;F:\ITK_Release\lib\ITKStatistics-4.13.lib;F:\ITK_Release\lib\itksys-4.13.lib;F:\ITK_Release\lib\itktestlib-4.13.lib;F:\ITK_Release\lib\itktiff-4.13.lib;F:\ITK_Release\lib\ITKTransform-4.13.lib;F:\ITK_Release\lib\ITKTransformFactory-4.13.lib;F:\ITK_Release\lib\itkv3p_netlib-4.13.lib;F:\ITK_Release\lib\itkvcl-4.13.lib;F:\ITK_Release\lib\ITKVideoCore-4.13.lib;F:\ITK_Release\lib\ITKVideoIO-4.13.lib;F:\ITK_Release\lib\itkvnl-4.13.lib;F:\ITK_Release\lib\ITKVNLInstantiation-4.13.lib;F:\ITK_Release\lib\itkvnl_algo-4.13.lib;F:\ITK_Release\lib\ITKVTK-4.13.lib;F:\ITK_Release\lib\ITKVtkGlue-4.13.lib;F:\ITK_Release\lib\ITKWatersheds-4.13.lib;F:\ITK_Release\lib\itkzlib-4.13.lib;F:\ITK_Release\lib\ITKznz-4.13.lib;F:\ITK_Release\lib\libitkhdf5.lib;F:\ITK_Release\lib\libitkhdf5_cpp.lib</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
@@ -99,19 +119,15 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
+      <PrecompiledHeader>Create</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;CMAKE_INTDIR="Debug";_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;ITK_IO_FACTORY_REGISTER_MANAGER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>F:\VTK\include\vtk-8.1;F:\ITK\include_Debug\ITK-4.13;F:\Build_ITK\Examples\ITKFactoryRegistration;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies);opengl32.lib;WS2_32.lib;Rpcrt4.lib;F:\VTK\lib\vtkalglib-8.1.lib;F:\VTK\lib\vtkChartsCore-8.1.lib;F:\VTK\lib\vtkCommonColor-8.1.lib;F:\VTK\lib\vtkCommonComputationalGeometry-8.1.lib;F:\VTK\lib\vtkCommonCore-8.1.lib;F:\VTK\lib\vtkCommonDataModel-8.1.lib;F:\VTK\lib\vtkCommonExecutionModel-8.1.lib;F:\VTK\lib\vtkCommonMath-8.1.lib;F:\VTK\lib\vtkCommonMisc-8.1.lib;F:\VTK\lib\vtkCommonSystem-8.1.lib;F:\VTK\lib\vtkCommonTransforms-8.1.lib;F:\VTK\lib\vtkDICOMParser-8.1.lib;F:\VTK\lib\vtkDomainsChemistry-8.1.lib;F:\VTK\lib\vtkexoIIc-8.1.lib;F:\VTK\lib\vtkexpat-8.1.lib;F:\VTK\lib\vtkFiltersAMR-8.1.lib;F:\VTK\lib\vtkFiltersCore-8.1.lib;F:\VTK\lib\vtkFiltersExtraction-8.1.lib;F:\VTK\lib\vtkFiltersFlowPaths-8.1.lib;F:\VTK\lib\vtkFiltersGeneral-8.1.lib;F:\VTK\lib\vtkFiltersGeneric-8.1.lib;F:\VTK\lib\vtkFiltersGeometry-8.1.lib;F:\VTK\lib\vtkFiltersHybrid-8.1.lib;F:\VTK\lib\vtkFiltersHyperTree-8.1.lib;F:\VTK\lib\vtkFiltersImaging-8.1.lib;F:\VTK\lib\vtkFiltersModeling-8.1.lib;F:\VTK\lib\vtkFiltersParallel-8.1.lib;F:\VTK\lib\vtkFiltersParallelImaging-8.1.lib;F:\VTK\lib\vtkFiltersPoints-8.1.lib;F:\VTK\lib\vtkFiltersProgrammable-8.1.lib;F:\VTK\lib\vtkFiltersSelection-8.1.lib;F:\VTK\lib\vtkFiltersSMP-8.1.lib;F:\VTK\lib\vtkFiltersSources-8.1.lib;F:\VTK\lib\vtkFiltersStatistics-8.1.lib;F:\VTK\lib\vtkFiltersTexture-8.1.lib;F:\VTK\lib\vtkFiltersTopology-8.1.lib;F:\VTK\lib\vtkFiltersVerdict-8.1.lib;F:\VTK\lib\vtkfreetype-8.1.lib;F:\VTK\lib\vtkGeovisCore-8.1.lib;F:\VTK\lib\vtkgl2ps-8.1.lib;F:\VTK\lib\vtkhdf5-8.1.lib;F:\VTK\lib\vtkhdf5_hl-8.1.lib;F:\VTK\lib\vtkImagingColor-8.1.lib;F:\VTK\lib\vtkImagingCore-8.1.lib;F:\VTK\lib\vtkImagingFourier-8.1.lib;F:\VTK\lib\vtkImagingGeneral-8.1.lib;F:\VTK\lib\vtkImagingHybrid-8.1.lib;F:\VTK\lib\vtkImagingMath-8.1.lib;F:\VTK\lib\vtkImagingMorphological-8.1.lib;F:\VTK\lib\vtkImagingSources-8.1.lib;F:\VTK\lib\vtkImagingStatistics-8.1.lib;F:\VTK\lib\vtkImagingStencil-8.1.lib;F:\VTK\lib\vtkInfovisCore-8.1.lib;F:\VTK\lib\vtkInfovisLayout-8.1.lib;F:\VTK\lib\vtkInteractionImage-8.1.lib;F:\VTK\lib\vtkInteractionStyle-8.1.lib;F:\VTK\lib\vtkInteractionWidgets-8.1.lib;F:\VTK\lib\vtkIOAMR-8.1.lib;F:\VTK\lib\vtkIOCore-8.1.lib;F:\VTK\lib\vtkIOEnSight-8.1.lib;F:\VTK\lib\vtkIOExodus-8.1.lib;F:\VTK\lib\vtkIOExport-8.1.lib;F:\VTK\lib\vtkIOExportOpenGL-8.1.lib;F:\VTK\lib\vtkIOGeometry-8.1.lib;F:\VTK\lib\vtkIOImage-8.1.lib;F:\VTK\lib\vtkIOImport-8.1.lib;F:\VTK\lib\vtkIOInfovis-8.1.lib;F:\VTK\lib\vtkIOLegacy-8.1.lib;F:\VTK\lib\vtkIOLSDyna-8.1.lib;F:\VTK\lib\vtkIOMINC-8.1.lib;F:\VTK\lib\vtkIOMovie-8.1.lib;F:\VTK\lib\vtkIONetCDF-8.1.lib;F:\VTK\lib\vtkIOParallel-8.1.lib;F:\VTK\lib\vtkIOParallelXML-8.1.lib;F:\VTK\lib\vtkIOPLY-8.1.lib;F:\VTK\lib\vtkIOSQL-8.1.lib;F:\VTK\lib\vtkIOTecplotTable-8.1.lib;F:\VTK\lib\vtkIOVideo-8.1.lib;F:\VTK\lib\vtkIOXML-8.1.lib;F:\VTK\lib\vtkIOXMLParser-8.1.lib;F:\VTK\lib\vtkjpeg-8.1.lib;F:\VTK\lib\vtkjsoncpp-8.1.lib;F:\VTK\lib\vtklibharu-8.1.lib;F:\VTK\lib\vtklibxml2-8.1.lib;F:\VTK\lib\vtkLocalExample-8.1.lib;F:\VTK\lib\vtklz4-8.1.lib;F:\VTK\lib\vtkmetaio-8.1.lib;F:\VTK\lib\vtkNetCDF-8.1.lib;F:\VTK\lib\vtknetcdfcpp-8.1.lib;F:\VTK\lib\vtkoggtheora-8.1.lib;F:\VTK\lib\vtkParallelCore-8.1.lib;F:\VTK\lib\vtkpng-8.1.lib;F:\VTK\lib\vtkproj4-8.1.lib;F:\VTK\lib\vtkRenderingAnnotation-8.1.lib;F:\VTK\lib\vtkRenderingContext2D-8.1.lib;F:\VTK\lib\vtkRenderingContextOpenGL-8.1.lib;F:\VTK\lib\vtkRenderingCore-8.1.lib;F:\VTK\lib\vtkRenderingFreeType-8.1.lib;F:\VTK\lib\vtkRenderingGL2PS-8.1.lib;F:\VTK\lib\vtkRenderingImage-8.1.lib;F:\VTK\lib\vtkRenderingLabel-8.1.lib;F:\VTK\lib\vtkRenderingLIC-8.1.lib;F:\VTK\lib\vtkRenderingLOD-8.1.lib;F:\VTK\lib\vtkRenderingOpenGL-8.1.lib;F:\VTK\lib\vtkRenderingVolume-8.1.lib;F:\VTK\lib\vtkRenderingVolumeOpenGL-8.1.lib;F:\VTK\lib\vtksqlite-8.1.lib;F:\VTK\lib\vtksys-8.1.lib;F:\VTK\lib\vtktiff-8.1.lib;F:\VTK\lib\vtkverdict-8.1.lib;F:\VTK\lib\vtkViewsContext2D-8.1.lib;F:\VTK\lib\vtkViewsCore-8.1.lib;F:\VTK\lib\vtkViewsInfovis-8.1.lib;F:\VTK\lib\vtkzlib-8.1.lib;F:\ITK\lib_Debug\ITKBiasCorrection-4.13d.lib;F:\ITK\lib_Debug\ITKBioCell-4.13d.lib;F:\ITK\lib_Debug\ITKCommon-4.13d.lib;F:\ITK\lib_Debug\ITKDICOMParser-4.13d.lib;F:\ITK\lib_Debug\itkdouble-conversion-4.13d.lib;F:\ITK\lib_Debug\ITKEXPAT-4.13d.lib;F:\ITK\lib_Debug\ITKFEM-4.13d.lib;F:\ITK\lib_Debug\itkgdcmcharls-4.13d.lib;F:\ITK\lib_Debug\itkgdcmCommon-4.13d.lib;F:\ITK\lib_Debug\itkgdcmDICT-4.13d.lib;F:\ITK\lib_Debug\itkgdcmDSED-4.13d.lib;F:\ITK\lib_Debug\itkgdcmIOD-4.13d.lib;F:\ITK\lib_Debug\itkgdcmjpeg12-4.13d.lib;F:\ITK\lib_Debug\itkgdcmjpeg16-4.13d.lib;F:\ITK\lib_Debug\itkgdcmjpeg8-4.13d.lib;F:\ITK\lib_Debug\itkgdcmMEXD-4.13d.lib;F:\ITK\lib_Debug\itkgdcmMSFF-4.13d.lib;F:\ITK\lib_Debug\itkgdcmopenjp2-4.13d.lib;F:\ITK\lib_Debug\itkgdcmsocketxx-4.13d.lib;F:\ITK\lib_Debug\ITKgiftiio-4.13d.lib;F:\ITK\lib_Debug\ITKIOBioRad-4.13d.lib;F:\ITK\lib_Debug\ITKIOBMP-4.13d.lib;F:\ITK\lib_Debug\ITKIOBruker-4.13d.lib;F:\ITK\lib_Debug\ITKIOCSV-4.13d.lib;F:\ITK\lib_Debug\ITKIOGDCM-4.13d.lib;F:\ITK\lib_Debug\ITKIOGE-4.13d.lib;F:\ITK\lib_Debug\ITKIOGIPL-4.13d.lib;F:\ITK\lib_Debug\ITKIOHDF5-4.13d.lib;F:\ITK\lib_Debug\ITKIOImageBase-4.13d.lib;F:\ITK\lib_Debug\ITKIOIPL-4.13d.lib;F:\ITK\lib_Debug\ITKIOJPEG-4.13d.lib;F:\ITK\lib_Debug\ITKIOLSM-4.13d.lib;F:\ITK\lib_Debug\ITKIOMesh-4.13d.lib;F:\ITK\lib_Debug\ITKIOMeta-4.13d.lib;F:\ITK\lib_Debug\ITKIOMINC-4.13d.lib;F:\ITK\lib_Debug\ITKIOMRC-4.13d.lib;F:\ITK\lib_Debug\ITKIONIFTI-4.13d.lib;F:\ITK\lib_Debug\ITKIONRRD-4.13d.lib;F:\ITK\lib_Debug\ITKIOPNG-4.13d.lib;F:\ITK\lib_Debug\ITKIOSiemens-4.13d.lib;F:\ITK\lib_Debug\ITKIOSpatialObjects-4.13d.lib;F:\ITK\lib_Debug\ITKIOStimulate-4.13d.lib;F:\ITK\lib_Debug\ITKIOTIFF-4.13d.lib;F:\ITK\lib_Debug\ITKIOTransformBase-4.13d.lib;F:\ITK\lib_Debug\ITKIOTransformHDF5-4.13d.lib;F:\ITK\lib_Debug\ITKIOTransformInsightLegacy-4.13d.lib;F:\ITK\lib_Debug\ITKIOTransformMatlab-4.13d.lib;F:\ITK\lib_Debug\ITKIOVTK-4.13d.lib;F:\ITK\lib_Debug\ITKIOXML-4.13d.lib;F:\ITK\lib_Debug\itkjpeg-4.13d.lib;F:\ITK\lib_Debug\ITKKLMRegionGrowing-4.13d.lib;F:\ITK\lib_Debug\ITKLabelMap-4.13d.lib;F:\ITK\lib_Debug\itklbfgs-4.13d.lib;F:\ITK\lib_Debug\ITKMesh-4.13d.lib;F:\ITK\lib_Debug\ITKMetaIO-4.13d.lib;F:\ITK\lib_Debug\itkminc2-4.13d.lib;F:\ITK\lib_Debug\itknetlib-4.13d.lib;F:\ITK\lib_Debug\itkNetlibSlatec-4.13d.lib;F:\ITK\lib_Debug\ITKniftiio-4.13d.lib;F:\ITK\lib_Debug\ITKNrrdIO-4.13d.lib;F:\ITK\lib_Debug\ITKOptimizers-4.13d.lib;F:\ITK\lib_Debug\ITKOptimizersv4-4.13d.lib;F:\ITK\lib_Debug\ITKPath-4.13d.lib;F:\ITK\lib_Debug\itkpng-4.13d.lib;F:\ITK\lib_Debug\ITKPolynomials-4.13d.lib;F:\ITK\lib_Debug\ITKQuadEdgeMesh-4.13d.lib;F:\ITK\lib_Debug\ITKSpatialObjects-4.13d.lib;F:\ITK\lib_Debug\ITKStatistics-4.13d.lib;F:\ITK\lib_Debug\itksys-4.13d.lib;F:\ITK\lib_Debug\itktestlib-4.13d.lib;F:\ITK\lib_Debug\itktiff-4.13d.lib;F:\ITK\lib_Debug\ITKTransform-4.13d.lib;F:\ITK\lib_Debug\ITKTransformFactory-4.13d.lib;F:\ITK\lib_Debug\itkv3p_netlib-4.13d.lib;F:\ITK\lib_Debug\itkvcl-4.13d.lib;F:\ITK\lib_Debug\ITKVideoCore-4.13d.lib;F:\ITK\lib_Debug\ITKVideoIO-4.13d.lib;F:\ITK\lib_Debug\itkvnl-4.13d.lib;F:\ITK\lib_Debug\ITKVNLInstantiation-4.13d.lib;F:\ITK\lib_Debug\itkvnl_algo-4.13d.lib;F:\ITK\lib_Debug\ITKVTK-4.13d.lib;F:\ITK\lib_Debug\ITKVtkGlue-4.13d.lib;F:\ITK\lib_Debug\ITKWatersheds-4.13d.lib;F:\ITK\lib_Debug\itkzlib-4.13d.lib;F:\ITK\lib_Debug\ITKznz-4.13d.lib;F:\ITK\lib_Debug\libitkhdf5_cpp_Dd.lib;F:\ITK\lib_Debug\libitkhdf5_Dd.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -119,7 +135,6 @@
       <PrecompiledHeader>
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
@@ -133,29 +148,24 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
-      <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
-      <FunctionLevelLinking>true</FunctionLevelLinking>
-      <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;CMAKE_INTDIR="Release";_SCL_SECURE_NO_WARNINGS;_CRT_SECURE_NO_WARNINGS;ITK_IO_FACTORY_REGISTER_MANAGER;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>F:\VTK_Release\include\vtk-8.1;F:\ITK_Release\include\ITK-4.13;F:\Build_ITK_Release\Examples\ITKFactoryRegistration</AdditionalIncludeDirectories>
-    </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-      <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>%(AdditionalDependencies);opengl32.lib;WS2_32.lib;Rpcrt4.lib;F:\VTK_Release\lib\vtkalglib-8.1.lib;F:\VTK_Release\lib\vtkChartsCore-8.1.lib;F:\VTK_Release\lib\vtkCommonColor-8.1.lib;F:\VTK_Release\lib\vtkCommonComputationalGeometry-8.1.lib;F:\VTK_Release\lib\vtkCommonCore-8.1.lib;F:\VTK_Release\lib\vtkCommonDataModel-8.1.lib;F:\VTK_Release\lib\vtkCommonExecutionModel-8.1.lib;F:\VTK_Release\lib\vtkCommonMath-8.1.lib;F:\VTK_Release\lib\vtkCommonMisc-8.1.lib;F:\VTK_Release\lib\vtkCommonSystem-8.1.lib;F:\VTK_Release\lib\vtkCommonTransforms-8.1.lib;F:\VTK_Release\lib\vtkDICOMParser-8.1.lib;F:\VTK_Release\lib\vtkDomainsChemistry-8.1.lib;F:\VTK_Release\lib\vtkexoIIc-8.1.lib;F:\VTK_Release\lib\vtkexpat-8.1.lib;F:\VTK_Release\lib\vtkFiltersAMR-8.1.lib;F:\VTK_Release\lib\vtkFiltersCore-8.1.lib;F:\VTK_Release\lib\vtkFiltersExtraction-8.1.lib;F:\VTK_Release\lib\vtkFiltersFlowPaths-8.1.lib;F:\VTK_Release\lib\vtkFiltersGeneral-8.1.lib;F:\VTK_Release\lib\vtkFiltersGeneric-8.1.lib;F:\VTK_Release\lib\vtkFiltersGeometry-8.1.lib;F:\VTK_Release\lib\vtkFiltersHybrid-8.1.lib;F:\VTK_Release\lib\vtkFiltersHyperTree-8.1.lib;F:\VTK_Release\lib\vtkFiltersImaging-8.1.lib;F:\VTK_Release\lib\vtkFiltersModeling-8.1.lib;F:\VTK_Release\lib\vtkFiltersParallel-8.1.lib;F:\VTK_Release\lib\vtkFiltersParallelImaging-8.1.lib;F:\VTK_Release\lib\vtkFiltersPoints-8.1.lib;F:\VTK_Release\lib\vtkFiltersProgrammable-8.1.lib;F:\VTK_Release\lib\vtkFiltersSelection-8.1.lib;F:\VTK_Release\lib\vtkFiltersSMP-8.1.lib;F:\VTK_Release\lib\vtkFiltersSources-8.1.lib;F:\VTK_Release\lib\vtkFiltersStatistics-8.1.lib;F:\VTK_Release\lib\vtkFiltersTexture-8.1.lib;F:\VTK_Release\lib\vtkFiltersTopology-8.1.lib;F:\VTK_Release\lib\vtkFiltersVerdict-8.1.lib;F:\VTK_Release\lib\vtkfreetype-8.1.lib;F:\VTK_Release\lib\vtkGeovisCore-8.1.lib;F:\VTK_Release\lib\vtkgl2ps-8.1.lib;F:\VTK_Release\lib\vtkhdf5-8.1.lib;F:\VTK_Release\lib\vtkhdf5_hl-8.1.lib;F:\VTK_Release\lib\vtkImagingColor-8.1.lib;F:\VTK_Release\lib\vtkImagingCore-8.1.lib;F:\VTK_Release\lib\vtkImagingFourier-8.1.lib;F:\VTK_Release\lib\vtkImagingGeneral-8.1.lib;F:\VTK_Release\lib\vtkImagingHybrid-8.1.lib;F:\VTK_Release\lib\vtkImagingMath-8.1.lib;F:\VTK_Release\lib\vtkImagingMorphological-8.1.lib;F:\VTK_Release\lib\vtkImagingSources-8.1.lib;F:\VTK_Release\lib\vtkImagingStatistics-8.1.lib;F:\VTK_Release\lib\vtkImagingStencil-8.1.lib;F:\VTK_Release\lib\vtkInfovisCore-8.1.lib;F:\VTK_Release\lib\vtkInfovisLayout-8.1.lib;F:\VTK_Release\lib\vtkInteractionImage-8.1.lib;F:\VTK_Release\lib\vtkInteractionStyle-8.1.lib;F:\VTK_Release\lib\vtkInteractionWidgets-8.1.lib;F:\VTK_Release\lib\vtkIOAMR-8.1.lib;F:\VTK_Release\lib\vtkIOCore-8.1.lib;F:\VTK_Release\lib\vtkIOEnSight-8.1.lib;F:\VTK_Release\lib\vtkIOExodus-8.1.lib;F:\VTK_Release\lib\vtkIOExport-8.1.lib;F:\VTK_Release\lib\vtkIOExportOpenGL-8.1.lib;F:\VTK_Release\lib\vtkIOGeometry-8.1.lib;F:\VTK_Release\lib\vtkIOImage-8.1.lib;F:\VTK_Release\lib\vtkIOImport-8.1.lib;F:\VTK_Release\lib\vtkIOInfovis-8.1.lib;F:\VTK_Release\lib\vtkIOLegacy-8.1.lib;F:\VTK_Release\lib\vtkIOLSDyna-8.1.lib;F:\VTK_Release\lib\vtkIOMINC-8.1.lib;F:\VTK_Release\lib\vtkIOMovie-8.1.lib;F:\VTK_Release\lib\vtkIONetCDF-8.1.lib;F:\VTK_Release\lib\vtkIOParallel-8.1.lib;F:\VTK_Release\lib\vtkIOParallelXML-8.1.lib;F:\VTK_Release\lib\vtkIOPLY-8.1.lib;F:\VTK_Release\lib\vtkIOSQL-8.1.lib;F:\VTK_Release\lib\vtkIOTecplotTable-8.1.lib;F:\VTK_Release\lib\vtkIOVideo-8.1.lib;F:\VTK_Release\lib\vtkIOXML-8.1.lib;F:\VTK_Release\lib\vtkIOXMLParser-8.1.lib;F:\VTK_Release\lib\vtkjpeg-8.1.lib;F:\VTK_Release\lib\vtkjsoncpp-8.1.lib;F:\VTK_Release\lib\vtklibharu-8.1.lib;F:\VTK_Release\lib\vtklibxml2-8.1.lib;F:\VTK_Release\lib\vtkLocalExample-8.1.lib;F:\VTK_Release\lib\vtklz4-8.1.lib;F:\VTK_Release\lib\vtkmetaio-8.1.lib;F:\VTK_Release\lib\vtkNetCDF-8.1.lib;F:\VTK_Release\lib\vtknetcdfcpp-8.1.lib;F:\VTK_Release\lib\vtkoggtheora-8.1.lib;F:\VTK_Release\lib\vtkParallelCore-8.1.lib;F:\VTK_Release\lib\vtkpng-8.1.lib;F:\VTK_Release\lib\vtkproj4-8.1.lib;F:\VTK_Release\lib\vtkRenderingAnnotation-8.1.lib;F:\VTK_Release\lib\vtkRenderingContext2D-8.1.lib;F:\VTK_Release\lib\vtkRenderingContextOpenGL-8.1.lib;F:\VTK_Release\lib\vtkRenderingCore-8.1.lib;F:\VTK_Release\lib\vtkRenderingFreeType-8.1.lib;F:\VTK_Release\lib\vtkRenderingGL2PS-8.1.lib;F:\VTK_Release\lib\vtkRenderingImage-8.1.lib;F:\VTK_Release\lib\vtkRenderingLabel-8.1.lib;F:\VTK_Release\lib\vtkRenderingLIC-8.1.lib;F:\VTK_Release\lib\vtkRenderingLOD-8.1.lib;F:\VTK_Release\lib\vtkRenderingOpenGL-8.1.lib;F:\VTK_Release\lib\vtkRenderingVolume-8.1.lib;F:\VTK_Release\lib\vtkRenderingVolumeOpenGL-8.1.lib;F:\VTK_Release\lib\vtksqlite-8.1.lib;F:\VTK_Release\lib\vtksys-8.1.lib;F:\VTK_Release\lib\vtktiff-8.1.lib;F:\VTK_Release\lib\vtkverdict-8.1.lib;F:\VTK_Release\lib\vtkViewsContext2D-8.1.lib;F:\VTK_Release\lib\vtkViewsCore-8.1.lib;F:\VTK_Release\lib\vtkViewsInfovis-8.1.lib;F:\VTK_Release\lib\vtkzlib-8.1.lib;F:\ITK_Release\lib\ITKBiasCorrection-4.13.lib;F:\ITK_Release\lib\ITKBioCell-4.13.lib;F:\ITK_Release\lib\ITKCommon-4.13.lib;F:\ITK_Release\lib\ITKDICOMParser-4.13.lib;F:\ITK_Release\lib\itkdouble-conversion-4.13.lib;F:\ITK_Release\lib\ITKEXPAT-4.13.lib;F:\ITK_Release\lib\ITKFEM-4.13.lib;F:\ITK_Release\lib\itkgdcmcharls-4.13.lib;F:\ITK_Release\lib\itkgdcmCommon-4.13.lib;F:\ITK_Release\lib\itkgdcmDICT-4.13.lib;F:\ITK_Release\lib\itkgdcmDSED-4.13.lib;F:\ITK_Release\lib\itkgdcmIOD-4.13.lib;F:\ITK_Release\lib\itkgdcmjpeg12-4.13.lib;F:\ITK_Release\lib\itkgdcmjpeg16-4.13.lib;F:\ITK_Release\lib\itkgdcmjpeg8-4.13.lib;F:\ITK_Release\lib\itkgdcmMEXD-4.13.lib;F:\ITK_Release\lib\itkgdcmMSFF-4.13.lib;F:\ITK_Release\lib\itkgdcmopenjp2-4.13.lib;F:\ITK_Release\lib\itkgdcmsocketxx-4.13.lib;F:\ITK_Release\lib\ITKgiftiio-4.13.lib;F:\ITK_Release\lib\ITKIOBioRad-4.13.lib;F:\ITK_Release\lib\ITKIOBMP-4.13.lib;F:\ITK_Release\lib\ITKIOBruker-4.13.lib;F:\ITK_Release\lib\ITKIOCSV-4.13.lib;F:\ITK_Release\lib\ITKIOGDCM-4.13.lib;F:\ITK_Release\lib\ITKIOGE-4.13.lib;F:\ITK_Release\lib\ITKIOGIPL-4.13.lib;F:\ITK_Release\lib\ITKIOHDF5-4.13.lib;F:\ITK_Release\lib\ITKIOImageBase-4.13.lib;F:\ITK_Release\lib\ITKIOIPL-4.13.lib;F:\ITK_Release\lib\ITKIOJPEG-4.13.lib;F:\ITK_Release\lib\ITKIOLSM-4.13.lib;F:\ITK_Release\lib\ITKIOMesh-4.13.lib;F:\ITK_Release\lib\ITKIOMeta-4.13.lib;F:\ITK_Release\lib\ITKIOMINC-4.13.lib;F:\ITK_Release\lib\ITKIOMRC-4.13.lib;F:\ITK_Release\lib\ITKIONIFTI-4.13.lib;F:\ITK_Release\lib\ITKIONRRD-4.13.lib;F:\ITK_Release\lib\ITKIOPNG-4.13.lib;F:\ITK_Release\lib\ITKIOSiemens-4.13.lib;F:\ITK_Release\lib\ITKIOSpatialObjects-4.13.lib;F:\ITK_Release\lib\ITKIOStimulate-4.13.lib;F:\ITK_Release\lib\ITKIOTIFF-4.13.lib;F:\ITK_Release\lib\ITKIOTransformBase-4.13.lib;F:\ITK_Release\lib\ITKIOTransformHDF5-4.13.lib;F:\ITK_Release\lib\ITKIOTransformInsightLegacy-4.13.lib;F:\ITK_Release\lib\ITKIOTransformMatlab-4.13.lib;F:\ITK_Release\lib\ITKIOVTK-4.13.lib;F:\ITK_Release\lib\ITKIOXML-4.13.lib;F:\ITK_Release\lib\itkjpeg-4.13.lib;F:\ITK_Release\lib\ITKKLMRegionGrowing-4.13.lib;F:\ITK_Release\lib\ITKLabelMap-4.13.lib;F:\ITK_Release\lib\itklbfgs-4.13.lib;F:\ITK_Release\lib\ITKMesh-4.13.lib;F:\ITK_Release\lib\ITKMetaIO-4.13.lib;F:\ITK_Release\lib\itkminc2-4.13.lib;F:\ITK_Release\lib\itknetlib-4.13.lib;F:\ITK_Release\lib\itkNetlibSlatec-4.13.lib;F:\ITK_Release\lib\ITKniftiio-4.13.lib;F:\ITK_Release\lib\ITKNrrdIO-4.13.lib;F:\ITK_Release\lib\ITKOptimizers-4.13.lib;F:\ITK_Release\lib\ITKOptimizersv4-4.13.lib;F:\ITK_Release\lib\ITKPath-4.13.lib;F:\ITK_Release\lib\itkpng-4.13.lib;F:\ITK_Release\lib\ITKPolynomials-4.13.lib;F:\ITK_Release\lib\ITKQuadEdgeMesh-4.13.lib;F:\ITK_Release\lib\ITKSpatialObjects-4.13.lib;F:\ITK_Release\lib\ITKStatistics-4.13.lib;F:\ITK_Release\lib\itksys-4.13.lib;F:\ITK_Release\lib\itktestlib-4.13.lib;F:\ITK_Release\lib\itktiff-4.13.lib;F:\ITK_Release\lib\ITKTransform-4.13.lib;F:\ITK_Release\lib\ITKTransformFactory-4.13.lib;F:\ITK_Release\lib\itkv3p_netlib-4.13.lib;F:\ITK_Release\lib\itkvcl-4.13.lib;F:\ITK_Release\lib\ITKVideoCore-4.13.lib;F:\ITK_Release\lib\ITKVideoIO-4.13.lib;F:\ITK_Release\lib\itkvnl-4.13.lib;F:\ITK_Release\lib\ITKVNLInstantiation-4.13.lib;F:\ITK_Release\lib\itkvnl_algo-4.13.lib;F:\ITK_Release\lib\ITKVTK-4.13.lib;F:\ITK_Release\lib\ITKVtkGlue-4.13.lib;F:\ITK_Release\lib\ITKWatersheds-4.13.lib;F:\ITK_Release\lib\itkzlib-4.13.lib;F:\ITK_Release\lib\ITKznz-4.13.lib;F:\ITK_Release\lib\libitkhdf5.lib;F:\ITK_Release\lib\libitkhdf5_cpp.lib</AdditionalDependencies>
-    </Link>
-  </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Segmentation2D.cpp" />
+    <ClCompile Include="Algorithm2D.cpp" />
+    <ClCompile Include="Callback2D.cpp" />
+    <ClCompile Include="Canvas2D.cpp" />
+    <ClCompile Include="InteractorStyle2D.cpp" />
+    <ClCompile Include="Segmentation2D.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Use</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Algorithm2D.h" />
+    <ClInclude Include="Callback2D.h" />
+    <ClInclude Include="Canvas2D.h" />
+    <ClInclude Include="ImageTypeDetails2D.h" />
+    <ClInclude Include="InteractorStyle2D.h" />
+    <ClInclude Include="SpeedFunction2D.h" />
+    <ClInclude Include="stdafx.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

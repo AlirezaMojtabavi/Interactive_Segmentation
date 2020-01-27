@@ -127,7 +127,7 @@ void MyCallback3D::Overlay()
 	thconnector->SetInput(OutputImage_2_Image->GetOutput());
 	thconnector->Update();
 
-	VTK_CREATE(vtkImageBlend, blend);
+	auto blend = vtkSmartPointer<vtkImageBlend>::New();
 	blend->AddInputData(thconnector->GetOutput());
 	blend->AddInputData(mrconnector->GetOutput());
 	blend->SetOpacity(0.5, 0.5);
@@ -136,7 +136,7 @@ void MyCallback3D::Overlay()
 
 	ResliceDicom2D->SetInputConnection(blend->GetOutputPort());
 
-	VTK_CREATE(vtkImageActor, DataActorOverlay);
+	auto DataActorOverlay = vtkSmartPointer<vtkImageActor>::New();
 	DataActorOverlay->GetMapper()->SetInputConnection(ResliceDicom2D->GetOutputPort());
 	renderer->AddActor(DataActorOverlay);
 	window->AddRenderer(renderer);

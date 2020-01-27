@@ -1,7 +1,7 @@
 #pragma once
 
-#ifndef MySpeed_h
-#define MySpeed_h
+#ifndef SpeedFunction2D_h
+#define SpeedFunction2D_h
 
 #include <itkImage.h>
 #include <itkMacro.h>
@@ -17,73 +17,80 @@
 #include <itkImageToHistogramFilter.h>
 #include "itkCurvatureAnisotropicDiffusionImageFilter.h"
 #include "itkGradientMagnitudeRecursiveGaussianImageFilter.h"
-
+#include "ImageTypeDetails2D.h"
 
 template< typename TImageType, typename TFeatureImageType = TImageType >
-class MySpeed :
+class SpeedFunction2D :
 	public itk::ThresholdSegmentationLevelSetFunction< TImageType, TFeatureImageType >
 {
 
 public:
 
-	typedef TFeatureImageType      FeatureImageType;
-	typedef double  PixelRealType;
+	typedef TFeatureImageType  FeatureImageType;
+	typedef double    PixelRealType;
 
-	typedef MySpeed Self;
+	typedef SpeedFunction2D Self;
 	typedef itk::ThresholdSegmentationLevelSetFunction< TImageType, TFeatureImageType > Superclass;
 	typedef itk::SmartPointer< Self >       Pointer;
 	typedef itk::SmartPointer< const Self > ConstPointer;
+	typename InternalImageType::ConstPointer m_FeatureImage;
+	typename InternalImageType::Pointer m_SpeedImage;
+	
 	itkNewMacro(Self);
-	itkTypeMacro(MySpeed, itk::ThresholdSegmentationLevelSetFunction);
+	itkTypeMacro(SpeedFunction2D, itk::ThresholdSegmentationLevelSetFunction);
 
-	MySpeed() {}
-	~MySpeed() {}
-
-	virtual void CalculateSpeedImage() override;
-	/*virtual const FeatureImageType * GetFeatureImage() const
+	 void CalculateSpeedImage() override;
+	const FeatureImageType* GetFeatureImage() const
 	{
 		return m_FeatureImage.GetPointer();
 	}
-	virtual ImageType * GetSpeedImage()
+	InternalImageType* GetSpeedImage()
 	{
 		return m_SpeedImage.GetPointer();
-	}*/
+	}
 
 
 
 protected:
 
+	SpeedFunction2D() {}
+	~SpeedFunction2D() {}
+	SpeedFunction2D(const Self&) ITK_DELETE_FUNCTION;
+	itkStaticConstMacro(ImageDimension, unsigned int, InternalImageType::ImageDimension);
 
-	MySpeed(const Self &) ITK_DELETE_FUNCTION;
-	itkStaticConstMacro(ImageDimension, unsigned int, ImageType::ImageDimension);
+	typename Superclass::ScalarValueType  max_scale;
+	typename Superclass::PixelType th, lap;
+	typename Superclass::ScalarValueType m_EdgeWeight;
+	typename Superclass::ScalarValueType upper_threshold;
+	typename Superclass::ScalarValueType lower_threshold;
+	typename Superclass::ScalarValueType m_UpperThreshold;
+	typename Superclass::ScalarValueType m_LowerThreshold;
 
-	Superclass::ScalarValueType max_scale;
-	Superclass::PixelType th, lap;
 
 };
 
 template<typename TImageType, typename TFeatureImageType>
-inline void MySpeed<TImageType, TFeatureImageType>::CalculateSpeedImage()
+inline void SpeedFunction2D<TImageType, TFeatureImageType>::CalculateSpeedImage()
 {
 
-	cout << "\n\n" << "MySpeed is on" << "\n\n";
+	cout << "\n\n" << "SpeedFunction2D is on" << "\n\n";
 
-	typename typedef itk::GradientAnisotropicDiffusionImageFilter<TFeatureImageType, TFeatureImageType >  GradientType;
-	GradientType::Pointer diffusion = GradientType::New();
+	typedef itk::GradientAnisotropicDiffusionImageFilter<TFeatureImageType, TFeatureImageType >  GradientType;
+	typename GradientType::Pointer diffusion = GradientType::New();
 
 	typedef itk::LaplacianImageFilter<TFeatureImageType, TFeatureImageType >  LaplacianType;
-	LaplacianType::Pointer laplacian = LaplacianType::New();
+	typename LaplacianType::Pointer laplacian = LaplacianType::New();
 
-	typedef itk::MinimumMaximumImageCalculator <FeatureImageType> ImageCalculatorFilterType;
-	ImageCalculatorFilterType::Pointer imageCalculatorFilter
+	typedef itk::MinimumMaximumImageCalculator <InternalImageType> ImageCalculatorFilterType;
+	typename ImageCalculatorFilterType::Pointer imageCalculatorFilter
 		= ImageCalculatorFilterType::New();
 	imageCalculatorFilter->SetImage(this->GetFeatureImage());
 	imageCalculatorFilter->Compute();
-	ScalarValueType max_image = imageCalculatorFilter->GetMaximum();
+	typename Superclass::ScalarValueType max_image = imageCalculatorFilter->GetMaximum();
 
 
 	typedef itk::InvertIntensityImageFilter< TFeatureImageType, TFeatureImageType > InvertType;
-	InvertType::Pointer inverter = InvertType::New();
+	typename InvertType::Pointer inverter = InvertType::New();
 	inverter->SetInput(this->GetFeatureImage());
 	inverter->SetMaximum(max_image);
 	inverter->Update();
@@ -93,15 +100,15 @@ inline void MySpeed<TImageType, TFeatureImageType>::CalculateSpeedImage()
 	itk::ImageRegionIterator< FeatureImageType > lit;
 	itk::ImageRegionConstIterator< FeatureImageType >
 		fit(this->GetFeatureImage(), this->GetFeatureImage()->GetRequestedRegion());
-	itk::ImageRegionIterator< ImageType >
+	itk::ImageRegionIterator< InternalImageType >
 		sit(this->GetSpeedImage(), this->GetFeatureImage()->GetRequestedRegion());
 
 
-	ImageCalculatorFilterType::Pointer imageCalculatorFilter1
+	typename ImageCalculatorFilterType::Pointer imageCalculatorFilter1
 		= ImageCalculatorFilterType::New();
-	ScalarValueType max_lap;
-	ScalarValueType min_lap;
-	ScalarValueType max_lap_abs;
+	typename Superclass::ScalarValueType max_lap;
+	typename Superclass::ScalarValueType min_lap;
+	typename Superclass::ScalarValueType max_lap_abs;
 
 	//----------------------------------------------------------------------------------
 
@@ -158,14 +165,14 @@ inline void MySpeed<TImageType, TFeatureImageType>::CalculateSpeedImage()
 	this->GetSpeedImage()->CopyInformation(this->GetFeatureImage());
 
 	// Calculate the speed image
-	ScalarValueType upper_threshold = static_cast<ScalarValueType>(m_UpperThreshold);
-	ScalarValueType lower_threshold = static_cast<ScalarValueType>(m_LowerThreshold);
-	ScalarValueType mid = ((upper_threshold - lower_threshold) / 2.0) + lower_threshold;
-	ScalarValueType threshold;
+	upper_threshold = static_cast<typename Superclass::ScalarValueType>(m_UpperThreshold);
+	lower_threshold = static_cast<typename Superclass::ScalarValueType>(m_LowerThreshold);
+	typename Superclass::ScalarValueType mid = ((upper_threshold - lower_threshold) / 2.0) + lower_threshold;
+	typename Superclass::ScalarValueType threshold;
 
 	for (fit.GoToBegin(), sit.GoToBegin(); !fit.IsAtEnd(); ++sit, ++fit)
 	{
-		if (static_cast<ScalarValueType>(fit.Get()) < mid)
+		if (static_cast<typename Superclass::ScalarValueType>(fit.Get()) < mid)
 		{
 			threshold = fit.Get() - lower_threshold;
 			th = threshold;
@@ -180,13 +187,13 @@ inline void MySpeed<TImageType, TFeatureImageType>::CalculateSpeedImage()
 		{
 			max_scale = mid - m_LowerThreshold;
 
-			sit.Set(static_cast<ScalarValueType>( /*threshold +*/ m_EdgeWeight * lit.Get()));
+			sit.Set(static_cast<typename Superclass::ScalarValueType>( /*threshold +*/ m_EdgeWeight * lit.Get()));
 			lap = lit.Get();
 			++lit;
 		}
 		else
 		{
-			sit.Set(static_cast<ScalarValueType>(threshold));
+			sit.Set(static_cast<typename Superclass::ScalarValueType>(threshold));
 
 		}
 	}

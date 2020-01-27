@@ -1,26 +1,26 @@
 #include "stdafx.h"
-#include "Algorithm.h"
+#include "Algorithm2D.h"
 
-Algorithm::Algorithm()
+Algorithm2D::Algorithm2D()
 {}
 
-void Algorithm::set_Canvas(Canvas2D* Diagram)
+void Algorithm2D::set_Canvas(Canvas2D* Diagram)
 {
 	diagram = Diagram;
 }
 
-void Algorithm::set_reader(itk::SmartPointer<InternalImageType > _reader)
+void Algorithm2D::set_reader(itk::SmartPointer<InternalImageType > _reader)
 {
 	reader = _reader;
 }
 
-void Algorithm::Set_Function(itk::SmartPointer<MySpeedType> _Function)
+void Algorithm2D::Set_Function(itk::SmartPointer<MySpeedType> _Function)
 {
 	my_function = _Function;
 }
 
 
-void Algorithm::FastMarching(const double distance)
+void Algorithm2D::FastMarching(const double distance)
 {
 	int size = diagram->get_vector().size();
 
@@ -56,7 +56,7 @@ void Algorithm::FastMarching(const double distance)
 
 }
 
-void Algorithm::Level_Set(int lower, int upper, double edge, double weight)
+void Algorithm2D::Level_Set(int lower, int upper, double edge, double weight)
 {
 	thresholder->SetLowerThreshold(-1000);
 	thresholder->SetUpperThreshold(0);
@@ -90,7 +90,7 @@ void Algorithm::Level_Set(int lower, int upper, double edge, double weight)
 
 }
 
-void Algorithm::Level_Set(double edge, double weight)
+void Algorithm2D::Level_Set(double edge, double weight)
 {
 
 	auto window = diagram->get_min_max();
@@ -131,11 +131,11 @@ void Algorithm::Level_Set(double edge, double weight)
 }
 
 
-int Algorithm::WriteImage(std::string output1)
+int Algorithm2D::WriteImage(std::string output1)
 {
 	writer1->SetInput(thresholder->GetOutput());
 	writer1->SetFileName(output1.c_str());
-	
+
 	try
 	{
 		writer1->Update();
@@ -168,12 +168,12 @@ int Algorithm::WriteImage(std::string output1)
 }
 
 
-InternalImageType * Algorithm::Get_FastMarching()
+InternalImageType* Algorithm2D::Get_FastMarching()
 {
 	return fastMarching->GetOutput();
 }
 
-OutputImageType * Algorithm::Get_thresholder()
+OutputImageType* Algorithm2D::Get_thresholder()
 {
 	return thresholder->GetOutput();
 }

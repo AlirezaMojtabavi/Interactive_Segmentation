@@ -4,7 +4,7 @@
 
 void InteractorStyle2D::OnKeyPress()
 {
-	vtkRenderWindowInteractor *rwi = this->Interactor;
+	vtkRenderWindowInteractor* rwi = this->Interactor;
 	std::string key = rwi->GetKeySym();
 	if (key == "c") //contrast
 		flag = -1;
@@ -30,7 +30,7 @@ void InteractorStyle2D::WindowLevel()
 {
 	if (flag == -1)
 	{
-		vtkRenderWindowInteractor *rwi = this->Interactor;
+		vtkRenderWindowInteractor* rwi = this->Interactor;
 
 		this->WindowLevelCurrentPosition[0] = rwi->GetEventPosition()[0];
 		this->WindowLevelCurrentPosition[1] = rwi->GetEventPosition()[1];
@@ -42,7 +42,7 @@ void InteractorStyle2D::WindowLevel()
 		}
 		else if (this->CurrentImageProperty)
 		{
-			int *size = this->CurrentRenderer->GetSize();
+			int* size = this->CurrentRenderer->GetSize();
 
 			double window = this->WindowLevelInitial[0];
 			double level = this->WindowLevelInitial[1];

@@ -57,8 +57,8 @@ protected:
 	MySpeedFunction3D(const Self &) ITK_DELETE_FUNCTION;
 	itkStaticConstMacro(ImageDimension, unsigned int, ImageType::ImageDimension);
 
-	ScalarValueType max_scale;
-	PixelType th, lap;
+	typename Superclass::ScalarValueType max_scale;
+	typename Superclass::PixelType th, lap;
 
 };
 

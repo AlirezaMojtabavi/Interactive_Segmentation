@@ -9,6 +9,7 @@
 #include "MyInteractionStyle3D.h"
 #include "MySpeedFunction3D.h"
 #include "MyCanvas3D.h"
+#include "ImageTypeDetails.h"
 
 class MyCallback3D : public vtkCommand
 {

@@ -5,12 +5,13 @@
 #include "MyCallback3D.h"
 #include "MyCanvas3D.h"
 #include "MyInteractionStyle3D.h"
-#include"Reslicer.h"
+#include "Reslicer.h"
+#include "ImageTypeDetails.h"
 
 
 int main(int argc, char *argv[])
 {
-	VTK_CREATE(vtkDICOMImageReader, input_reader);
+	auto input_reader = vtkSmartPointer<vtkDICOMImageReader>::New();
 	input_reader->SetDirectoryName("E:\\Interactive_Segmentation\\input3D");
 	input_reader->Update();
 
@@ -19,31 +20,31 @@ int main(int argc, char *argv[])
 	Reslicer* IS_Reslicer = new Reslicer(input_reader);
 	IS_Reslicer->PrepareInputImage(input_reader);
 
-	VTK_CREATE(vtkImageReslice, ResliceDicom3D);
+	auto ResliceDicom3D = vtkSmartPointer<vtkImageReslice>::New();
 	IS_Reslicer->SetReslice3D(ResliceDicom3D);
 	
-	VTK_CREATE(vtkImageActor, DataActor);
+	auto DataActor = vtkSmartPointer<vtkImageActor>::New();
 	MyCanvas3D* IS_MyCanvas3D = new MyCanvas3D(ResliceDicom3D);
 	IS_MyCanvas3D->SetImageData(ResliceDicom3D->GetOutput());
 	IS_Reslicer->SetCanvas(IS_MyCanvas3D);
 
-	VTK_CREATE(vtkImageReslice, ResliceDicom2D);
+	auto ResliceDicom2D = vtkSmartPointer<vtkImageReslice>::New();
 	IS_Reslicer->SetReslice2D(ResliceDicom2D);
 	ResliceDicom2D->Update();
 
 	DataActor->GetMapper()->SetInputConnection(ResliceDicom2D->GetOutputPort());
 
-	VTK_CREATE(vtkRenderer, renderer);
+	auto renderer = vtkSmartPointer<vtkRenderer>::New();
 	renderer->AddActor(DataActor);
 	renderer->GetActiveCamera()->ParallelProjectionOn();
 	renderer->ResetCamera();
 	IS_MyCanvas3D->SetRenderer(renderer);
 
-	VTK_CREATE(vtkRenderWindow, window);
+	auto window = vtkSmartPointer<vtkRenderWindow>::New();
 	window->AddRenderer(renderer);
 	IS_MyCanvas3D->SetWindow(window);
 
-	VTK_CREATE(vtkRenderWindowInteractor, interactor);
+	auto interactor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
 	vtkSmartPointer<MyInteractionStyle3D> imageStyle = new MyInteractionStyle3D;
 	IS_MyCanvas3D->SetStyle(imageStyle);
 	IS_MyCanvas3D->SetInteractor(interactor);
@@ -56,7 +57,7 @@ int main(int argc, char *argv[])
 	
 	typedef MySpeedFunction3D< InternalImageType, InternalImageType > MySpeedFunction3DType;
 	MySpeedFunction3DType::Pointer SegmentationSpeedFunction = MySpeedFunction3DType::New();
-	VTK_CREATE(MyCallback3D, IS_Callback);
+	auto IS_Callback = vtkSmartPointer<MyCallback3D>::New();
 	IS_Callback->SetImageReslice(ResliceDicom3D, ResliceDicom2D); // "ResliceDicom2D" For overlay
 	IS_Callback->SetRenderer(renderer); //For overlay
 	IS_Callback->SetWindow(window); //For overlay

@@ -91,9 +91,9 @@ void Canvas2D::Arc(double x, double y, int r, vtkImageData* inputData)
 	{
 		for (int theta = 0; theta < 361; theta++)
 		{
-			double deg = theta*0.0174532925;
-			double X = i*cos(deg) + x;
-			double Y = i*sin(deg) + y;
+			double deg = theta * 0.0174532925;
+			double X = i * cos(deg) + x;
+			double Y = i * sin(deg) + y;
 			unsigned short* pixel = static_cast<unsigned short*> (inputData->GetScalarPointer(X / pSpacing[0], Y / pSpacing[1], 0));
 			if (!pixel)
 				return;

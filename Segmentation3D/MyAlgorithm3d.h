@@ -11,6 +11,7 @@
 #include "MySpeedFunction3D.h"
 #include "MyInteractionStyle3D.h"
 #include "MyCanvas3D.h"
+#include "ImageTypeDetails.h"
 
 
 

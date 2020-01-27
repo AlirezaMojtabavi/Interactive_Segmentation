@@ -4,12 +4,12 @@
 #include "vtkRenderWindow.h"
 #include "vtkRendererCollection.h"
 
-Callback2D * Callback2D::New()
+Callback2D* Callback2D::New()
 {
 	return new Callback2D;
 }
 
-void Callback2D::SetStyle(InteractorStyle2D*_style)
+void Callback2D::SetStyle(InteractorStyle2D* _style)
 {
 	style = _style;
 }
@@ -103,11 +103,11 @@ void Callback2D::set_window(vtkSmartPointer<vtkRenderWindow> _window)
 	window = _window;
 }
 
-inline void Callback2D::Execute(vtkObject *caller, unsigned long event, void *)
+inline void Callback2D::Execute(vtkObject* caller, unsigned long event, void*)
 {
 
 	std::string outputFilename = "E:\\Interactive_Segmentation\\output2D\\my_final.dcm"; // level set output
-	
+
 	 //std::string outputFilename1 = "C:\\Users\\Alireza\\Desktop\\Result_Write\\my_curve.jpg"; // level set output
 	 //std::string outputFilename2 = "C:\\Users\\Alireza\\Desktop\\Result_Write\\Traditional_curve.jpg"; // level set output
 
@@ -125,7 +125,7 @@ inline void Callback2D::Execute(vtkObject *caller, unsigned long event, void *)
 		//cout << "X: " << position[0] << "\t\t\tY: " << position[1] << "\n\n\n";
 		Interactor->Render();
 
-		if (style->GetFlag() == 4 || style->GetFlag() == 1 || style->GetFlag() == 5 )
+		if (style->GetFlag() == 4 || style->GetFlag() == 1 || style->GetFlag() == 5)
 		{
 			MySeg->set_reader(Reader);
 			MySeg->Set_Function(My_Function);
@@ -133,7 +133,7 @@ inline void Callback2D::Execute(vtkObject *caller, unsigned long event, void *)
 			MySeg->FastMarching(4);
 			MySeg->Level_Set(355, 650, 1.5, 0.05);
 
-			if (style->GetFlag() == 4 || style->GetFlag() == 5 )
+			if (style->GetFlag() == 4 || style->GetFlag() == 5)
 			{
 
 				cout << "\t\t\tPlease Wait ..." << "\n\n\n";

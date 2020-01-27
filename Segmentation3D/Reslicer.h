@@ -8,6 +8,7 @@
 #include <itkVTKImageToImageFilter.h>
 #include <itkImageToVTKImageFilter.h>
 #include "MyCanvas3D.h"
+#include "ImageTypeDetails.h"
 
 
 class Reslicer
@@ -40,5 +41,6 @@ private:
 	vtkSmartPointer< vtkImageReslice> Reslise2D;
 	
 	MyCanvas3D* IS_MyCanvas3D;
-	VTK_CREATE(vtkMatrix4x4, ResliceAxes);
+	vtkSmartPointer<vtkMatrix4x4> ResliceAxes = vtkSmartPointer<vtkMatrix4x4>::New();
+	
 };
