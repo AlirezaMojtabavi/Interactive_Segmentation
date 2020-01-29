@@ -24,7 +24,7 @@ For now, Segmentation 3D is Ready to use
 - set upper and lower threshold of area(s) that you want to segment
 - run the project
 
-### Usage
+## Usage
 
 when project is running :
 - if (key == "c") // contrast -> by draging mouse you can adjust contrast and brightness
