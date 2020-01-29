@@ -1,7 +1,9 @@
 # Interactive_Segmentation
 My Master Thesis in Tehran University Of Medical Sciences
+
 This project segment Glioma tumor in MRI T1+C Images
-It Starts with segment boundaries(edema area in tumor) by seeding user and levelset method, finally morphological method adding Surrounded region to segmented region (See "sample" folder)
+
+In this project a combined level set algorithm consists of both region and boundary terms for Glioma tumor segmentation is proposed. The modified speed function incorporates threshold based level set and the Laplacian filter to highlight the fine details for performing an accurate extraction of the tumor region using multiple seed points selected by the user.(See "sample" folder)
 
 ![first test](sample/sample1.png)   ![first test](sample/sample2.png)
 
