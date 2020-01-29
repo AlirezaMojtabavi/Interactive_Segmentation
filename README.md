@@ -1,9 +1,11 @@
 # Interactive_Segmentation
 My Master Thesis in Tehran University Of Medical Sciences
 This project segment Glioma tumor in MRI T1+C Images
-It Starts with segment boundaries(edema area in tumor) by seeding user and levelset method, finally morphological method adding Surrounded region to segmented region
-![first test](sample/Media2.avi)
+It Starts with segment boundaries(edema area in tumor) by seeding user and levelset method, finally morphological method adding Surrounded region to segmented region (See "sample" folder)
 
+![first test](sample/sample1.png)   ![first test](sample/sample2.png)
+
+Red area is my result and white area is gold standard
 
 For now, Segmentation 3D is Ready to use
 
