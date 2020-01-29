@@ -1,15 +1,14 @@
 # Interactive_Segmentation
 My Master Thesis in Tehran University Of Medical Sciences
+This project segment Glioma tumor in MRI T1+C Images
+It Starts with segment boundaries(edema area in tumor) by seeding user and levelset method, finally morphological method adding Surrounded region to segmented region
+![first test](sample/Media2.avi)
+
 
 For now, Segmentation 3D is Ready to use
 
-## Getting Started
+## Installing
 
-These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
-
-### Installing
-
-A step by step series of examples that tell you how to get a development env running:
 - download VTK-8.1 and ITK-4.13 and cmake-3.16.0
 - config and Generate VTK by cmake(unchecked shared-libs and select openGL not openGl2) 
 - open vtk.sln with visual studio(Run as administrator) and build Install with configuration Release 
@@ -17,13 +16,13 @@ A step by step series of examples that tell you how to get a development env run
 - open itk.sln with visual studio(Run as administrator) and build Install with configuration Release 
 - open Segmentaion3D or Segmentation2D and set libs and header files of vtk and itk
 
-#### Running the tests
+## Running the tests
 
 - set image directory in main function (MRI Images for Segmentation3D for example "input3D" file)
 - set upper and lower threshold of area(s) that you want to segment
 - run the project
 
-##### Deployment
+### Usage
 
 when project is running :
 - if (key == "c") // contrast -> by draging mouse you can adjust contrast and brightness
