@@ -18,7 +18,7 @@
 #include <itkImageToHistogramFilter.h>
 #include "itkCurvatureAnisotropicDiffusionImageFilter.h"
 #include "itkGradientMagnitudeRecursiveGaussianImageFilter.h"
-
+#include "ImageTypeDetails.h"
 
 template< typename TImageType, typename TFeatureImageType = TImageType >
 class MySpeedFunction3D :
@@ -32,7 +32,7 @@ public:
 
 	typedef MySpeedFunction3D Self;
 	typedef itk::ThresholdSegmentationLevelSetFunction< TImageType, TFeatureImageType > Superclass;
-	typedef itk::SmartPointer< Self >       Pointer;
+	typedef itk::SmartPointer< Self >  Pointer;
 	typedef itk::SmartPointer< const Self > ConstPointer;
 	itkNewMacro(Self);
 	itkTypeMacro(MySpeedFunction3D, itk::ThresholdSegmentationLevelSetFunction);
@@ -40,7 +40,7 @@ public:
 	MySpeedFunction3D() {}
 	~MySpeedFunction3D() {}
 
-	virtual void CalculateSpeedImage() override;
+	void CalculateSpeedImage() override;
 	virtual const FeatureImageType * GetFeatureImage() const
 	{
 		return m_FeatureImage.GetPointer();

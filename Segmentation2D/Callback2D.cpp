@@ -9,45 +9,51 @@ Callback2D* Callback2D::New()
 	return new Callback2D;
 }
 
+void Callback2D::SetInternalImage(InternalImageType2D::Pointer _Reader)
+{
+	Reader = _Reader;
+}
+
+void Callback2D::SetDiagram(Canvas2D* Diagram)
+{
+	diagram = Diagram;
+}
+
 void Callback2D::SetStyle(InteractorStyle2D* _style)
 {
 	style = _style;
 }
 
 
-void Callback2D::SetSpeed(MySpeedType::Pointer _Function)
+void Callback2D::SetSpeed(MySpeedFunction2DType::Pointer _Function)
 {
 	My_Function = _Function;
 }
 
-void Callback2D::SetReader(InternalImageType::Pointer _Reader)
-{
-	Reader = _Reader;
-}
 
 void Callback2D::Overlay()
 {
 
 	//-------------------------MRI----------------------------------
 
-	typedef itk::RescaleIntensityImageFilter< InternalImageType, InternalImageType > RescaleFilterType;
+	typedef itk::RescaleIntensityImageFilter< InternalImageType2D, InternalImageType2D > RescaleFilterType;
 	RescaleFilterType::Pointer rescaleFilter = RescaleFilterType::New();
 	rescaleFilter->SetInput(Reader);
 	rescaleFilter->SetOutputMinimum(0);
 	rescaleFilter->SetOutputMaximum(255);
 
-	typedef itk::ImageToVTKImageFilter<InternalImageType>   ConnectorType;
+	typedef itk::ImageToVTKImageFilter<InternalImageType2D>   ConnectorType;
 	ConnectorType::Pointer connector = ConnectorType::New();
 	connector->SetInput(rescaleFilter->GetOutput());
 	connector->Update();
 
 	//------------------------------------------------------------
 
-	OutputImageType_2_InternalImageType::Pointer seg_caster = OutputImageType_2_InternalImageType::New();
+	OutputImageType2D_2_InternalImageType2D::Pointer seg_caster = OutputImageType2D_2_InternalImageType2D::New();
 	seg_caster->SetInput(MySeg->Get_thresholder());
 	seg_caster->Update();
 
-	typedef itk::ImageToVTKImageFilter<InternalImageType>   ConnectorType;
+	typedef itk::ImageToVTKImageFilter<InternalImageType2D>   ConnectorType;
 	ConnectorType::Pointer thconnector = ConnectorType::New();
 	thconnector->SetInput(seg_caster->GetOutput());
 	thconnector->Update();
@@ -75,10 +81,7 @@ void Callback2D::Overlay()
 	}
 }
 
-void Callback2D::SetDiagram(Canvas2D* Diagram)
-{
-	diagram = Diagram;
-}
+
 
 
 inline void Callback2D::SetImageActor(vtkSmartPointer<vtkImageActor> image_actor)
@@ -139,6 +142,7 @@ inline void Callback2D::Execute(vtkObject* caller, unsigned long event, void*)
 				cout << "\t\t\tPlease Wait ..." << "\n\n\n";
 
 				//MySeg->Level_Set(1.55, 0.05);
+				MySeg->Get_thresholder()->Update();
 				MySeg->WriteImage(outputFilename);
 				this->Overlay();
 

@@ -1,6 +1,6 @@
 #pragma once
+#include "targetver.h"
 
-#pragma once
 #include <stdio.h>
 #include <tchar.h>
 

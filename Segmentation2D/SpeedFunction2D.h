@@ -19,6 +19,7 @@
 #include "itkGradientMagnitudeRecursiveGaussianImageFilter.h"
 #include "ImageTypeDetails2D.h"
 
+
 template< typename TImageType, typename TFeatureImageType = TImageType >
 class SpeedFunction2D :
 	public itk::ThresholdSegmentationLevelSetFunction< TImageType, TFeatureImageType >
@@ -27,36 +28,38 @@ class SpeedFunction2D :
 public:
 
 	typedef TFeatureImageType  FeatureImageType;
-	typedef double    PixelRealType;
+
+	typedef double   PixelRealType;
 
 	typedef SpeedFunction2D Self;
 	typedef itk::ThresholdSegmentationLevelSetFunction< TImageType, TFeatureImageType > Superclass;
-	typedef itk::SmartPointer< Self >       Pointer;
+	typedef itk::SmartPointer< Self >  Pointer;
 	typedef itk::SmartPointer< const Self > ConstPointer;
+	//typename  Superclass::ImageType ImageType;
 	typename FeatureImageType::ConstPointer m_FeatureImage;
-	typename FeatureImageType::Pointer m_SpeedImage;
-	
+	typename ImageType2D::Pointer m_SpeedImage;
 	itkNewMacro(Self);
 	itkTypeMacro(SpeedFunction2D, itk::ThresholdSegmentationLevelSetFunction);
+	
+	SpeedFunction2D() {}
+	~SpeedFunction2D() {}
 
-	 void CalculateSpeedImage() override;
-	virtual const FeatureImageType* GetFeatureImage() const
+	void CalculateSpeedImage() override;
+
+	const FeatureImageType* GetMyFeatureImage() const
 	{
 		return m_FeatureImage.GetPointer();
 	}
-	virtual TImageType* GetSpeedImage()
+	InternalImageType2D* GetMySpeedImage()
 	{
 		return m_SpeedImage.GetPointer();
 	}
 
 
-
 protected:
-
-	SpeedFunction2D() {}
-	~SpeedFunction2D() {}
+	
 	SpeedFunction2D(const Self&) ITK_DELETE_FUNCTION;
-	itkStaticConstMacro(ImageDimension, unsigned int, ImageType::ImageDimension);
+	itkStaticConstMacro(ImageDimension, unsigned int, ImageType2D::ImageDimension);
 
 	typename Superclass::ScalarValueType  max_scale;
 	typename Superclass::PixelType th, lap;
@@ -65,7 +68,6 @@ protected:
 	typename Superclass::ScalarValueType lower_threshold;
 	typename Superclass::ScalarValueType m_UpperThreshold;
 	typename Superclass::ScalarValueType m_LowerThreshold;
-
 
 };
 
@@ -112,11 +114,11 @@ inline void SpeedFunction2D<TImageType, TFeatureImageType>::CalculateSpeedImage(
 
 	//----------------------------------------------------------------------------------
 
-	//typedef itk::RescaleIntensityImageFilter< InternalImageType, OutputImageType >
+	//typedef itk::RescaleIntensityImageFilter< InternalImageType2D, OutputImageType2D >
 	//	CastFilterType;
-	//typedef   itk::CurvatureAnisotropicDiffusionImageFilter< InternalImageType, InternalImageType >
+	//typedef   itk::CurvatureAnisotropicDiffusionImageFilter< InternalImageType2D, InternalImageType2D >
 	//	SmoothingFilterType;
-	//typedef   itk::GradientMagnitudeRecursiveGaussianImageFilter< InternalImageType, InternalImageType > GradientFilterType;
+	//typedef   itk::GradientMagnitudeRecursiveGaussianImageFilter< InternalImageType2D, InternalImageType2D > GradientFilterType;
 
 	//SmoothingFilterType::Pointer smoothing = SmoothingFilterType::New();
 	//GradientFilterType::Pointer  gradientMagnitude = GradientFilterType::New();
@@ -128,8 +130,8 @@ inline void SpeedFunction2D<TImageType, TFeatureImageType>::CalculateSpeedImage(
 	{
 		diffusion->SetInput(inverter->GetOutput());
 		diffusion->SetConductanceParameter(8);
-		diffusion->SetTimeStep(0.06);
-		diffusion->SetNumberOfIterations(3);
+		diffusion->SetTimeStep(0.03);
+		diffusion->SetNumberOfIterations(9);
 		diffusion->Update();
 
 		laplacian->SetInput(diffusion->GetOutput());
@@ -213,7 +215,7 @@ inline void SpeedFunction2D<TImageType, TFeatureImageType>::CalculateSpeedImage(
 	//const unsigned int binsPerDimension =
 	//	static_cast< unsigned int >(max_speed - min_speed +1);
 
-	//typedef itk::Statistics::ImageToHistogramFilter< FeatureImageType >
+	//typedef itk::Statistics::ImageToHistogramFilter< FeatureImageType2D >
 	//	ImageToHistogramFilterType;
 	//ImageToHistogramFilterType::HistogramType::MeasurementVectorType
 	//	lowerBound(binsPerDimension);

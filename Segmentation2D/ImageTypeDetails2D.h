@@ -3,11 +3,11 @@
 
 
 static const  unsigned int  Dimension = 2;
-typedef  float  InternalPixelType;
-typedef itk::Image< InternalPixelType, Dimension >  InternalImageType;
+typedef  float  InternalPixelType2D;
+typedef  itk::Image< InternalPixelType2D, Dimension >  InternalImageType2D ;
 
-typedef itk::Image < unsigned short, Dimension > ImageType;
+typedef itk::Image < unsigned short, Dimension > ImageType2D;
 
-typedef unsigned short OutputPixelType;
-typedef itk::Image< OutputPixelType, Dimension > OutputImageType;
+typedef unsigned short OutputPixelType2D;
+typedef itk::Image< OutputPixelType2D, Dimension > OutputImageType2D;
 

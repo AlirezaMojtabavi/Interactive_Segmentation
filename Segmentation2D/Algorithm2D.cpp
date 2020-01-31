@@ -9,12 +9,12 @@ void Algorithm2D::set_Canvas(Canvas2D* Diagram)
 	diagram = Diagram;
 }
 
-void Algorithm2D::set_reader(itk::SmartPointer<InternalImageType > _reader)
+void Algorithm2D::set_reader(InternalImageType2D::Pointer _reader)
 {
 	reader = _reader;
 }
 
-void Algorithm2D::Set_Function(itk::SmartPointer<MySpeedType> _Function)
+void Algorithm2D::Set_Function(itk::SmartPointer<MySpeedFunction2DType> _Function)
 {
 	my_function = _Function;
 }
@@ -24,7 +24,7 @@ void Algorithm2D::FastMarching(const double distance)
 {
 	int size = diagram->get_vector().size();
 
-	std::vector<InternalImageType::IndexType>  seedPosition(size);
+	std::vector<InternalImageType2D::IndexType>  seedPosition(size);
 	std::vector<NodeType> node(size);
 
 	const double initialDistance = distance;
@@ -83,7 +83,7 @@ void Algorithm2D::Level_Set(int lower, int upper, double edge, double weight)
 	thresholder->SetInput(thresholdSegmentation->GetOutput());
 	//thresholder->Update();
 
-	InternalImageType_2_OutputImageType::Pointer cast_outout = InternalImageType_2_OutputImageType::New();
+	InternalImageType2D_2_OutputImageType2D::Pointer cast_outout = InternalImageType2D_2_OutputImageType2D::New();
 	cast_outout->SetInput(fastMarching->GetOutput());
 	cast_outout->Update();
 
@@ -125,7 +125,7 @@ void Algorithm2D::Level_Set(double edge, double weight)
 	thresholder->SetInput(thresholdSegmentation->GetOutput());
 	//thresholder->Update();
 
-	InternalImageType_2_OutputImageType::Pointer cast_outout = InternalImageType_2_OutputImageType::New();
+	InternalImageType2D_2_OutputImageType2D::Pointer cast_outout = InternalImageType2D_2_OutputImageType2D::New();
 	cast_outout->SetInput(fastMarching->GetOutput());
 	cast_outout->Update();
 }
@@ -168,12 +168,12 @@ int Algorithm2D::WriteImage(std::string output1)
 }
 
 
-InternalImageType* Algorithm2D::Get_FastMarching()
+InternalImageType2D* Algorithm2D::Get_FastMarching()
 {
 	return fastMarching->GetOutput();
 }
 
-OutputImageType* Algorithm2D::Get_thresholder()
+OutputImageType2D* Algorithm2D::Get_thresholder()
 {
 	return thresholder->GetOutput();
 }

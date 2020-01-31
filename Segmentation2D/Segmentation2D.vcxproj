@@ -166,6 +166,7 @@
     <ClInclude Include="InteractorStyle2D.h" />
     <ClInclude Include="SpeedFunction2D.h" />
     <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

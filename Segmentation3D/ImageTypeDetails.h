@@ -10,5 +10,3 @@ typedef itk::Image < unsigned short, Dimension > ImageType;
 
 typedef unsigned short OutputPixelType;
 typedef itk::Image< OutputPixelType, Dimension > OutputImageType;
-
-

@@ -1,22 +1,17 @@
 #pragma once
 
 #include<vector>
-#include "vtkSmartPointer.h"
 #include "vtkObjectFactory.h"
-#include <itkImage.h>
 #include "itkFastMarchingImageFilter.h"
 #include "itkBinaryThresholdImageFilter.h"
 #include "itkImageFileReader.h"
 #include "itkImageFileWriter.h"
 #include "itkZeroCrossingImageFilter.h"
 #include <itkCastImageFilter.h>
-#include "itkSmartPointer.h"
 #include "itkThresholdSegmentationLevelSetImageFilter.h"
 #include <vtkImageBlend.h>
 #include "itkRGBPixel.h"
 #include "itkScalarToRGBColormapImageFilter.h"
-#include <algorithm> 
-
 #include "Canvas2D.h"
 #include "SpeedFunction2D.h"
 #include "ImageTypeDetails2D.h"
@@ -26,25 +21,21 @@
 //-----------------------------------------------------------------
 
 
-typedef  itk::ImageFileWriter<  OutputImageType  > WriterType;
-typedef SpeedFunction2D< InternalImageType, InternalImageType > MySpeedType;
+typedef  itk::ImageFileWriter<  OutputImageType2D  > WriterType;
+
 
 //-----------------------------------------------------------------
 //-------------------------Alorithm--------------------------------
 //-----------------------------------------------------------------
 
-typedef  itk::FastMarchingImageFilter< InternalImageType, InternalImageType > FastMarchingFilterType;
+typedef  itk::FastMarchingImageFilter< InternalImageType2D, InternalImageType2D > FastMarchingFilterType;
 typedef FastMarchingFilterType::NodeContainer   NodeContainer;
 typedef FastMarchingFilterType::NodeType    NodeType;
 
-typedef  itk::ThresholdSegmentationLevelSetImageFilter< InternalImageType,
-	InternalImageType > ThresholdSegmentationLevelSetImageFilterType;
-typedef itk::BinaryThresholdImageFilter<InternalImageType, OutputImageType>
-ThresholdingFilterType;
 
-typedef itk::CastImageFilter<ImageType, InternalImageType> ImageType_2_InternalImageType;
-typedef itk::CastImageFilter<InternalImageType, OutputImageType> InternalImageType_2_OutputImageType;
-typedef itk::CastImageFilter<OutputImageType, InternalImageType> OutputImageType_2_InternalImageType;
+typedef itk::CastImageFilter<ImageType2D, InternalImageType2D> ImageType2D_2_InternalImageType2D;
+typedef itk::CastImageFilter<InternalImageType2D, OutputImageType2D> InternalImageType2D_2_OutputImageType2D;
+typedef itk::CastImageFilter<OutputImageType2D, InternalImageType2D> OutputImageType2D_2_InternalImageType2D;
 
 
 class Algorithm2D
@@ -52,31 +43,38 @@ class Algorithm2D
 public:
 
 	Algorithm2D();
+	void set_reader(InternalImageType2D::Pointer);
 	void set_Canvas(Canvas2D*);
-	void set_reader(itk::SmartPointer<InternalImageType >);
 
-	void Set_Function(itk::SmartPointer<MySpeedType>);
+	typedef SpeedFunction2D< InternalImageType2D, InternalImageType2D > MySpeedFunction2DType;
+	void Set_Function(itk::SmartPointer<MySpeedFunction2DType>);
 	void FastMarching(const double);
 	void Level_Set(int lower, int upper, double edge, double weight);
 	void Level_Set(double edge, double weight);
 
 	int WriteImage(std::string output1);
 
-	InternalImageType* Get_FastMarching();
-	OutputImageType* Get_thresholder();
+	InternalImageType2D* Get_FastMarching();
+	OutputImageType2D* Get_thresholder();
 
 
 private:
 
-	InternalImageType::Pointer reader = InternalImageType::New();
+	InternalImageType2D::Pointer reader;
 	WriterType::Pointer writer1 = WriterType::New();
 
 	Canvas2D* diagram;
-	MySpeedType::Pointer my_function = MySpeedType::New();
-
-	ThresholdingFilterType::Pointer thresholder = ThresholdingFilterType::New();
+	MySpeedFunction2DType::Pointer my_function = MySpeedFunction2DType::New();
+	
 	NodeContainer::Pointer seeds = NodeContainer::New();
 	FastMarchingFilterType::Pointer  fastMarching = FastMarchingFilterType::New();
+
+	typedef  itk::ThresholdSegmentationLevelSetImageFilter< InternalImageType2D,
+		InternalImageType2D > ThresholdSegmentationLevelSetImageFilterType;
 	ThresholdSegmentationLevelSetImageFilterType::Pointer thresholdSegmentation =
 		ThresholdSegmentationLevelSetImageFilterType::New();
+
+	typedef itk::BinaryThresholdImageFilter<InternalImageType2D, OutputImageType2D>
+		ThresholdingFilterType;
+	ThresholdingFilterType::Pointer thresholder = ThresholdingFilterType::New();
 };

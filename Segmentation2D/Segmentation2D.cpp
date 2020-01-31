@@ -41,13 +41,13 @@ int main(int argc, char* argv[])
 
 	std::string outputFilename = "E:\\Interactive_Segmentation\\output2D\\my_final.dcm";  // my Region output
 
-	typedef itk::VTKImageToImageFilter<ImageType> VTKImageToImageType;
-	VTKImageToImageType::Pointer vtkImageToImageFilter = VTKImageToImageType::New();
+	typedef itk::VTKImageToImageFilter<ImageType2D> VTKImageToImageType2D;
+	VTKImageToImageType2D::Pointer vtkImageToImageFilter = VTKImageToImageType2D::New();
 	vtkImageToImageFilter->SetInput(reader->GetOutput());
 	vtkImageToImageFilter->Update();
 
-	typedef itk::CastImageFilter<ImageType, InternalImageType> ImageType_2_InternalImageType;
-	ImageType_2_InternalImageType::Pointer itk_image = ImageType_2_InternalImageType::New();
+	typedef itk::CastImageFilter<ImageType2D, InternalImageType2D> ImageType2D_2_InternalImageType2D;
+	ImageType2D_2_InternalImageType2D::Pointer itk_image = ImageType2D_2_InternalImageType2D::New();
 	itk_image->SetInput(vtkImageToImageFilter->GetOutput());
 	itk_image->Update();
 
@@ -82,8 +82,8 @@ int main(int argc, char* argv[])
 	//----------------------------------------------------
 	//----------------------Segmentation------------------
 	//----------------------------------------------------
-	typedef SpeedFunction2D< InternalImageType, InternalImageType > MySpeedType;
-	MySpeedType::Pointer My_Function = MySpeedType::New();
+	typedef SpeedFunction2D< InternalImageType2D, InternalImageType2D > MySpeedFunction2DType;
+	MySpeedFunction2DType::Pointer My_Function = MySpeedFunction2DType::New();
 
 	VTK_CREATE(Callback2D, callback);
 	callback->SetInteractor(interactor);
@@ -91,22 +91,22 @@ int main(int argc, char* argv[])
 	callback->set_window(window);
 	callback->SetDiagram(diagram);
 	callback->SetStyle(imageStyle);
-	callback->SetReader(itk_image->GetOutput());
+	callback->SetInternalImage(itk_image->GetOutput());
 	callback->SetSpeed(My_Function);
 
-	interactor->AddObserver(vtkCommand::InteractionEvent, callback);
+	interactor->AddObserver(vtkCommand::LeftButtonPressEvent, callback);
 	interactor->Start();
 
 	//----------------------------------------------------
 	//----------------------My Refining-------------------
 	//----------------------------------------------------
 
-	typedef itk::CastImageFilter<OutputImageType, ImageType> OutputImageType_2_ImageType;
-	OutputImageType_2_ImageType::Pointer mycurve2image = OutputImageType_2_ImageType::New();
+	typedef itk::CastImageFilter<OutputImageType2D, ImageType2D> OutputImageType2D_2_ImageType2D;
+	OutputImageType2D_2_ImageType2D::Pointer mycurve2image = OutputImageType2D_2_ImageType2D::New();
 	mycurve2image->SetInput(callback->GetAlgorithm()->Get_thresholder());
 	mycurve2image->Update();
 
-	typedef itk::ImageToVTKImageFilter<ImageType>  ConnectorType;
+	typedef itk::ImageToVTKImageFilter<ImageType2D>  ConnectorType;
 	ConnectorType::Pointer connector_curve = ConnectorType::New();
 	connector_curve->SetInput(mycurve2image->GetOutput());
 	connector_curve->Update();
@@ -147,20 +147,20 @@ int main(int argc, char* argv[])
 	//----------------------My Morphology---------------------
 	//--------------------------------------------------------
 
-	VTKImageToImageType::Pointer vtkImageToImageFilter2 = VTKImageToImageType::New();
+	VTKImageToImageType2D::Pointer vtkImageToImageFilter2 = VTKImageToImageType2D::New();
 	vtkImageToImageFilter2->SetInput(diagram2->getImage());
 	vtkImageToImageFilter2->Update();
 
-	ImageType_2_InternalImageType::Pointer caster_image2Internal = ImageType_2_InternalImageType::New();
+	ImageType2D_2_InternalImageType2D::Pointer caster_image2Internal = ImageType2D_2_InternalImageType2D::New();
 	caster_image2Internal->SetInput(vtkImageToImageFilter2->GetOutput());
 	caster_image2Internal->Update();
 
-	typedef itk::BinaryFillholeImageFilter< InternalImageType > FilterType;
+	typedef itk::BinaryFillholeImageFilter< InternalImageType2D > FilterType;
 	FilterType::Pointer morph_filter = FilterType::New();
 	morph_filter->SetInput(caster_image2Internal->GetOutput());
 	morph_filter->SetForegroundValue(255);
 
-	InternalImageType_2_OutputImageType::Pointer morph_cast = InternalImageType_2_OutputImageType::New();
+	InternalImageType2D_2_OutputImageType2D::Pointer morph_cast = InternalImageType2D_2_OutputImageType2D::New();
 	morph_cast->SetInput(morph_filter->GetOutput());
 	morph_cast->Update();
 
