@@ -9,7 +9,6 @@ In this project a combined level set algorithm consists of both region and bound
 
 Red area is my result and white area is gold standard
 
-For now, Segmentation 3D is Ready to use
 
 ## Installing
 
@@ -31,7 +30,7 @@ For now, Segmentation 3D is Ready to use
 when project is running :
 - if (key == "c") // contrast -> by draging mouse you can adjust contrast and brightness
 - if (key == "b") // brush -> by clicking Left Button you can initialaze algorithm before running algorithm
-- if (key == "r") // manual refine -> not working yet
-- if (key == "p") // manual erase -> not working yet
+- if (key == "r") // manual refine -> for 2D Segmentation
+- if (key == "p") // manual erase -> for 2D Segmentation
 - if (key == "g") // go - run -> by clicking Left Button you can initialaze and run algorithm
 - if (key == "o") // remove seed -> by clicking Left Button you can remove last seed and run algorithm
