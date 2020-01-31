@@ -1,17 +1,13 @@
-// Interactive_Segmentation.cpp : Defines the entry point for the console application.
-//
-
 
 #include "stdafx.h"
 #include "Canvas2D.h"
 #include "Callback2D.h"
 #include "Algorithm2D.h"
 #include "InteractorStyle2D.h"
-#include "SpeedFunction2D.h"
-#include "ImageTypeDetails2D.h"
+#include "MySpeedFunction2D.h"
 
 
-int main(int argc, char* argv[])
+int main(int argc, char *argv[])
 {
 
 	//-----------------FOR JPEG IMAGES-------------------
@@ -39,17 +35,20 @@ int main(int argc, char* argv[])
 	reader->SetDirectoryName("E:\\Interactive_Segmentation\\input2D");
 	reader->Update();
 
-	std::string outputFilename = "E:\\Interactive_Segmentation\\output2D\\my_final.dcm";  // My Output
+	//std::string outputFilename1 = "C:\\Users\\a.mojtabavi\\Desktop\\final_write\\my_curve.dcm"; // level set output
+	//std::string outputFilename3 = "C:\\Users\\a.mojtabavi\\Desktop\\final_write\\threshold_curve.dcm"; // prievous curve
+	std::string outputFilename5 = "E:\\Interactive_Segmentation\\output2D\\final.dcm";  // my Region output
+	//std::string outputFilename6 = "C:\\Users\\Alireza\\Desktop\\Result_Write\\traditional_final.dcm"; // conventional Region output
 
-	typedef itk::VTKImageToImageFilter<ImageType2D> VTKImageToImageType2D;
-	VTKImageToImageType2D::Pointer vtkImageToImageFilter = VTKImageToImageType2D::New();
+	typedef itk::VTKImageToImageFilter<ImageType> VTKImageToImageType;
+	VTKImageToImageType::Pointer vtkImageToImageFilter = VTKImageToImageType::New();
 	vtkImageToImageFilter->SetInput(reader->GetOutput());
 	vtkImageToImageFilter->Update();
 
-	typedef itk::CastImageFilter<ImageType2D, InternalImageType2D> ImageType2D_2_InternalImageType2D;
-	ImageType2D_2_InternalImageType2D::Pointer itk_image = ImageType2D_2_InternalImageType2D::New();
-	itk_image->SetInput(vtkImageToImageFilter->GetOutput());
-	itk_image->Update();
+	typedef itk::CastImageFilter<ImageType, InternalImageType> CastFilter;
+	CastFilter::Pointer caster = CastFilter::New();
+	caster->SetInput(vtkImageToImageFilter->GetOutput());
+	caster->Update();
 
 	//-------------------------------------------------------
 	//---------------------Visualization---------------------
@@ -82,8 +81,8 @@ int main(int argc, char* argv[])
 	//----------------------------------------------------
 	//----------------------Segmentation------------------
 	//----------------------------------------------------
-	typedef SpeedFunction2D< InternalImageType2D, InternalImageType2D > MySpeedFunction2DType;
-	MySpeedFunction2DType::Pointer My_Function = MySpeedFunction2DType::New();
+
+	MySpeedType::Pointer My_Function = MySpeedType::New();
 
 	VTK_CREATE(Callback2D, callback);
 	callback->SetInteractor(interactor);
@@ -91,7 +90,8 @@ int main(int argc, char* argv[])
 	callback->set_window(window);
 	callback->SetDiagram(diagram);
 	callback->SetStyle(imageStyle);
-	callback->SetInternalImage(itk_image->GetOutput());
+	callback->set_image(vtkImageToImageFilter->GetOutput());	//overlay
+	callback->SetReader(caster);
 	callback->SetSpeed(My_Function);
 
 	interactor->AddObserver(vtkCommand::LeftButtonPressEvent, callback);
@@ -101,12 +101,12 @@ int main(int argc, char* argv[])
 	//----------------------My Refining-------------------
 	//----------------------------------------------------
 
-	typedef itk::CastImageFilter<OutputImageType2D, ImageType2D> OutputImageType2D_2_ImageType2D;
-	OutputImageType2D_2_ImageType2D::Pointer mycurve2image = OutputImageType2D_2_ImageType2D::New();
+	typedef itk::CastImageFilter<OutputImageType, ImageType> CastFilter3;
+	CastFilter3::Pointer mycurve2image = CastFilter3::New();
 	mycurve2image->SetInput(callback->GetAlgorithm()->Get_thresholder());
 	mycurve2image->Update();
 
-	typedef itk::ImageToVTKImageFilter<ImageType2D>  ConnectorType;
+	typedef itk::ImageToVTKImageFilter<ImageType>  ConnectorType;
 	ConnectorType::Pointer connector_curve = ConnectorType::New();
 	connector_curve->SetInput(mycurve2image->GetOutput());
 	connector_curve->Update();
@@ -144,28 +144,73 @@ int main(int argc, char* argv[])
 	interactor2->Start();
 
 	//--------------------------------------------------------
+	//----------------------Traditional Refining-------------
+	//--------------------------------------------------------
+
+	/*CastFilter3::Pointer caster4 = CastFilter3::New();
+	caster4->SetInput(callback->GetAlgorithm2()->Get_thresholder());
+	caster4->Update();
+
+	ConnectorType::Pointer connector2 = ConnectorType::New();
+	connector2->SetInput(caster4->GetOutput());
+	connector2->Update();
+
+	VTK_CREATE(vtkImageActor, DataActor3);
+	Canvas2D* diagram3 = new Canvas2D();
+	diagram3->SetImageData(connector2->GetOutput());
+	DataActor3->GetMapper()->SetInputData(diagram3->getImage());
+
+	VTK_CREATE(vtkRenderer, renderer3);
+	renderer3->AddActor(DataActor3);
+	renderer3->GetActiveCamera()->ParallelProjectionOn();
+	renderer3->ResetCamera();
+
+	VTK_CREATE(vtkRenderWindow, window3);
+	window3->AddRenderer(renderer3);
+
+	VTK_CREATE(vtkRenderWindowInteractor, interactor3);
+	InteractorStyle2D* imageStyle3 = new InteractorStyle2D();
+	interactor3->SetInteractorStyle(imageStyle3);
+	diagram3->set_style(imageStyle3);
+	window3->SetInteractor(interactor3);
+	imageStyle3->SetCurrentRenderer(renderer3);
+	window3->Render();
+
+	VTK_CREATE(Callback2D, callback3);
+	callback3->SetInteractor(interactor3);
+	callback3->SetDiagram(diagram3);
+	callback3->SetStyle(imageStyle3);
+
+	interactor3->AddObserver(vtkCommand::InteractionEvent, callback3);
+	interactor3->Start();
+
+	connector2->Update();*/
+
+	//--------------------------------------------------------
 	//----------------------My Morphology---------------------
 	//--------------------------------------------------------
 
-	VTKImageToImageType2D::Pointer vtkImageToImageFilter2 = VTKImageToImageType2D::New();
+	VTKImageToImageType::Pointer vtkImageToImageFilter2 = VTKImageToImageType::New();
 	vtkImageToImageFilter2->SetInput(diagram2->getImage());
 	vtkImageToImageFilter2->Update();
 
-	ImageType2D_2_InternalImageType2D::Pointer caster_image2Internal = ImageType2D_2_InternalImageType2D::New();
-	caster_image2Internal->SetInput(vtkImageToImageFilter2->GetOutput());
-	caster_image2Internal->Update();
+	typedef itk::CastImageFilter<ImageType, InternalImageType> CastFilter;
+	CastFilter::Pointer caster5 = CastFilter::New();
+	caster5->SetInput(vtkImageToImageFilter2->GetOutput());
+	caster5->Update();
 
-	typedef itk::BinaryFillholeImageFilter< InternalImageType2D > FilterType;
+	typedef itk::BinaryFillholeImageFilter< InternalImageType > FilterType;
 	FilterType::Pointer morph_filter = FilterType::New();
-	morph_filter->SetInput(caster_image2Internal->GetOutput());
+	morph_filter->SetInput(caster5->GetOutput());
 	morph_filter->SetForegroundValue(255);
 
-	InternalImageType2D_2_OutputImageType2D::Pointer morph_cast = InternalImageType2D_2_OutputImageType2D::New();
+	typedef itk::CastImageFilter<InternalImageType, OutputImageType> CastFilter2;
+	CastFilter2::Pointer morph_cast = CastFilter2::New();
 	morph_cast->SetInput(morph_filter->GetOutput());
 	morph_cast->Update();
 
 	WriterType::Pointer mywriter = WriterType::New();
-	mywriter->SetFileName(outputFilename.c_str());
+	mywriter->SetFileName(outputFilename5.c_str());
 	mywriter->SetInput(morph_cast->GetOutput());
 	try
 	{
@@ -177,9 +222,39 @@ int main(int argc, char* argv[])
 		return EXIT_FAILURE;
 	}
 
+	//--------------------------------------------------------
+	//----------------------Conventional Morphology-----------
+	//--------------------------------------------------------
+
+	/*VTKImageToImageType::Pointer vtkImageToImageFilter3 = VTKImageToImageType::New();
+	vtkImageToImageFilter3->SetInput(connector2->GetOutput());
+	vtkImageToImageFilter3->Update();
+
+	CastFilter::Pointer caster7 = CastFilter::New();
+	caster7->SetInput(vtkImageToImageFilter3->GetOutput());
+	caster7->Update();
+
+	FilterType::Pointer filter2 = FilterType::New();
+	filter2->SetInput(caster7->GetOutput());
+	filter2->SetForegroundValue(255);
+
+	CastFilter2::Pointer caster9 = CastFilter2::New();
+	caster9->SetInput(filter2->GetOutput());
+	caster9->Update();
+
+	WriterType::Pointer writer4 = WriterType::New();
+	writer4->SetFileName(outputFilename6.c_str());
+	writer4->SetInput(caster9->GetOutput());
+	try
+	{
+		writer4->Update();
+	}
+	catch (itk::ExceptionObject & error)
+	{
+		std::cerr << "Error: " << error << std::endl;
+		return EXIT_FAILURE;
+	}*/
+
 	return EXIT_SUCCESS;
 }
-
-
-
 
