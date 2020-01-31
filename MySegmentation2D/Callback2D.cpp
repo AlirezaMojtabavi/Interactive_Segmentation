@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Callback2D.h"
-#include "Canvas2D.h"
+#include "vtkImageBlend.h"
 #include "vtkRenderWindow.h"
 #include "vtkRendererCollection.h"
 
@@ -15,12 +15,12 @@ void Callback2D::SetStyle(InteractorStyle2D*_style)
 }
 
 
-void Callback2D::SetSpeed(MySpeedType::Pointer _Function)
+void Callback2D::SetSpeed(MySpeedFunction2DType::Pointer _Function)
 {
 	My_Function = _Function;
 }
 
-void Callback2D::SetReader(CastFilter::Pointer _Reader)
+void Callback2D::SetReader(ImageType_2_InternalImageType::Pointer _Reader)
 {
 	Reader = _Reader;
 }
@@ -58,17 +58,6 @@ void Callback2D::Overlay()
 	thconnector->SetInput(seg_caster->GetOutput());
 	thconnector->Update();
 
-	//------------------------traditional-----------------------------
-
-	//CastFilter3::Pointer thcaster2 = CastFilter3::New();
-	//thcaster2->SetInput(MySeg2->Get_thresholder());
-	//thcaster2->Update();
-
-	//typedef itk::ImageToVTKImageFilter<ImageType>   ConnectorType;
-	//ConnectorType::Pointer thconnector2 = ConnectorType::New();
-	//thconnector2->SetInput(thcaster2->GetOutput());
-	//thconnector2->Update();
-
 	//---------------------------viewer-----------------------------------
 
 	VTK_CREATE(vtkImageBlend, blend);
@@ -77,32 +66,17 @@ void Callback2D::Overlay()
 	blend->SetOpacity(0.5, 0.5);
 	blend->SetOpacity(1, .5);
 
-	//--------------------------teraditional---------------------------------
-
-	//VTK_CREATE(vtkImageBlend, blend2);
-	//blend2->AddInputData(thconnector2->GetOutput());
-	//blend2->AddInputData(connector->GetOutput());
-	//blend2->SetOpacity(0.5, 0.5);
-	//blend2->SetOpacity(1, .5);
-
-	//----------------------------------------------
-
 	VTK_CREATE(vtkImageActor, DataActor);
 	DataActor->GetMapper()->SetInputConnection(blend->GetOutputPort());
 	renderer->AddActor(DataActor);
 	window->AddRenderer(renderer);
 	window->Render();
 
-	//imageViewer2->SetInputConnection(blend2->GetOutputPort());
-	//imageViewer2->Render();
-
 	static bool started = false;
 	if (!started)
 	{
 		started = true;
 		window->SetInteractor(Interactor);
-		//imageViewer2->SetupInteractor(renderWindowInteractor2);
-		//renderWindowInteractor2->Start();
 	}
 }
 
@@ -123,11 +97,6 @@ void Callback2D::SetInteractor(vtkSmartPointer<vtkRenderWindowInteractor> intera
 	this->Interactor = interactor;
 }
 
-inline vtkRenderWindowInteractor * Callback2D::GetInteractor()
-{
-	return this->Interactor;
-}
-
 void Callback2D::set_renderer(vtkSmartPointer<vtkRenderer> _renderer)
 {
 	renderer = _renderer;
@@ -141,21 +110,16 @@ void Callback2D::set_window(vtkSmartPointer<vtkRenderWindow> _window)
 inline void Callback2D::Execute(vtkObject *caller, unsigned long event, void *)
 {
 
-	std::string outputFilename1 = "C:\\Users\\Alireza\\Desktop\\Result_Write\\my_curve.dcm"; // level set output
-	//std::string outputFilename2 = "C:\\Users\\Alireza\\Desktop\\Result_Write\\Traditional_curve.dcm"; // level set output
+	std::string outputFilename1 = "E:\\Interactive_Segmentation\\output3D\\my_curve.dcm"; // level set output
 
 	 //std::string outputFilename1 = "C:\\Users\\Alireza\\Desktop\\Result_Write\\my_curve.jpg"; // level set output
-	 //std::string outputFilename2 = "C:\\Users\\Alireza\\Desktop\\Result_Write\\Traditional_curve.jpg"; // level set output
-
-	vtkRenderWindowInteractor *interactor = this->GetInteractor();
 
 	if (style->GetFlag() > 0)
 	{
-		auto interctor = (vtkRenderWindowInteractor*)(caller);
-		double x = interctor->GetEventPosition()[0];
-		double y = interctor->GetEventPosition()[1];
+		double x = Interactor->GetEventPosition()[0];
+		double y = Interactor->GetEventPosition()[1];
 
-		Interactor->GetRenderWindow()->GetRenderers()->GetFirstRenderer()->SetDisplayPoint(interctor->GetEventPosition()[0], interctor->GetEventPosition()[1], 0);
+		Interactor->GetRenderWindow()->GetRenderers()->GetFirstRenderer()->SetDisplayPoint(Interactor->GetEventPosition()[0], Interactor->GetEventPosition()[1], 0);
 		Interactor->GetRenderWindow()->GetRenderers()->GetFirstRenderer()->DisplayToWorld();
 		double* position = Interactor->GetRenderWindow()->GetRenderers()->GetFirstRenderer()->GetWorldPoint();
 		diagram->SetLastposition(position[0], position[1]);
@@ -171,12 +135,6 @@ inline void Callback2D::Execute(vtkObject *caller, unsigned long event, void *)
 			MySeg->FastMarching(4);
 			MySeg->Level_Set(355, 650, 1.5, 0.05);
 
-			//MySeg2->set_reader(Reader);
-			//MySeg2->Set_Function(My_Function2);
-			//MySeg2->set_Canvas(diagram);
-			//MySeg2->FastMarching(4);
-			//MySeg2->Level_Set(445, 700, 0, 0.05);
-
 			if (style->GetFlag() == 4 || style->GetFlag() == 7 || style->GetFlag() == 8)
 			{
 
@@ -184,10 +142,6 @@ inline void Callback2D::Execute(vtkObject *caller, unsigned long event, void *)
 
 				//MySeg->Level_Set(1.55, 0.05);
 				MySeg->WriteImage(outputFilename1);
-
-				//MySeg2->Level_Set( 0, 0.05);
-				//MySeg2->WriteImage(outputFilename2);
-
 				this->Overlay();
 
 			}

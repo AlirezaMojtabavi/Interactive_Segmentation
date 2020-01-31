@@ -23,7 +23,6 @@
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>MySegmentation2D</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>My_Segmentation2D</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -154,6 +153,7 @@
     <ClInclude Include="Algorithm2D.h" />
     <ClInclude Include="Callback2D.h" />
     <ClInclude Include="Canvas2D.h" />
+    <ClInclude Include="ImageTypeDetails2D.h" />
     <ClInclude Include="InteractorStyle2D.h" />
     <ClInclude Include="MySpeedFunction2D.h" />
     <ClInclude Include="stdafx.h" />

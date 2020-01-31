@@ -9,12 +9,12 @@ void Algorithm2D::set_Canvas(Canvas2D* Diagram)
 	diagram = Diagram;
 }
 
-void Algorithm2D::set_reader(itk::SmartPointer<itk::CastImageFilter<ImageType, InternalImageType>> _reader)
+void Algorithm2D::set_reader(itk::SmartPointer<ImageType_2_InternalImageType> _reader)
 {
 	reader = _reader;
 }
 
-void Algorithm2D::Set_Function(itk::SmartPointer<MySpeedType> _Function)
+void Algorithm2D::Set_Function(itk::SmartPointer<MySpeedFunction2DType> _Function)
 {
 	my_function = _Function;
 }
@@ -83,12 +83,6 @@ void Algorithm2D::Level_Set(int lower, int upper, double edge, double weight)
 	thresholdSegmentation->SetFeatureImage(reader->GetOutput());
 	thresholder->SetInput(thresholdSegmentation->GetOutput());
 	//thresholder->Update();
-
-	CastFilter2::Pointer caster2 = CastFilter2::New();
-	caster2->SetInput(fastMarching->GetOutput());
-	caster2->Update();
-	//writer2->SetInput(caster2->GetOutput());
-
 }
 
 void Algorithm2D::Level_Set(double edge, double weight)
@@ -126,9 +120,6 @@ void Algorithm2D::Level_Set(double edge, double weight)
 	thresholder->SetInput(thresholdSegmentation->GetOutput());
 	//thresholder->Update();
 
-	CastFilter2::Pointer caster2 = CastFilter2::New();
-	caster2->SetInput(fastMarching->GetOutput());
-	caster2->Update();
 }
 
 
@@ -136,11 +127,10 @@ int Algorithm2D::WriteImage(std::string output1)
 {
 	writer1->SetInput(thresholder->GetOutput());
 	writer1->SetFileName(output1.c_str());
-	//writer2->SetFileName(output2.c_str());
+
 	try
 	{
 		writer1->Update();
-		//writer2->Update();
 	}
 	catch (itk::ExceptionObject & excep)
 	{
@@ -156,39 +146,7 @@ int Algorithm2D::WriteImage(std::string output1)
 	//std::cout << "No. elpased iterations: " << thresholdSegmentation->GetElapsedIterations() << std::endl;
 	//std::cout << "RMS change: " << thresholdSegmentation->GetRMSChange() << std::endl;
 
-	//InternalWriterType::Pointer mapWriter = InternalWriterType::New();
-	//mapWriter->SetInput(fastMarching->GetOutput());
-	//mapWriter->SetFileName("fastMarchingImage.mha");
-	//mapWriter->Update();
-
-	//InternalWriterType::Pointer speedWriter = InternalWriterType::New();
-	//speedWriter->SetInput(thresholdSegmentation->GetSpeedImage());
-	//speedWriter->SetFileName("speedTermImage.mha");
-	//speedWriter->Update();
-
 	return EXIT_SUCCESS;
-}
-
-void Algorithm2D::imshow()
-{
-	ImageType::Pointer mri = ImageType::New();
-	ImageType::Pointer distanceFunction = ImageType::New();
-	ImageType::Pointer result = ImageType::New();
-	ImageType::Pointer result2 = ImageType::New();
-
-	CastFilter2::Pointer imcast = CastFilter2::New();
-	imcast->SetInput(reader->GetOutput());
-	imcast->Update();
-
-	CastFilter2::Pointer caster2 = CastFilter2::New();
-	caster2->SetInput(this->Get_FastMarching());
-	caster2->Update();
-
-	mri->Graft(imcast->GetOutput());
-	distanceFunction->Graft(caster2->GetOutput());
-	result->Graft(this->Get_thresholder());
-	//result2->Graft(segmentation2->Get_thresholder());
-
 }
 
 InternalImageType * Algorithm2D::Get_FastMarching()

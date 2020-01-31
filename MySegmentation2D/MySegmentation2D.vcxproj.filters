@@ -39,6 +39,9 @@
     <ClInclude Include="Algorithm2D.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ImageTypeDetails2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

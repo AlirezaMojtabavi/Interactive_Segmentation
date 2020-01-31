@@ -5,9 +5,7 @@ VisualStudioVersion = 16.0.29709.97
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Segmentation3D", "Segmentation3D\Segmentation3D.vcxproj", "{F2942007-65B8-46D4-9BB2-4B3869C0FCF5}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Segmentation2D", "Segmentation2D\Segmentation2D.vcxproj", "{F2DE184D-59E9-46DD-98C9-3E11C13FB7BC}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MySegmentation2D", "MySegmentation2D\MySegmentation2D.vcxproj", "{A324F3B7-26FF-473D-B63E-53A3042A391F}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "My_Segmentation2D", "MySegmentation2D\MySegmentation2D.vcxproj", "{A324F3B7-26FF-473D-B63E-53A3042A391F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,14 +23,6 @@ Global
 		{F2942007-65B8-46D4-9BB2-4B3869C0FCF5}.Release|x64.Build.0 = Release|x64
 		{F2942007-65B8-46D4-9BB2-4B3869C0FCF5}.Release|x86.ActiveCfg = Release|Win32
 		{F2942007-65B8-46D4-9BB2-4B3869C0FCF5}.Release|x86.Build.0 = Release|Win32
-		{F2DE184D-59E9-46DD-98C9-3E11C13FB7BC}.Debug|x64.ActiveCfg = Debug|x64
-		{F2DE184D-59E9-46DD-98C9-3E11C13FB7BC}.Debug|x64.Build.0 = Debug|x64
-		{F2DE184D-59E9-46DD-98C9-3E11C13FB7BC}.Debug|x86.ActiveCfg = Debug|Win32
-		{F2DE184D-59E9-46DD-98C9-3E11C13FB7BC}.Debug|x86.Build.0 = Debug|Win32
-		{F2DE184D-59E9-46DD-98C9-3E11C13FB7BC}.Release|x64.ActiveCfg = Release|x64
-		{F2DE184D-59E9-46DD-98C9-3E11C13FB7BC}.Release|x64.Build.0 = Release|x64
-		{F2DE184D-59E9-46DD-98C9-3E11C13FB7BC}.Release|x86.ActiveCfg = Release|Win32
-		{F2DE184D-59E9-46DD-98C9-3E11C13FB7BC}.Release|x86.Build.0 = Release|Win32
 		{A324F3B7-26FF-473D-B63E-53A3042A391F}.Debug|x64.ActiveCfg = Debug|x64
 		{A324F3B7-26FF-473D-B63E-53A3042A391F}.Debug|x64.Build.0 = Debug|x64
 		{A324F3B7-26FF-473D-B63E-53A3042A391F}.Debug|x86.ActiveCfg = Debug|Win32
