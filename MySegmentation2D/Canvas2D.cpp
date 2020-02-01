@@ -8,7 +8,7 @@ Canvas2D::Canvas2D()
 void Canvas2D::SetImageData(vtkSmartPointer<vtkImageData> image)
 {
 	data->ShallowCopy(image);
-	double* pSpacing = data->GetSpacing();
+	pSpacing = data->GetSpacing();
 }
 
 std::vector<coordinate> Canvas2D::get_vector()
@@ -40,8 +40,6 @@ vtkImageData* Canvas2D::getImage()
 {
 	return data;
 }
-
-
 
 double* Canvas2D::get_min_max()
 {
@@ -80,11 +78,8 @@ double* Canvas2D::get_min_max()
 	return threshold;
 }
 
-
-
 void Canvas2D::Arc(double x, double y, int r, vtkImageData* inputData)
 {
-	double* pSpacing = inputData->GetSpacing();
 	for (int i = 0; i < r + 1; i++)
 	{
 		for (int theta = 0; theta < 361; theta++)
@@ -128,17 +123,12 @@ int Canvas2D::paint(int x, int y)
 	window->AddRenderer(renderer);
 	interactor->SetRenderWindow(window);
 
-
 	return EXIT_SUCCESS;
 }
 
 
-
-
 void Canvas2D::SetLastposition(double x, double y)
 {
-	double* pSpacing = data->GetSpacing();
-
 	Arc(x, y, 1, data);
 	coordinate MySeed;
 
@@ -146,7 +136,6 @@ void Canvas2D::SetLastposition(double x, double y)
 	//cout << "x: " << x << "\t\t\ty: " << y << endl;
 	MySeed._x = x / pSpacing[0];
 	MySeed._y = y / pSpacing[1];
-
 
 	if (style->GetFlag() == 7)
 	{
@@ -160,7 +149,6 @@ void Canvas2D::SetLastposition(double x, double y)
 		interactor->SetRenderWindow(window);
 		ActorList.pop_back();
 	}
-
 
 	else if (style->GetFlag() != 2 && style->GetFlag() != 3)
 	{

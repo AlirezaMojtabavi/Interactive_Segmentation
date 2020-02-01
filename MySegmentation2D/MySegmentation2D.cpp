@@ -28,13 +28,11 @@ int main(int argc, char *argv[])
 	//-----------------FOR DICOM IMAGES--------------------
 	//-----------------------------------------------------
 
-	
 	auto input_reader = vtkSmartPointer<vtkDICOMImageReader>::New();
 	input_reader->SetDirectoryName("E:\\Interactive_Segmentation\\input2D");
 	input_reader->Update();
 
-	//std::string outputFilename1 = "C:\\Users\\a.mojtabavi\\Desktop\\final_write\\my_curve.dcm"; // level set output
-	std::string outputFilename5 = "E:\\Interactive_Segmentation\\output2D\\final.dcm";  // my Region output
+	std::string outputFilename = "E:\\Interactive_Segmentation\\output2D\\final.dcm";  // my Region output
 
 	auto vtkImageToImageFilter = VTKImageToImageType::New();
 	vtkImageToImageFilter->SetInput(input_reader->GetOutput());
@@ -157,7 +155,7 @@ int main(int argc, char *argv[])
 	morph_cast->Update();
 
 	WriterType::Pointer mywriter = WriterType::New();
-	mywriter->SetFileName(outputFilename5.c_str());
+	mywriter->SetFileName(outputFilename.c_str());
 	mywriter->SetInput(morph_cast->GetOutput());
 	try
 	{
