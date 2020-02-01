@@ -3,6 +3,7 @@
 #include <itkCastImageFilter.h>
 
 //--------------------------Defenition Image Type --------------------------------------
+
 const  unsigned int  Dimension = 2;
 typedef itk::Image < unsigned short, Dimension > ImageType;
 
@@ -17,6 +18,7 @@ typedef itk::VTKImageToImageFilter<ImageType> VTKImageToImageType; //convert vtk
 typedef itk::ImageToVTKImageFilter<ImageType>  ConnectorType; //convert itk image to vtk image
 
 //--------------------------Defenition Algorithm Type --------------------------------------
+
 typedef  itk::FastMarchingImageFilter< InternalImageType, InternalImageType > FastMarchingFilterType;
 typedef FastMarchingFilterType::NodeContainer   NodeContainer;
 typedef FastMarchingFilterType::NodeType  NodeType;
@@ -30,6 +32,7 @@ ThresholdingFilterType;
 typedef itk::RescaleIntensityImageFilter< ImageType, ImageType > RescaleFilterType; // for overlay
 
 //--------------------------Defenition CastImage Type --------------------------------------
+
 typedef itk::CastImageFilter<ImageType, InternalImageType> ImageType_2_InternalImageType;
 typedef itk::CastImageFilter<InternalImageType, OutputImageType> InternalImageType_2_OutputImageType;
 typedef itk::CastImageFilter<OutputImageType, ImageType> OutputImageType_2_ImageType;

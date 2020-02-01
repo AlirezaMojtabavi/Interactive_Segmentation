@@ -8,7 +8,7 @@
 #include <itkVTKImageToImageFilter.h>
 #include <itkImageToVTKImageFilter.h>
 #include "MyCanvas3D.h"
-#include "ImageTypeDetails.h"
+#include "ImageDetailsType.h"
 
 
 class Reslicer

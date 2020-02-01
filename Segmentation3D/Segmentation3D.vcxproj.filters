@@ -42,7 +42,7 @@
     <ClInclude Include="Reslicer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ImageTypeDetails.h">
+    <ClInclude Include="ImageDetailsType.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

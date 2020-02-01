@@ -152,7 +152,7 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="ImageTypeDetails.h" />
+    <ClInclude Include="ImageDetailsType.h" />
     <ClInclude Include="MyAlgorithm3d.h" />
     <ClInclude Include="MyCallback3D.h" />
     <ClInclude Include="MyCanvas3D.h" />

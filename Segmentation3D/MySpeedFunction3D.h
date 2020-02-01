@@ -18,7 +18,7 @@
 #include <itkImageToHistogramFilter.h>
 #include "itkCurvatureAnisotropicDiffusionImageFilter.h"
 #include "itkGradientMagnitudeRecursiveGaussianImageFilter.h"
-#include "ImageTypeDetails.h"
+
 
 template< typename TImageType, typename TFeatureImageType = TImageType >
 class MySpeedFunction3D :

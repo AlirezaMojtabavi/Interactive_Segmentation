@@ -11,12 +11,11 @@
 #include "MySpeedFunction3D.h"
 #include "MyInteractionStyle3D.h"
 #include "MyCanvas3D.h"
-#include "ImageTypeDetails.h"
-
+#include "ImageDetailsType.h"
 
 typedef  itk::FastMarchingImageFilter< InternalImageType, InternalImageType > FastMarchingFilterType;
 typedef FastMarchingFilterType::NodeContainer   NodeContainer;
-typedef FastMarchingFilterType::NodeType    NodeType;
+typedef FastMarchingFilterType::NodeType  NodeType;
 
 class MyAlgorithm3d
 {
@@ -47,7 +46,8 @@ private:
 
 	MySpeedFunction3DType::Pointer SegmentationSpeedFunction = MySpeedFunction3DType::New();
 
-	typedef itk::BinaryThresholdImageFilter<InternalImageType, OutputImageType> ThresholdingFilterType;
+	typedef itk::BinaryThresholdImageFilter<InternalImageType, OutputImageType> // for output image
+		ThresholdingFilterType;
 	ThresholdingFilterType::Pointer thresholder = ThresholdingFilterType::New();
 
 	typedef  itk::ThresholdSegmentationLevelSetImageFilter< InternalImageType, InternalImageType >

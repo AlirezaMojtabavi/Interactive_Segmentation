@@ -11,7 +11,8 @@
 #include "vtkRenderWindow.h"
 #include <vtkProperty.h>
 #include "MyInteractionStyle3D.h"
-#include "ImageTypeDetails.h"
+#include "ImageDetailsType.h"
+
 
 
 struct coordinate3D

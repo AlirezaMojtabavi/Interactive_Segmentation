@@ -10,7 +10,7 @@
 #include <stdio.h>
 #include <tchar.h>
 
-#define vtkRenderingCore_AUTOINIT 2(vtkRenderingOpenGL, vtkInteractionStyle)
+#define vtkRenderingCore_AUTOINIT 2(vtkInteractionStyle, vtkRenderingOpenGL)
 
 #include <algorithm>
 #include <iostream>
@@ -33,7 +33,7 @@
 #include "itkBinaryFillholeImageFilter.h"
 #include <itkImageToVTKImageFilter.h>
 #include <vtkImageSliceMapper.h>
-#include "itkCastImageFilter.h"
+
 
 
 

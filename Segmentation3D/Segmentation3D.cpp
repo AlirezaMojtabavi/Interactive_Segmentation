@@ -6,7 +6,7 @@
 #include "MyCanvas3D.h"
 #include "MyInteractionStyle3D.h"
 #include "Reslicer.h"
-#include "ImageTypeDetails.h"
+#include "ImageDetailsType.h"
 
 
 int main(int argc, char *argv[])
