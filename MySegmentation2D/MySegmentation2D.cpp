@@ -21,7 +21,6 @@ int main(int argc, char *argv[])
 	luminanceFilter->SetInputConnection(reader->GetOutputPort());
 	luminanceFilter->Update();
 
-	std::string outputFilename1 = "C:\\Users\\a.mojtabavi\\Desktop\\final_write\\my_curve.jpg"; // level set output
 	std::string outputFilename5 = "C:\\Users\\a.mojtabavi\\Desktop\\final_write\\my_final.jpg";  // morphology output
 	std::string outputFilename7 = "C:\\Users\\a.mojtabavi\\Desktop\\final_write\\last_curve.jpg"; // manipulate curve*/
 

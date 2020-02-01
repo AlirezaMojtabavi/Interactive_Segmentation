@@ -15,8 +15,6 @@
 #include "MySpeedFunction2D.h"
 #include "ImageTypeDetails2D.h"
 
-
-
 typedef  itk::FastMarchingImageFilter< InternalImageType, InternalImageType > FastMarchingFilterType;
 typedef FastMarchingFilterType::NodeContainer   NodeContainer;
 typedef FastMarchingFilterType::NodeType    NodeType;
@@ -37,8 +35,6 @@ public:
 	void Level_Set(int lower, int upper, double edge, double weight);
 	void Level_Set(double edge, double weight);
 
-	int WriteImage(std::string output1);
-
 	InternalImageType* Get_FastMarching();
 	OutputImageType*  Get_thresholder();
 
@@ -46,7 +42,6 @@ public:
 private:
 
 	ImageType_2_InternalImageType::Pointer reader = ImageType_2_InternalImageType::New();
-	WriterType::Pointer writer1 = WriterType::New();
 
 	Canvas2D* diagram;
 	MySpeedFunction2DType::Pointer my_function = MySpeedFunction2DType::New();

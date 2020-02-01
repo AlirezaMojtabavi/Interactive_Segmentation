@@ -9,9 +9,14 @@ Callback2D * Callback2D::New()
 	return new Callback2D;
 }
 
-void Callback2D::SetReader(ImageType_2_InternalImageType::Pointer _Reader)
+void Callback2D::SetReader(ImageType_2_InternalImageType::Pointer input_algorithm)
 {
-	Reader = _Reader;
+	IS2D_InternalImage = input_algorithm;
+}
+
+void Callback2D::SetDiagram(Canvas2D* Diagram)
+{
+	diagram = Diagram;
 }
 
 void Callback2D::SetStyle(InteractorStyle2D*_style)
@@ -19,31 +24,10 @@ void Callback2D::SetStyle(InteractorStyle2D*_style)
 	style = _style;
 }
 
-
 void Callback2D::SetSpeed(MySpeedFunction2DType::Pointer _Function)
 {
 	My_Function = _Function;
 }
-
-
-
-void Callback2D::set_image(ImageType* _image)
-{
-	image = _image;		// overlay
-}
-
-
-void Callback2D::SetDiagram(Canvas2D* Diagram)
-{
-	diagram = Diagram;
-}
-
-
-inline void Callback2D::SetImageActor(vtkSmartPointer<vtkImageActor> image_actor)
-{
-	this->actor = image_actor;
-}
-
 
 void Callback2D::SetInteractor(vtkSmartPointer<vtkRenderWindowInteractor> interactor)
 {
@@ -62,10 +46,8 @@ void Callback2D::set_window(vtkSmartPointer<vtkRenderWindow> _window)
 
 inline void Callback2D::Execute(vtkObject *caller, unsigned long event, void *)
 {
-
-	std::string outputFilename1 = "E:\\Interactive_Segmentation\\output3D\\my_curve.dcm"; // level set output
-
-	 //std::string outputFilename1 = "C:\\Users\\Alireza\\Desktop\\Result_Write\\my_curve.jpg"; // level set output
+	std::string outputFilename1 = "E:\\Interactive_Segmentation\\output2D\\my_curve.dcm"; // level set output
+	//std::string outputFilename1 = "C:\\Users\\Alireza\\Desktop\\Result_Write\\my_curve.jpg"; // level set output
 
 	if (style->GetFlag() > 0)
 	{
@@ -82,7 +64,7 @@ inline void Callback2D::Execute(vtkObject *caller, unsigned long event, void *)
 
 		if (style->GetFlag() == 4 || style->GetFlag() == 1 || style->GetFlag() == 7 || style->GetFlag() == 8)
 		{
-			MySeg->set_reader(Reader);
+			MySeg->set_reader(IS2D_InternalImage);
 			MySeg->Set_Function(My_Function);
 			MySeg->set_Canvas(diagram);
 			MySeg->FastMarching(4);
@@ -90,16 +72,20 @@ inline void Callback2D::Execute(vtkObject *caller, unsigned long event, void *)
 
 			if (style->GetFlag() == 4 || style->GetFlag() == 7 || style->GetFlag() == 8)
 			{
-
 				cout << "\t\t\tPlease Wait ..." << "\n\n\n";
 
 				//MySeg->Level_Set(1.55, 0.05);
-				MySeg->WriteImage(outputFilename1);
+				//MySeg->WriteImage(outputFilename1);
+				MySeg->Get_thresholder()->Update();
 				this->Overlay();
-
 			}
 		}
 	}
+}
+
+void Callback2D::set_image(ImageType* _image)
+{
+	image = _image;		// overlay
 }
 
 void Callback2D::Overlay()
@@ -127,13 +113,13 @@ void Callback2D::Overlay()
 
 	//---------------------------viewer-----------------------------------
 
-	VTK_CREATE(vtkImageBlend, blend);
+	auto blend = vtkSmartPointer<vtkImageBlend>::New();
 	blend->AddInputData(thconnector->GetOutput());
 	blend->AddInputData(connector->GetOutput());
 	blend->SetOpacity(0.5, 0.5);
 	blend->SetOpacity(1, .5);
 
-	VTK_CREATE(vtkImageActor, DataActor);
+	auto DataActor = vtkSmartPointer<vtkImageActor>::New();
 	DataActor->GetMapper()->SetInputConnection(blend->GetOutputPort());
 	renderer->AddActor(DataActor);
 	window->AddRenderer(renderer);

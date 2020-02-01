@@ -17,40 +17,35 @@ class Callback2D : public vtkCommand
 {
 public:
 	static Callback2D *New();
+	void SetReader(ImageType_2_InternalImageType::Pointer input_algorithm);
+	void set_image(ImageType*); //overlay
 	void SetDiagram(Canvas2D* Diagram);
-
-	void SetImageActor(vtkSmartPointer<vtkImageActor>);
+	void SetStyle(InteractorStyle2D*);
 
 	void SetInteractor(vtkSmartPointer<vtkRenderWindowInteractor>);
 	void set_renderer(vtkSmartPointer<vtkRenderer>);
 	void set_window(vtkSmartPointer<vtkRenderWindow>);
 
-	virtual void Execute(vtkObject *, unsigned long event, void *);
-
-	void SetStyle(InteractorStyle2D*);
 	typedef MySpeedFunction2D< InternalImageType, InternalImageType > MySpeedFunction2DType;
 	void SetSpeed(MySpeedFunction2DType::Pointer);
-	void SetReader(ImageType_2_InternalImageType::Pointer);
 	Algorithm2D* GetAlgorithm() { return MySeg; }
-	void set_image(ImageType*);
+	void Execute(vtkObject *, unsigned long event, void *);
 	void Overlay();
 
 private:
 
-	VTK_CREATE(vtkRenderWindowInteractor, Interactor);
+	ImageType_2_InternalImageType::Pointer IS2D_InternalImage;
+	vtkSmartPointer<vtkRenderWindowInteractor> Interactor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
 	vtkSmartPointer<vtkRenderer> renderer;
 	vtkSmartPointer<vtkRenderWindow> window;
-	VTK_CREATE(vtkImageActor, actor);
-	ImageType* image;
 
 	Canvas2D* diagram;
 	InteractorStyle2D* style;
 	Algorithm2D* MySeg = new Algorithm2D();
 	MySpeedFunction2DType::Pointer My_Function = MySpeedFunction2DType::New();
-	ImageType_2_InternalImageType::Pointer Reader;
 
 	//---------------Overlay-------------------
 	//---------------------------------------------
-	VTK_CREATE(vtkImageViewer2, imageViewer);
-
+	vtkSmartPointer<vtkImageViewer2> imageViewer = vtkSmartPointer<vtkImageViewer2>::New();
+	ImageType* image;
 };

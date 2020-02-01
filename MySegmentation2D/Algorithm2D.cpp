@@ -19,7 +19,6 @@ void Algorithm2D::Set_Function(itk::SmartPointer<MySpeedFunction2DType> _Functio
 	my_function = _Function;
 }
 
-
 void Algorithm2D::FastMarching(const double distance)
 {
 	int size = diagram->get_vector().size();
@@ -87,13 +86,11 @@ void Algorithm2D::Level_Set(int lower, int upper, double edge, double weight)
 
 void Algorithm2D::Level_Set(double edge, double weight)
 {
-
 	auto window = diagram->get_min_max();
 	double lower = window[0];
 	double upper = window[1];
 
 	cout << "lower : " << lower << "\t\t" << "upper : " << upper << endl;
-
 
 	thresholder->SetLowerThreshold(-1000);
 	thresholder->SetUpperThreshold(0);
@@ -119,34 +116,6 @@ void Algorithm2D::Level_Set(double edge, double weight)
 	thresholdSegmentation->SetFeatureImage(reader->GetOutput());
 	thresholder->SetInput(thresholdSegmentation->GetOutput());
 	//thresholder->Update();
-
-}
-
-
-int Algorithm2D::WriteImage(std::string output1)
-{
-	writer1->SetInput(thresholder->GetOutput());
-	writer1->SetFileName(output1.c_str());
-
-	try
-	{
-		writer1->Update();
-	}
-	catch (itk::ExceptionObject & excep)
-	{
-		std::cerr << "Exception caught !" << std::endl;
-		std::cerr << excep << std::endl;
-		return EXIT_FAILURE;
-	}
-
-	//std::cout << std::endl;
-	//std::cout << "Max. no. iterations: " << thresholdSegmentation->GetNumberOfIterations() << std::endl;
-	//std::cout << "Max. RMS error: " << thresholdSegmentation->GetMaximumRMSError() << std::endl;
-	//std::cout << std::endl;
-	//std::cout << "No. elpased iterations: " << thresholdSegmentation->GetElapsedIterations() << std::endl;
-	//std::cout << "RMS change: " << thresholdSegmentation->GetRMSChange() << std::endl;
-
-	return EXIT_SUCCESS;
 }
 
 InternalImageType * Algorithm2D::Get_FastMarching()
