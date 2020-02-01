@@ -14,41 +14,38 @@ void Callback2D::SetReader(ImageType_2_InternalImageType::Pointer input_algorith
 	IS2D_InternalImage = input_algorithm;
 }
 
-void Callback2D::SetDiagram(Canvas2D* Diagram)
+void Callback2D::SetDiagram(Canvas2D* _Diagram)
 {
-	diagram = Diagram;
+	diagram = _Diagram;
 }
 
-void Callback2D::SetStyle(InteractorStyle2D*_style)
+void Callback2D::SetStyle(InteractorStyle2D* _style)
 {
 	style = _style;
 }
 
-void Callback2D::SetSpeed(MySpeedFunction2DType::Pointer _Function)
+void Callback2D::SetSpeed(MySpeedFunction2DType::Pointer _function)
 {
-	mySpeedFunction = _Function;
+	mySpeedFunction = _function;
 }
 
-void Callback2D::SetInteractor(vtkSmartPointer<vtkRenderWindowInteractor> interactor)
+void Callback2D::SetInteractor(vtkSmartPointer<vtkRenderWindowInteractor> _interactor)
 {
-	this->Interactor = interactor;
+	this->Interactor = _interactor;
 }
 
-void Callback2D::set_renderer(vtkSmartPointer<vtkRenderer> _renderer)
+void Callback2D::SetRenderer(vtkSmartPointer<vtkRenderer> _renderer)
 {
 	renderer = _renderer;
 }
 
-void Callback2D::set_window(vtkSmartPointer<vtkRenderWindow> _window)
+void Callback2D::SetWindow(vtkSmartPointer<vtkRenderWindow> _window)
 {
 	window = _window;
 }
 
 inline void Callback2D::Execute(vtkObject *caller, unsigned long event, void *)
 {
-	std::string outputFilename1 = "E:\\Interactive_Segmentation\\output2D\\my_curve.dcm"; // level set output
-	//std::string outputFilename1 = "C:\\Users\\Alireza\\Desktop\\Result_Write\\my_curve.jpg"; // level set output
-
 	if (style->GetFlag() > 0)
 	{
 		double x = Interactor->GetEventPosition()[0];
@@ -62,19 +59,19 @@ inline void Callback2D::Execute(vtkObject *caller, unsigned long event, void *)
 		//cout << "X: " << position[0] << "\t\t\tY: " << position[1] << "\n\n\n";
 		Interactor->Render();
 
-		if (style->GetFlag() == 4 || style->GetFlag() == 1 || style->GetFlag() == 7 || style->GetFlag() == 8)
+		if (style->GetFlag() == 1 || style->GetFlag() == 4 || style->GetFlag() == 5)
 		{
-			MySeg->set_reader(IS2D_InternalImage);
-			MySeg->Set_Function(mySpeedFunction);
-			MySeg->set_Canvas(diagram);
+			MySeg->SetInternalImage(IS2D_InternalImage);
+			MySeg->SetSpeedFunction(mySpeedFunction);
+			MySeg->SetCanvas(diagram);
 			MySeg->FastMarching(4);
-			MySeg->Level_Set(355, 650, 1.5, 0.05);
+			MySeg->LevelSet(355, 650, 1.5, 0.05);
 
-			if (style->GetFlag() == 4 || style->GetFlag() == 7 || style->GetFlag() == 8)
+			if (style->GetFlag() == 4 || style->GetFlag() == 5 )
 			{
 				cout << "\t\t\tPlease Wait ..." << "\n\n\n";
 
-				//MySeg->Level_Set(1.55, 0.05);
+				//MySeg->LevelSet(1.55, 0.05);
 				MySeg->GetResult()->Update();
 				this->Overlay();
 			}
@@ -82,7 +79,7 @@ inline void Callback2D::Execute(vtkObject *caller, unsigned long event, void *)
 	}
 }
 
-void Callback2D::set_image(ImageType* _image)
+void Callback2D::SetOverlayImage(ImageType* _image)
 {
 	image = _image;		// overlay
 }
@@ -96,7 +93,7 @@ void Callback2D::Overlay()
 	rescaleFilter->SetOutputMinimum(0);
 	rescaleFilter->SetOutputMaximum(255);
 
-	ConnectorType::Pointer connector = ConnectorType::New();
+	ConnectorType::Pointer connector = ConnectorType::New();//convert itk image to vtk image
 	connector->SetInput(rescaleFilter->GetOutput());
 	connector->Update();
 

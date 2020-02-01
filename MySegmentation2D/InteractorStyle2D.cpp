@@ -16,12 +16,8 @@ void InteractorStyle2D::OnKeyPress()
 		flag = 3;
 	if (key == "g") // go - run
 		flag = 4;
-	if (key == "d") // delete all seeds
+	if (key == "o") // remove seed when algorthm is running
 		flag = 5;
-	if (key == "l") // remove seed
-		flag = 6;
-	if (key == "o") // remove observers
-		flag = 7;
 
 }
 

@@ -84,7 +84,7 @@ inline void MyCallback3D::Execute(vtkObject *caller, unsigned long event, void *
 			//cout << "X: " << position[0] << "\t\tY: " << position[1] << "\t\tZ: " << z << "\n\n\n";
 			Interactor->Render();
 
-			if (imageStyle->GetFlag() == 4 || imageStyle->GetFlag() == 1 || imageStyle->GetFlag() == 5)
+			if (imageStyle->GetFlag() == 1 || imageStyle->GetFlag() == 4 || imageStyle->GetFlag() == 5)
 			{
 				IS_Algorithm->SetInternalImage(IS_InternalImage->GetOutput());
 				IS_Algorithm->SetSpeedFunction(SegmentationSpeedFunction);

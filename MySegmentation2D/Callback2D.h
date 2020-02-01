@@ -18,19 +18,18 @@ class Callback2D : public vtkCommand
 public:
 	static Callback2D *New();
 	void SetReader(ImageType_2_InternalImageType::Pointer input_algorithm);
-	void set_image(ImageType*); //overlay
-	void SetDiagram(Canvas2D* Diagram);
+	
+	void SetDiagram(Canvas2D* _Diagram);
 	void SetStyle(InteractorStyle2D*);
-
 	void SetInteractor(vtkSmartPointer<vtkRenderWindowInteractor>);
-	void set_renderer(vtkSmartPointer<vtkRenderer>);
-	void set_window(vtkSmartPointer<vtkRenderWindow>);
+	void SetRenderer(vtkSmartPointer<vtkRenderer>);
+	void SetWindow(vtkSmartPointer<vtkRenderWindow>);
 
-	typedef MySpeedFunction2D< InternalImageType, InternalImageType > MySpeedFunction2DType;
-	void SetSpeed(MySpeedFunction2DType::Pointer);
+	void SetSpeed(MySpeedFunction2DType::Pointer _function);
 	Algorithm2D* GetAlgorithm() { return MySeg; }
 	void Execute(vtkObject *, unsigned long event, void *);
 	void Overlay();
+	void SetOverlayImage(ImageType*); // for overlay
 
 private:
 
@@ -48,4 +47,5 @@ private:
 	//---------------------------------------------
 	vtkSmartPointer<vtkImageViewer2> imageViewer = vtkSmartPointer<vtkImageViewer2>::New();
 	ImageType* image;
+	
 };

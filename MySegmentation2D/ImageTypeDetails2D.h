@@ -19,7 +19,7 @@ typedef itk::ImageToVTKImageFilter<ImageType>  ConnectorType; //convert itk imag
 //--------------------------Defenition Algorithm Type --------------------------------------
 typedef  itk::FastMarchingImageFilter< InternalImageType, InternalImageType > FastMarchingFilterType;
 typedef FastMarchingFilterType::NodeContainer   NodeContainer;
-typedef FastMarchingFilterType::NodeType    NodeType;
+typedef FastMarchingFilterType::NodeType  NodeType;
 
 typedef  itk::ThresholdSegmentationLevelSetImageFilter< InternalImageType,// for sparse field levelset algorithm
 	InternalImageType > ThresholdSegmentationLevelSetImageFilterType;

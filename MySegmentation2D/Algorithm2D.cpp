@@ -4,24 +4,24 @@
 Algorithm2D::Algorithm2D()
 {}
 
-void Algorithm2D::set_reader(itk::SmartPointer<ImageType_2_InternalImageType> _IS2D_InternalImage)
+void Algorithm2D::SetInternalImage(itk::SmartPointer<ImageType_2_InternalImageType> _IS2D_InternalImage)
 {
 	IS2D_InternalImage = _IS2D_InternalImage;
 }
 
-void Algorithm2D::set_Canvas(Canvas2D* Diagram)
+void Algorithm2D::SetCanvas(Canvas2D* Diagram)
 {
 	diagram = Diagram;
 }
 
-void Algorithm2D::Set_Function(itk::SmartPointer<MySpeedFunction2DType> _Function)
+void Algorithm2D::SetSpeedFunction(itk::SmartPointer<MySpeedFunction2DType> _Function)
 {
 	mySpeedFunction = _Function;
 }
 
 void Algorithm2D::FastMarching(const double distance)
 {
-	int size = diagram->get_vector().size();
+	int size = diagram->GetPointList().size();
 
 	std::vector<InternalImageType::IndexType>  seedPosition(size);
 	std::vector<NodeType> node(size);
@@ -33,8 +33,8 @@ void Algorithm2D::FastMarching(const double distance)
 
 	for (int i = 0; i < size; i++)
 	{
-		seedPosition[i][0] = diagram->get_vector()[i]._x;
-		seedPosition[i][1] = diagram->get_vector()[i]._y;
+		seedPosition[i][0] = diagram->GetPointList()[i]._x;
+		seedPosition[i][1] = diagram->GetPointList()[i]._y;
 		cout << seedPosition[i] << "\n";
 
 		node[i].SetValue(seedValue);
@@ -52,7 +52,7 @@ void Algorithm2D::FastMarching(const double distance)
 	fastMarching->SetOutputDirection(IS2D_InternalImage->GetOutput()->GetDirection());
 }
 
-void Algorithm2D::Level_Set(int lower, int upper, double edge, double weight)
+void Algorithm2D::LevelSet(int lower, int upper, double edge, double weight)
 {
 	thresholder->SetLowerThreshold(-1000);
 	thresholder->SetUpperThreshold(0);
@@ -79,7 +79,7 @@ void Algorithm2D::Level_Set(int lower, int upper, double edge, double weight)
 	thresholder->SetInput(thresholdSegmentation->GetOutput());
 }
 
-void Algorithm2D::Level_Set(double edge, double weight) // without setting lower and upper threshold
+void Algorithm2D::LevelSet(double edge, double weight) // without setting lower and upper threshold
 {
 	auto window = diagram->get_min_max();
 	double lower = window[0];

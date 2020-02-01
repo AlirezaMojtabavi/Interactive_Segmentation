@@ -5,38 +5,38 @@
 Canvas2D::Canvas2D()
 {}
 
-void Canvas2D::SetImageData(vtkSmartPointer<vtkImageData> image)
+void Canvas2D::SetImageData(vtkSmartPointer<vtkImageData> _image)
 {
-	data->ShallowCopy(image);
+	data->ShallowCopy(_image);
 	pSpacing = data->GetSpacing();
 }
 
-std::vector<coordinate> Canvas2D::get_vector()
+std::vector<coordinate> Canvas2D::GetPointList()
 {
 	return PointList;
 }
 
-void Canvas2D::set_style(InteractorStyle2D* _style)
+void Canvas2D::SetStyle(InteractorStyle2D* _style)
 {
 	style = _style;
 }
 
-void Canvas2D::set_renderer(vtkSmartPointer<vtkRenderer> _renderer)
+void Canvas2D::SetRenderer(vtkSmartPointer<vtkRenderer> _renderer)
 {
 	renderer = _renderer;
 }
 
-void Canvas2D::set_window(vtkSmartPointer<vtkRenderWindow> _window)
+void Canvas2D::SetWindow(vtkSmartPointer<vtkRenderWindow> _window)
 {
 	window = _window;
 }
 
-void Canvas2D::set_interactor(vtkSmartPointer<vtkRenderWindowInteractor> _interactor)
+void Canvas2D::SetInteractor(vtkSmartPointer<vtkRenderWindowInteractor> _interactor)
 {
 	interactor = _interactor;
 }
 
-vtkImageData* Canvas2D::getImage()
+vtkImageData* Canvas2D::GetImage()
 {
 	return data;
 }
@@ -66,7 +66,7 @@ double* Canvas2D::get_min_max()
 		}
 	}
 
-	if (style->GetFlag() == 7)
+	if (style->GetFlag() == 5)
 	{
 		min.pop_back();
 		max.pop_back();
@@ -136,7 +136,7 @@ void Canvas2D::SetLastposition(double x, double y)
 	MySeed._x = x / pSpacing[0];
 	MySeed._y = y / pSpacing[1];
 
-	if (style->GetFlag() == 7)
+	if (style->GetFlag() == 5) // remove last seed
 	{
 		PointList.pop_back();
 		Intensity.pop_back();

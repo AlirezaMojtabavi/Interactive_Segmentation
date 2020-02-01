@@ -20,13 +20,13 @@ class Algorithm2D
 public:
 
 	Algorithm2D();
-	void set_reader(itk::SmartPointer<ImageType_2_InternalImageType> _IS2D_InternalImage);
-	void set_Canvas(Canvas2D*);
-	void Set_Function(itk::SmartPointer<MySpeedFunction2DType> _Function);
+	void SetInternalImage(itk::SmartPointer<ImageType_2_InternalImageType> _IS2D_InternalImage);
+	void SetCanvas(Canvas2D*);
+	void SetSpeedFunction(itk::SmartPointer<MySpeedFunction2DType> _Function);
 
 	void FastMarching(const double);
-	void Level_Set(int lower, int upper, double edge, double weight);
-	void Level_Set(double edge, double weight);
+	void LevelSet(int lower, int upper, double edge, double weight);
+	void LevelSet(double edge, double weight);
 
 	OutputImageType*  GetResult();
 

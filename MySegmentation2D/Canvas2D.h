@@ -26,18 +26,18 @@ public:
 	Canvas2D();
 
 	void SetImageData(vtkSmartPointer<vtkImageData>);
-	void set_style(InteractorStyle2D*);
-	void set_renderer(vtkSmartPointer<vtkRenderer>);
-	void set_window(vtkSmartPointer<vtkRenderWindow>);
-	void set_interactor(vtkSmartPointer<vtkRenderWindowInteractor>);
+	void SetStyle(InteractorStyle2D*);
+	void SetRenderer(vtkSmartPointer<vtkRenderer>);
+	void SetWindow(vtkSmartPointer<vtkRenderWindow>);
+	void SetInteractor(vtkSmartPointer<vtkRenderWindowInteractor>);
 
 	void Arc(double x, double y, int r, vtkImageData* data);
 	void SetLastposition(double x, double y);
-	std::vector<coordinate> get_vector();
+	std::vector<coordinate> GetPointList();
 	int paint(int x, int y);
 
 	double* get_min_max();
-	vtkImageData* getImage();
+	vtkImageData* GetImage();
 
 private:
 
