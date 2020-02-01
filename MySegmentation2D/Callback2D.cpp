@@ -26,7 +26,7 @@ void Callback2D::SetStyle(InteractorStyle2D*_style)
 
 void Callback2D::SetSpeed(MySpeedFunction2DType::Pointer _Function)
 {
-	My_Function = _Function;
+	mySpeedFunction = _Function;
 }
 
 void Callback2D::SetInteractor(vtkSmartPointer<vtkRenderWindowInteractor> interactor)
@@ -65,7 +65,7 @@ inline void Callback2D::Execute(vtkObject *caller, unsigned long event, void *)
 		if (style->GetFlag() == 4 || style->GetFlag() == 1 || style->GetFlag() == 7 || style->GetFlag() == 8)
 		{
 			MySeg->set_reader(IS2D_InternalImage);
-			MySeg->Set_Function(My_Function);
+			MySeg->Set_Function(mySpeedFunction);
 			MySeg->set_Canvas(diagram);
 			MySeg->FastMarching(4);
 			MySeg->Level_Set(355, 650, 1.5, 0.05);
@@ -75,8 +75,7 @@ inline void Callback2D::Execute(vtkObject *caller, unsigned long event, void *)
 				cout << "\t\t\tPlease Wait ..." << "\n\n\n";
 
 				//MySeg->Level_Set(1.55, 0.05);
-				//MySeg->WriteImage(outputFilename1);
-				MySeg->Get_thresholder()->Update();
+				MySeg->GetResult()->Update();
 				this->Overlay();
 			}
 		}
@@ -104,7 +103,7 @@ void Callback2D::Overlay()
 	//------------------------------------------------------------
 
 	OutputImageType_2_ImageType::Pointer seg_caster = OutputImageType_2_ImageType::New();
-	seg_caster->SetInput(MySeg->Get_thresholder());
+	seg_caster->SetInput(MySeg->GetResult());
 	seg_caster->Update();
 
 	ConnectorType::Pointer thconnector = ConnectorType::New();

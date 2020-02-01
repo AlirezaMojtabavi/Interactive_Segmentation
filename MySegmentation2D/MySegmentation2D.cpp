@@ -74,7 +74,7 @@ int main(int argc, char *argv[])
 	//----------------------Segmentation------------------
 	//----------------------------------------------------
 	typedef MySpeedFunction2D< InternalImageType, InternalImageType > MySpeedFunction2DType;
-	MySpeedFunction2DType::Pointer My_Function = MySpeedFunction2DType::New();
+	MySpeedFunction2DType::Pointer mySpeedFunction = MySpeedFunction2DType::New();
 
 	auto callback = vtkSmartPointer<Callback2D>::New();
 	callback->SetInteractor(interactor);
@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
 	callback->SetStyle(imageStyle);
 	callback->set_image(vtkImageToImageFilter->GetOutput());	//overlay
 	callback->SetReader(Image_2_InternalImage);
-	callback->SetSpeed(My_Function);
+	callback->SetSpeed(mySpeedFunction);
 
 	interactor->AddObserver(vtkCommand::LeftButtonPressEvent, callback);
 	interactor->Start();
@@ -94,7 +94,7 @@ int main(int argc, char *argv[])
 	//----------------------------------------------------
 
 	OutputImageType_2_ImageType::Pointer mycurve2image = OutputImageType_2_ImageType::New();
-	mycurve2image->SetInput(callback->GetAlgorithm()->Get_thresholder());
+	mycurve2image->SetInput(callback->GetAlgorithm()->GetResult());
 	mycurve2image->Update();
 
 	ConnectorType::Pointer connector_curve = ConnectorType::New();

@@ -5,7 +5,6 @@
 #include "itkFastMarchingImageFilter.h"
 #include "itkBinaryThresholdImageFilter.h"
 #include "itkImageFileReader.h"
-#include "itkImageFileWriter.h"
 #include "itkZeroCrossingImageFilter.h"
 #include "itkThresholdSegmentationLevelSetImageFilter.h"
 #include "itkRGBPixel.h"
@@ -15,46 +14,30 @@
 #include "MySpeedFunction2D.h"
 #include "ImageTypeDetails2D.h"
 
-typedef  itk::FastMarchingImageFilter< InternalImageType, InternalImageType > FastMarchingFilterType;
-typedef FastMarchingFilterType::NodeContainer   NodeContainer;
-typedef FastMarchingFilterType::NodeType    NodeType;
-
 
 class Algorithm2D
 {
 public:
 
 	Algorithm2D();
+	void set_reader(itk::SmartPointer<ImageType_2_InternalImageType> _IS2D_InternalImage);
 	void set_Canvas(Canvas2D*);
-	void set_reader(itk::SmartPointer<ImageType_2_InternalImageType>);
-
-	typedef MySpeedFunction2D< InternalImageType, InternalImageType > MySpeedFunction2DType;
-	void Set_Function(itk::SmartPointer<MySpeedFunction2DType>);
+	void Set_Function(itk::SmartPointer<MySpeedFunction2DType> _Function);
 
 	void FastMarching(const double);
 	void Level_Set(int lower, int upper, double edge, double weight);
 	void Level_Set(double edge, double weight);
 
-	InternalImageType* Get_FastMarching();
-	OutputImageType*  Get_thresholder();
-
+	OutputImageType*  GetResult();
 
 private:
 
-	ImageType_2_InternalImageType::Pointer reader = ImageType_2_InternalImageType::New();
-
+	ImageType_2_InternalImageType::Pointer IS2D_InternalImage = ImageType_2_InternalImageType::New();
 	Canvas2D* diagram;
-	MySpeedFunction2DType::Pointer my_function = MySpeedFunction2DType::New();
-	
-	typedef itk::BinaryThresholdImageFilter<InternalImageType, OutputImageType>
-		ThresholdingFilterType;
-	ThresholdingFilterType::Pointer thresholder = ThresholdingFilterType::New();
-
 	NodeContainer::Pointer seeds = NodeContainer::New();
 	FastMarchingFilterType::Pointer  fastMarching = FastMarchingFilterType::New();
-
-	typedef  itk::ThresholdSegmentationLevelSetImageFilter< InternalImageType,
-		InternalImageType > ThresholdSegmentationLevelSetImageFilterType;
+	MySpeedFunction2DType::Pointer mySpeedFunction = MySpeedFunction2DType::New();
 	ThresholdSegmentationLevelSetImageFilterType::Pointer thresholdSegmentation =
 		ThresholdSegmentationLevelSetImageFilterType::New();
+	ThresholdingFilterType::Pointer thresholder = ThresholdingFilterType::New();
 };

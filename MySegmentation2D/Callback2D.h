@@ -42,7 +42,7 @@ private:
 	Canvas2D* diagram;
 	InteractorStyle2D* style;
 	Algorithm2D* MySeg = new Algorithm2D();
-	MySpeedFunction2DType::Pointer My_Function = MySpeedFunction2DType::New();
+	MySpeedFunction2DType::Pointer mySpeedFunction = MySpeedFunction2DType::New();
 
 	//---------------Overlay-------------------
 	//---------------------------------------------

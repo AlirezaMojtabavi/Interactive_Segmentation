@@ -105,16 +105,15 @@ void Canvas2D::Arc(double x, double y, int r, vtkImageData* inputData)
 
 int Canvas2D::paint(int x, int y)
 {
-
-	VTK_CREATE(vtkRegularPolygonSource, polygonSource);
+	auto polygonSource = vtkSmartPointer<vtkRegularPolygonSource>::New();
 	polygonSource->SetNumberOfSides(50);
 	polygonSource->SetRadius(1);
 	polygonSource->SetCenter(x, y, 0);
 
-	VTK_CREATE(vtkPolyDataMapper, mapper);
+	auto mapper = vtkSmartPointer<vtkPolyDataMapper>::New();
 	mapper->SetInputConnection(polygonSource->GetOutputPort());
 
-	VTK_CREATE(vtkActor, actor);
+	auto actor = vtkSmartPointer<vtkActor>::New();
 	actor->SetMapper(mapper);
 	actor->GetProperty()->SetColor(1, 0, 0);
 	ActorList.push_back(actor);

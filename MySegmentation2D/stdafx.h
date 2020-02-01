@@ -35,6 +35,4 @@
 #include <vtkJPEGReader.h>
 #include "vtkImageLuminance.h"
 
-#define VTK_CREATE(type, name) \
-  vtkSmartPointer<type> name = vtkSmartPointer<type>::New()
 // TODO: reference additional headers your program requires here
