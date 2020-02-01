@@ -14,18 +14,13 @@
 #include "ImageTypeDetails.h"
 
 
-
-
 typedef  itk::FastMarchingImageFilter< InternalImageType, InternalImageType > FastMarchingFilterType;
 typedef FastMarchingFilterType::NodeContainer   NodeContainer;
 typedef FastMarchingFilterType::NodeType    NodeType;
 
-
-
 class MyAlgorithm3d
 {
 public:
-
 
 	MyAlgorithm3d();
 	void SetInternalImage(InternalImageType::Pointer _InternalImage);

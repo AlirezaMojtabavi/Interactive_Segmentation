@@ -29,18 +29,19 @@ int main(int argc, char *argv[])
 	//-----------------FOR DICOM IMAGES--------------------
 	//-----------------------------------------------------
 
-	VTK_CREATE(vtkDICOMImageReader, reader);
-	reader->SetDirectoryName("E:\\Interactive_Segmentation\\input2D");
-	reader->Update();
+	
+	auto input_reader = vtkSmartPointer<vtkDICOMImageReader>::New();
+	input_reader->SetDirectoryName("E:\\Interactive_Segmentation\\input2D");
+	input_reader->Update();
 
 	//std::string outputFilename1 = "C:\\Users\\a.mojtabavi\\Desktop\\final_write\\my_curve.dcm"; // level set output
 	std::string outputFilename5 = "E:\\Interactive_Segmentation\\output2D\\final.dcm";  // my Region output
 
-	VTKImageToImageType::Pointer vtkImageToImageFilter = VTKImageToImageType::New();
-	vtkImageToImageFilter->SetInput(reader->GetOutput());
+	auto vtkImageToImageFilter = VTKImageToImageType::New();
+	vtkImageToImageFilter->SetInput(input_reader->GetOutput());
 	vtkImageToImageFilter->Update();
 
-	ImageType_2_InternalImageType::Pointer Image_2_InternalImage = ImageType_2_InternalImageType::New();
+	auto Image_2_InternalImage = ImageType_2_InternalImageType::New();
 	Image_2_InternalImage->SetInput(vtkImageToImageFilter->GetOutput());
 	Image_2_InternalImage->Update();
 
@@ -48,22 +49,22 @@ int main(int argc, char *argv[])
 	//---------------------Visualization---------------------
 	//-------------------------------------------------------
 
-	VTK_CREATE(vtkImageActor, DataActor);
+	auto DataActor = vtkSmartPointer<vtkImageActor>::New();
 	Canvas2D* diagram = new Canvas2D();
-	diagram->SetImageData(reader->GetOutput());
+	diagram->SetImageData(input_reader->GetOutput());
 	DataActor->GetMapper()->SetInputData(diagram->getImage());
 
-	VTK_CREATE(vtkRenderer, renderer);
+	auto renderer = vtkSmartPointer<vtkRenderer>::New();
 	renderer->AddActor(DataActor);
 	renderer->GetActiveCamera()->ParallelProjectionOn();
 	diagram->set_renderer(renderer);
 	renderer->ResetCamera();
 
-	VTK_CREATE(vtkRenderWindow, window);
+	auto window = vtkSmartPointer<vtkRenderWindow>::New();
 	window->AddRenderer(renderer);
 	diagram->set_window(window);
 
-	VTK_CREATE(vtkRenderWindowInteractor, interactor);
+	auto interactor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
 	InteractorStyle2D* imageStyle = new InteractorStyle2D();
 	interactor->SetInteractorStyle(imageStyle);
 	diagram->set_style(imageStyle);
@@ -78,7 +79,7 @@ int main(int argc, char *argv[])
 	typedef MySpeedFunction2D< InternalImageType, InternalImageType > MySpeedFunction2DType;
 	MySpeedFunction2DType::Pointer My_Function = MySpeedFunction2DType::New();
 
-	VTK_CREATE(Callback2D, callback);
+	auto callback = vtkSmartPointer<Callback2D>::New();
 	callback->SetInteractor(interactor);
 	callback->set_renderer(renderer);
 	callback->set_window(window);
@@ -103,22 +104,22 @@ int main(int argc, char *argv[])
 	connector_curve->SetInput(mycurve2image->GetOutput());
 	connector_curve->Update();
 
-	VTK_CREATE(vtkImageActor, DataActor2);
+	auto DataActor2 = vtkSmartPointer<vtkImageActor>::New();
 	Canvas2D* diagram2 = new Canvas2D();
 	diagram2->SetImageData(connector_curve->GetOutput());
 	DataActor2->GetMapper()->SetInputData(diagram2->getImage());
 
-	VTK_CREATE(vtkRenderer, renderer2);
+	auto renderer2 = vtkSmartPointer<vtkRenderer>::New();
 	renderer2->AddActor(DataActor2);
 	renderer2->GetActiveCamera()->ParallelProjectionOn();
 	renderer2->ResetCamera();
 	diagram2->set_renderer(renderer2);
 
-	VTK_CREATE(vtkRenderWindow, window2);
+	auto window2 = vtkSmartPointer<vtkRenderWindow>::New();
 	window2->AddRenderer(renderer2);
 	diagram2->set_window(window2);
 
-	VTK_CREATE(vtkRenderWindowInteractor, interactor2);
+	auto interactor2 = vtkSmartPointer<vtkRenderWindowInteractor>::New();
 	InteractorStyle2D* imageStyle2 = new InteractorStyle2D();
 	interactor2->SetInteractorStyle(imageStyle2);
 	diagram2->set_interactor(interactor2);
@@ -127,7 +128,7 @@ int main(int argc, char *argv[])
 	imageStyle2->SetCurrentRenderer(renderer2);
 	window2->Render();
 
-	VTK_CREATE(Callback2D, callback2);
+	auto callback2 = vtkSmartPointer<Callback2D>::New();
 	callback2->SetInteractor(interactor2);
 	callback2->SetDiagram(diagram2);
 	callback2->SetStyle(imageStyle2);

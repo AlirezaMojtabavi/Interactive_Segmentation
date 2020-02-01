@@ -9,6 +9,11 @@ Callback2D * Callback2D::New()
 	return new Callback2D;
 }
 
+void Callback2D::SetReader(ImageType_2_InternalImageType::Pointer _Reader)
+{
+	Reader = _Reader;
+}
+
 void Callback2D::SetStyle(InteractorStyle2D*_style)
 {
 	style = _style;
@@ -20,65 +25,13 @@ void Callback2D::SetSpeed(MySpeedFunction2DType::Pointer _Function)
 	My_Function = _Function;
 }
 
-void Callback2D::SetReader(ImageType_2_InternalImageType::Pointer _Reader)
-{
-	Reader = _Reader;
-}
+
 
 void Callback2D::set_image(ImageType* _image)
 {
 	image = _image;		// overlay
 }
 
-void Callback2D::Overlay()
-{
-
-	//-------------------------MRI----------------------------------
-
-	typedef itk::RescaleIntensityImageFilter< ImageType, ImageType > RescaleFilterType;
-	RescaleFilterType::Pointer rescaleFilter = RescaleFilterType::New();
-	rescaleFilter->SetInput(image);
-	rescaleFilter->SetOutputMinimum(0);
-	rescaleFilter->SetOutputMaximum(255);
-
-	typedef itk::ImageToVTKImageFilter<ImageType>   ConnectorType;
-	ConnectorType::Pointer connector = ConnectorType::New();
-	connector->SetInput(rescaleFilter->GetOutput());
-	connector->Update();
-
-	//------------------------------------------------------------
-
-	typedef itk::CastImageFilter<OutputImageType, ImageType> CastFilter3;
-	CastFilter3::Pointer seg_caster = CastFilter3::New();
-	seg_caster->SetInput(MySeg->Get_thresholder());
-	seg_caster->Update();
-
-	typedef itk::ImageToVTKImageFilter<ImageType>   ConnectorType;
-	ConnectorType::Pointer thconnector = ConnectorType::New();
-	thconnector->SetInput(seg_caster->GetOutput());
-	thconnector->Update();
-
-	//---------------------------viewer-----------------------------------
-
-	VTK_CREATE(vtkImageBlend, blend);
-	blend->AddInputData(thconnector->GetOutput());
-	blend->AddInputData(connector->GetOutput());
-	blend->SetOpacity(0.5, 0.5);
-	blend->SetOpacity(1, .5);
-
-	VTK_CREATE(vtkImageActor, DataActor);
-	DataActor->GetMapper()->SetInputConnection(blend->GetOutputPort());
-	renderer->AddActor(DataActor);
-	window->AddRenderer(renderer);
-	window->Render();
-
-	static bool started = false;
-	if (!started)
-	{
-		started = true;
-		window->SetInteractor(Interactor);
-	}
-}
 
 void Callback2D::SetDiagram(Canvas2D* Diagram)
 {
@@ -149,3 +102,47 @@ inline void Callback2D::Execute(vtkObject *caller, unsigned long event, void *)
 	}
 }
 
+void Callback2D::Overlay()
+{
+	//-------------------------MRI----------------------------------
+
+	RescaleFilterType::Pointer rescaleFilter = RescaleFilterType::New();
+	rescaleFilter->SetInput(image);
+	rescaleFilter->SetOutputMinimum(0);
+	rescaleFilter->SetOutputMaximum(255);
+
+	ConnectorType::Pointer connector = ConnectorType::New();
+	connector->SetInput(rescaleFilter->GetOutput());
+	connector->Update();
+
+	//------------------------------------------------------------
+
+	OutputImageType_2_ImageType::Pointer seg_caster = OutputImageType_2_ImageType::New();
+	seg_caster->SetInput(MySeg->Get_thresholder());
+	seg_caster->Update();
+
+	ConnectorType::Pointer thconnector = ConnectorType::New();
+	thconnector->SetInput(seg_caster->GetOutput());
+	thconnector->Update();
+
+	//---------------------------viewer-----------------------------------
+
+	VTK_CREATE(vtkImageBlend, blend);
+	blend->AddInputData(thconnector->GetOutput());
+	blend->AddInputData(connector->GetOutput());
+	blend->SetOpacity(0.5, 0.5);
+	blend->SetOpacity(1, .5);
+
+	VTK_CREATE(vtkImageActor, DataActor);
+	DataActor->GetMapper()->SetInputConnection(blend->GetOutputPort());
+	renderer->AddActor(DataActor);
+	window->AddRenderer(renderer);
+	window->Render();
+
+	static bool started = false;
+	if (!started)
+	{
+		started = true;
+		window->SetInteractor(Interactor);
+	}
+}

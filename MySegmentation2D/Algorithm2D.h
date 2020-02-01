@@ -7,7 +7,6 @@
 #include "itkImageFileReader.h"
 #include "itkImageFileWriter.h"
 #include "itkZeroCrossingImageFilter.h"
-#include <itkCastImageFilter.h>
 #include "itkThresholdSegmentationLevelSetImageFilter.h"
 #include "itkRGBPixel.h"
 #include "itkScalarToRGBColormapImageFilter.h"

@@ -2,8 +2,6 @@
 #include "Canvas2D.h"
 
 
-//vtkStandardNewMacro(Canvas2D);
-
 Canvas2D::Canvas2D()
 {}
 
