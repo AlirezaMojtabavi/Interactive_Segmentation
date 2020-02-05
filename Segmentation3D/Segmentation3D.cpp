@@ -1,7 +1,6 @@
 
 #include "stdafx.h"
 
-#include "MySpeedFunction3D.h"
 #include "MyCallback3D.h"
 #include "MyCanvas3D.h"
 #include "MyInteractionStyle3D.h"
@@ -12,7 +11,7 @@
 int main(int argc, char *argv[])
 {
 	auto input_reader = vtkSmartPointer<vtkDICOMImageReader>::New();
-	input_reader->SetDirectoryName("E:\\Interactive_Segmentation\\input3D");
+	input_reader->SetDirectoryName("E:\\misSoloution\\CreateMISRelease_local\\Images\\MRI_wth_dcm");
 	input_reader->Update();
 
 	//---------------------------------------visualization-----------------------------
@@ -55,8 +54,6 @@ int main(int argc, char *argv[])
 
 	//------------------------------------------Algorithm-------------------------------------------
 	
-	typedef MySpeedFunction3D< InternalImageType, InternalImageType > MySpeedFunction3DType;
-	MySpeedFunction3DType::Pointer SegmentationSpeedFunction = MySpeedFunction3DType::New();
 	auto IS_Callback = vtkSmartPointer<MyCallback3D>::New();
 	IS_Callback->SetImageReslice(ResliceDicom3D, ResliceDicom2D); // "ResliceDicom2D" For overlay
 	IS_Callback->SetRenderer(renderer); //For overlay
@@ -64,7 +61,6 @@ int main(int argc, char *argv[])
 	IS_Callback->SetInteractor(interactor);
 	IS_Callback->SetDiagram(IS_MyCanvas3D);
 	IS_Callback->SetStyle(imageStyle);
-	IS_Callback->SetSpeed(SegmentationSpeedFunction);
 
 	imageStyle->AddObserver(vtkCommand::MouseWheelForwardEvent, IS_Callback);
 	imageStyle->AddObserver(vtkCommand::MouseWheelBackwardEvent, IS_Callback);

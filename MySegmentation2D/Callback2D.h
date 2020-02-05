@@ -25,7 +25,7 @@ public:
 	void SetRenderer(vtkSmartPointer<vtkRenderer>);
 	void SetWindow(vtkSmartPointer<vtkRenderWindow>);
 
-	void SetSpeed(MySpeedFunction2DType::Pointer _function);
+	//void SetSpeed(MySpeedFunction2DType::Pointer _function);
 	Algorithm2D* GetAlgorithm() { return MySeg; }
 	void Execute(vtkObject *, unsigned long event, void *);
 	void Overlay();
@@ -41,7 +41,7 @@ private:
 	Canvas2D* diagram;
 	InteractorStyle2D* style;
 	Algorithm2D* MySeg = new Algorithm2D();
-	MySpeedFunction2DType::Pointer mySpeedFunction = MySpeedFunction2DType::New();
+	//MySpeedFunction2DType::Pointer mySpeedFunction = MySpeedFunction2DType::New();
 
 	//---------------Overlay-------------------
 	//---------------------------------------------

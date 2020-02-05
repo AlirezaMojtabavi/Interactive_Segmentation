@@ -76,7 +76,7 @@ void MyAlgorithm3d::FastMarching(const double distance)
 	fastMarching->SetOutputDirection(IS_InternalImage->GetDirection());
 }
 
-void MyAlgorithm3d::LevelSet(int lower, int upper, double edge, double weight)
+void MyAlgorithm3d::LevelSet(short int lower, short int upper, double edge, double weight)
 {
 	thresholder->SetLowerThreshold(-1000);
 	thresholder->SetUpperThreshold(0);

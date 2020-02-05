@@ -24,11 +24,6 @@ void Callback2D::SetStyle(InteractorStyle2D* _style)
 	style = _style;
 }
 
-void Callback2D::SetSpeed(MySpeedFunction2DType::Pointer _function)
-{
-	mySpeedFunction = _function;
-}
-
 void Callback2D::SetInteractor(vtkSmartPointer<vtkRenderWindowInteractor> _interactor)
 {
 	this->Interactor = _interactor;
@@ -62,7 +57,6 @@ inline void Callback2D::Execute(vtkObject *caller, unsigned long event, void *)
 		if (style->GetFlag() == 1 || style->GetFlag() == 4 || style->GetFlag() == 5)
 		{
 			MySeg->SetInternalImage(IS2D_InternalImage);
-			MySeg->SetSpeedFunction(mySpeedFunction);
 			MySeg->SetCanvas(diagram);
 			MySeg->FastMarching(4);
 			MySeg->LevelSet(355, 650, 1.5, 0.05);

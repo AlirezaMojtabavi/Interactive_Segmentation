@@ -39,10 +39,6 @@ void MyCallback3D::SetInteractor(vtkRenderWindowInteractor * interactor)
 {
 	this->Interactor = interactor;
 }
-void MyCallback3D::SetSpeed(MySpeedFunction3DType::Pointer _Function)
-{
-	SegmentationSpeedFunction = _Function;
-}
 
 void MyCallback3D::SetRenderer(vtkSmartPointer<vtkRenderer> _renderer)
 {
@@ -87,10 +83,9 @@ inline void MyCallback3D::Execute(vtkObject *caller, unsigned long event, void *
 			if (imageStyle->GetFlag() == 1 || imageStyle->GetFlag() == 4 || imageStyle->GetFlag() == 5)
 			{
 				IS_Algorithm->SetInternalImage(IS_InternalImage->GetOutput());
-				IS_Algorithm->SetSpeedFunction(SegmentationSpeedFunction);
 				IS_Algorithm->SetCanvas(IS_MyCanvas3D);
 				IS_Algorithm->FastMarching(5);
-				IS_Algorithm->LevelSet(191, 450, 0, 0.05);
+				IS_Algorithm->LevelSet(500, 1500, 0, 0.05);
 
 				if (imageStyle->GetFlag() == 4 || imageStyle->GetFlag() == 5)
 				{

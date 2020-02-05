@@ -4,7 +4,6 @@
 #include "Callback2D.h"
 #include "Algorithm2D.h"
 #include "InteractorStyle2D.h"
-#include "MySpeedFunction2D.h"
 
 
 int main(int argc, char *argv[])
@@ -69,8 +68,6 @@ int main(int argc, char *argv[])
 
 	//----------------------Segmentation------------------
 
-	MySpeedFunction2DType::Pointer mySpeedFunction = MySpeedFunction2DType::New();
-
 	auto callback = vtkSmartPointer<Callback2D>::New();
 	callback->SetInteractor(interactor);
 	callback->SetRenderer(renderer);
@@ -79,7 +76,6 @@ int main(int argc, char *argv[])
 	callback->SetStyle(imageStyle);
 	callback->SetOverlayImage(vtkImageToImageFilter->GetOutput());	//overlay
 	callback->SetReader(Image_2_InternalImage);
-	callback->SetSpeed(mySpeedFunction);
 
 	interactor->AddObserver(vtkCommand::LeftButtonPressEvent, callback);
 	interactor->Start();

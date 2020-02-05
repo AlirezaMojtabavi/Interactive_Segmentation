@@ -7,7 +7,6 @@
 #include "vtkCoordinate.h"
 #include "MyAlgorithm3d.h"
 #include "MyInteractionStyle3D.h"
-#include "MySpeedFunction3D.h"
 #include "MyCanvas3D.h"
 
 
@@ -19,9 +18,6 @@ public:
 	void SetDiagram(MyCanvas3D*);
 	void SetStyle(MyInteractionStyle3D*_style);
 	void SetInteractor(vtkRenderWindowInteractor* interactor);
-
-	typedef MySpeedFunction3D< InternalImageType, InternalImageType > MySpeedFunction3DType;
-	void SetSpeed(MySpeedFunction3DType::Pointer);
 
 	virtual void Execute(vtkObject *, unsigned long event, void *);
 	void SetRenderer(vtkSmartPointer<vtkRenderer>); //For Overlay
@@ -38,12 +34,10 @@ private:
 
 	typedef itk::VTKImageToImageFilter<ImageType> VTKImageToImageType;
 	VTKImageToImageType::Pointer vtkImageToImageFilter = VTKImageToImageType::New();
-
-	MyAlgorithm3d* IS_Algorithm = new MyAlgorithm3d();
-	MySpeedFunction3DType::Pointer SegmentationSpeedFunction;
-
 	typedef itk::CastImageFilter<ImageType, InternalImageType> ImageType_2_InternalType;
 	ImageType_2_InternalType::Pointer IS_InternalImage = ImageType_2_InternalType::New();
+
+	MyAlgorithm3d* IS_Algorithm = new MyAlgorithm3d();
 
 	//-----------------------Overlay-------------------
 	vtkSmartPointer<vtkImageReslice> ResliceDicom2D;

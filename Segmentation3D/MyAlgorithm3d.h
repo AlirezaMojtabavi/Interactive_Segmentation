@@ -30,7 +30,7 @@ public:
 	void SetSpeedFunction(itk::SmartPointer<MySpeedFunction3DType>);
 
 	void FastMarching(const double);
-	void LevelSet(int lower, int upper, double edge, double weight);
+	void LevelSet(short int lower, short int upper, double edge, double weight);
 	void LevelSet(double edge, double weight);
 
 	void SetStyle(MyInteractionStyle3D*);
