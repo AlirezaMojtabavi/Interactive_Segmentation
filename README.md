@@ -5,7 +5,7 @@ and done in Research Center for Biomedical Technology and Robotics
 
 ![first test](sample/tums.png)   ![first test](sample/rcbtr.png)
 
-This project segment Glioma brain tumor in MRI T1+C Images
+This project segment Glioma brain tumors in MRI T1+C Images
 
 In this project a combined level set algorithm consists of both region and boundary terms for Glioma tumor segmentation is proposed. The modified speed function incorporates threshold based level set and the Laplacian filter to highlight the fine details for performing an accurate extraction of the tumor region using multiple seed points selected by the user.(See "sample" folder)
 
