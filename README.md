@@ -3,7 +3,7 @@
 My Master Thesis in Tehran University Of Medical Sciences(TUMS)
 and has been done in Research Center for Biomedical Technology and Robotics(RCBTR)
 
-![first test](sample/tums.png)   ![first test](sample/rcbtr.png)
+![first test](sample/tums.png)                                                      ![first test](sample/rcbtr.png)
 
 At first, this project was defined for segment Glioma brain tumors in MRI T1+C Images, but it can be extent for another dicom images with small changes.
 
