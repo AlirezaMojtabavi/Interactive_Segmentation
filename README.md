@@ -40,3 +40,7 @@ when project is running :
 - if (key == "p") // manual erase -> for 2D Segmentation
 - if (key == "g") // go - run -> by clicking Left Button you can initialaze and run algorithm
 - if (key == "o") // remove seed -> by clicking Left Button you can remove last seed and run algorithm
+
+### Publication
+
+https://ieeexplore.ieee.org/document/8301983/
