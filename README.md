@@ -25,7 +25,7 @@ Red area is my result and white area is gold standard
 - open itk.sln with visual studio(Run as administrator) and build Install with configuration Release 
 - open Segmentaion3D or Segmentation2D and set libs and header files of vtk and itk
 
-## Running the tests
+## Running the test
 
 - set image directory in main function (MRI Images for Segmentation3D for example "input3D" file)
 - set upper and lower threshold of area(s) that you want to segment
