@@ -1,7 +1,6 @@
 # Interactive_Segmentation
 
-My Master Thesis in Tehran University Of Medical Sciences(TUMS)
-and has been done in Research Center for Biomedical Technology and Robotics(RCBTR)
+This project is my Master thesis which was completed in the Research Center for Biomedical Technology and Robotics (RCBTR) at Tehran University Of Medical Sciences (TUMS).
 
 ![first test](sample/tums.png)                                                      ![first test](sample/rcbtr.png)
 
