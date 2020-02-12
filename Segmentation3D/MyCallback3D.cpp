@@ -50,6 +50,16 @@ void MyCallback3D::SetWindow(vtkSmartPointer<vtkRenderWindow> _window)
 	window = _window;
 }
 
+OutputImageType* MyCallback3D::GetResult()
+{
+	return IS_Algorithm->GetThresholder();
+}
+
+InternalImageType* MyCallback3D::GetInternalImage()
+{
+	return IS_InternalImage->GetOutput();
+}
+
 inline void MyCallback3D::Execute(vtkObject *caller, unsigned long event, void *)
 {
 	//const char * outputDirectory1 = "E:\\Interactive_Segmentation\\output3D";//Directory for write output

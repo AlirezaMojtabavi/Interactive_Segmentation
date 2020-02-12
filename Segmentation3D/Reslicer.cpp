@@ -48,3 +48,8 @@ void Reslicer::SetCanvas(MyCanvas3D* _Canvas)
 {
 	IS_MyCanvas3D = _Canvas;
 }
+
+double* Reslicer::GetSpacing()
+{
+	return spacing;
+}

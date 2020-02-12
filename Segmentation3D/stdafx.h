@@ -33,6 +33,11 @@
 #include "itkBinaryFillholeImageFilter.h"
 #include <itkImageToVTKImageFilter.h>
 #include <vtkImageSliceMapper.h>
+#include "itkGDCMImageIO.h"
+#include "itkMetaDataDictionary.h"
+#include "itkMetaDataObject.h"
+#include "itkImageSeriesWriter.h"
+#include "itksys/System.h"
 
 
 

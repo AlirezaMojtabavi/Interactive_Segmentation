@@ -21,6 +21,7 @@ public:
 	void Reslicer::SetReslice3D(vtkSmartPointer<vtkImageReslice> _reslicer3d);
 	void Reslicer::SetReslice2D(vtkSmartPointer<vtkImageReslice> _reslicer2d);
 	void SetCanvas(MyCanvas3D* _Canvas);
+	double* GetSpacing();
 
 
 private:

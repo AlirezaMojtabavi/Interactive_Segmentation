@@ -157,28 +157,9 @@ int main(int argc, char *argv[])
 	//------------------------------------------ Write Final ---------------------------------------
 	//----------------------------------------------------------------------------------------------
 
-	//std::string outputFilename = "C:\\Users\\a.mojtabavi\\Desktop\\final_write\\final_result\\MyVTK1.vtk";
-	//
-	/*VTKImageToImageType::Pointer vtkImageToImageFilter2 = VTKImageToImageType::New();
-	vtkImageToImageFilter2->SetInput(diagram2->GetImage());
-	vtkImageToImageFilter2->Update();
-
-	typedef itk::CastImageFilter<ImageType, OutputImageType> OutputImageType_2_ImageType;
-	OutputImageType_2_ImageType::Pointer caster_morph_writer = OutputImageType_2_ImageType::New();
-	caster_morph_writer->SetInput(vtkImageToImageFilter2->GetOutput());
-	caster_morph_writer->Update();
-
-	//typedef  itk::ImageFileWriter< ImageType  > WriterType;
-	//WriterType::Pointer writer2 = WriterType::New();
-	//writer2->SetFileName(outputFilename);
-	//writer2->SetInput(caster_morph_writer->GetOutput());
-	//writer2->Update();
-
-
-
 	typedef itk::GDCMImageIO    ImageIOType;
-	ImageIOType::Pointer morphgdcmIO = ImageIOType::New();
-	itk::MetaDataDictionary & dict = morphgdcmIO->GetMetaDataDictionary();
+	ImageIOType::Pointer myOutput = ImageIOType::New();
+	itk::MetaDataDictionary & dict = myOutput->GetMetaDataDictionary();
 	std::string tagkey, value;
 	tagkey = "0008|0060"; // Modality
 	value = "MR";
@@ -189,22 +170,22 @@ int main(int argc, char *argv[])
 	tagkey = "0008|0064"; // Conversion Type
 	value = "DV";
 	itk::EncapsulateMetaData<std::string>(dict, tagkey, value);
-	morphgdcmIO->SetSpacing(2, spacing[2]);
+	myOutput->SetSpacing(2, IS_Reslicer->GetSpacing()[2]);
 
-	SeriesWriterType::Pointer morphseriesWriter = SeriesWriterType::New();
-	morphseriesWriter->SetInput(caster_morph_writer->GetOutput());
-	morphseriesWriter->SetImageIO(morph
-	IO);
+	typedef itk::Image< OutputPixelType, 2 >  Image2DType;
+	typedef itk::ImageSeriesWriter<OutputImageType, Image2DType >  SeriesWriterType;
+	SeriesWriterType::Pointer seriesResult = SeriesWriterType::New();
+	seriesResult->SetInput(IS_Callback->GetResult());
+	seriesResult->SetImageIO(myOutput);
 
 	OutputImageType::RegionType region =
-		itk_image->GetOutput()->GetLargestPossibleRegion();
+		IS_Callback->GetInternalImage()->GetLargestPossibleRegion();
 	OutputImageType::IndexType start = region.GetIndex();
 	OutputImageType::SizeType  size = region.GetSize();
 
 	const char * outputDirectory = "E:\\Interactive_Segmentation\\output3D\\";
 	std::string format = outputDirectory;
 	format += "/image%03d.dcm";
-	itksys::SystemTools::MakeDirectory(outputDirectory);
 
 	typedef itk::NumericSeriesFileNames             NamesGeneratorType;
 	NamesGeneratorType::Pointer namesGenerator = NamesGeneratorType::New();
@@ -214,11 +195,11 @@ int main(int argc, char *argv[])
 	namesGenerator->SetEndIndex(start[2] + size[2] - 1);
 	namesGenerator->SetIncrementIndex(1);
 
-	morphseriesWriter->SetFileNames(namesGenerator->GetFileNames());
+	seriesResult->SetFileNames(namesGenerator->GetFileNames());
 
 	try
 	{
-		morphseriesWriter->Update();
+		seriesResult->Update();
 
 	}
 	catch (itk::ExceptionObject & excp)
@@ -226,7 +207,7 @@ int main(int argc, char *argv[])
 		std::cerr << "Exception thrown while writing the series " << std::endl;
 		std::cerr << excp << std::endl;
 		return EXIT_FAILURE;
-	}*/
+	}
 
 	return EXIT_SUCCESS;
 }

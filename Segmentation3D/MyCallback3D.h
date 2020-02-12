@@ -22,7 +22,8 @@ public:
 	virtual void Execute(vtkObject *, unsigned long event, void *);
 	void SetRenderer(vtkSmartPointer<vtkRenderer>); //For Overlay
 	void SetWindow(vtkSmartPointer<vtkRenderWindow>); //For Overlay
-	
+	OutputImageType* GetResult();
+	InternalImageType* GetInternalImage();
 	void Overlay();
 
 private:
