@@ -26,9 +26,8 @@ void MyCanvas3D::SetInteractor(vtkSmartPointer<vtkRenderWindowInteractor> _inter
 }
 
 
-void MyCanvas3D::Arc(double x, double y, int z, int r, vtkImageReslice* inputData)
+void MyCanvas3D::Arc(double x, double y, int z, int r, vtkSmartPointer<vtkImageData> inputData)
 {
-	double* pSpacing = inputData->GetOutput()->GetSpacing();
 	for (int i = 0; i < r + 1; i++)
 	{
 		for (int theta = 0; theta < 361; theta++)
@@ -36,7 +35,7 @@ void MyCanvas3D::Arc(double x, double y, int z, int r, vtkImageReslice* inputDat
 			double deg = theta*0.0174532925;
 			double X = i*cos(deg) + x;
 			double Y = i*sin(deg) + y;
-			unsigned short* pixel = static_cast<unsigned short*> (inputData->GetOutput()->GetScalarPointer(X / pSpacing[0], Y / pSpacing[1], z));
+			unsigned short* pixel = static_cast<unsigned short*> (inputData->GetScalarPointer(X / pSpacing[0], Y / pSpacing[1], z));
 			if (!pixel)
 				return;
 
@@ -83,8 +82,6 @@ void MyCanvas3D::SetLastposition(double x, double y, int z)
 	
 	if (z != this->GetCurrentSlice())
 		return;
-
-	//Arc(x, y, z, 1, data);
 
 	coordinate3D MySeed;
 

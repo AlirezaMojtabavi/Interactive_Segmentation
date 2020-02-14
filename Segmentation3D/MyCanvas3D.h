@@ -36,7 +36,7 @@ public:
 	void SetInteractor(vtkSmartPointer<vtkRenderWindowInteractor>);
 	void SetStyle(MyInteractionStyle3D*);
 
-	void Arc(double x, double y, int z, int r, vtkImageReslice* IS_OutPut); // for manual refining result
+	void Arc(double x, double y, int z, int r, vtkSmartPointer<vtkImageData> IS_OutPut); // for manual refining result
 	void SetLastposition(double x, double y, int z);
 	int paint(int x, int y, int z); // show seeds on window
 	double* GetMinMaxIntensity();

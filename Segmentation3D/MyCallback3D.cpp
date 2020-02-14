@@ -62,8 +62,6 @@ InternalImageType* MyCallback3D::GetInternalImage()
 
 inline void MyCallback3D::Execute(vtkObject *caller, unsigned long event, void *)
 {
-	//const char * outputDirectory1 = "E:\\Interactive_Segmentation\\output3D";//Directory for write output
-
 	if (event == vtkCommand::MouseWheelForwardEvent)
 	{
 		IS_MyCanvas3D->MouseWheelForward();
@@ -95,7 +93,7 @@ inline void MyCallback3D::Execute(vtkObject *caller, unsigned long event, void *
 				IS_Algorithm->SetInternalImage(IS_InternalImage->GetOutput());
 				IS_Algorithm->SetCanvas(IS_MyCanvas3D);
 				IS_Algorithm->FastMarching(5);
-				IS_Algorithm->LevelSet(500, 1500, 0, 0.05);
+				IS_Algorithm->LevelSet(428, 741, 0.5, 0.05);
 
 				if (imageStyle->GetFlag() == 4 || imageStyle->GetFlag() == 5)
 				{
@@ -105,6 +103,10 @@ inline void MyCallback3D::Execute(vtkObject *caller, unsigned long event, void *
 					IS_Algorithm->GetThresholder()->Update();
 					this->Overlay();
 				}
+			}
+			if (imageStyle->GetFlag() == 2 || imageStyle->GetFlag() == 3)
+			{
+				this->Overlay();
 			}
 		}
 	}
@@ -124,16 +126,27 @@ void MyCallback3D::Overlay()
 	mrconnector->Update();
 
 	typedef itk::CastImageFilter<OutputImageType, ImageType> OutputImageType_2_ImageType;
-	OutputImageType_2_ImageType::Pointer OutputImage_2_Image = OutputImageType_2_ImageType::New();
-	OutputImage_2_Image->SetInput(IS_Algorithm->GetThresholder());
-	OutputImage_2_Image->Update();
+	OutputImageType_2_ImageType::Pointer itkResult = OutputImageType_2_ImageType::New();
+	itkResult->SetInput(IS_Algorithm->GetThresholder());
+	itkResult->Update();
 
-	ConnectorType::Pointer thconnector = ConnectorType::New();
-	thconnector->SetInput(OutputImage_2_Image->GetOutput());
-	thconnector->Update();
+	ConnectorType::Pointer vtkResult = ConnectorType::New();
+	vtkResult->SetInput(itkResult->GetOutput());
+	vtkResult->Update();
+
+	if (imageStyle->GetFlag() == 2 || imageStyle->GetFlag() == 3)
+	{
+		int z = IS_MyCanvas3D->GetCurrentSlice();
+
+		Interactor->GetRenderWindow()->GetRenderers()->GetFirstRenderer()->SetDisplayPoint(Interactor->GetEventPosition()[0], Interactor->GetEventPosition()[1], 0);
+		Interactor->GetRenderWindow()->GetRenderers()->GetFirstRenderer()->DisplayToWorld();
+		double* position = Interactor->GetRenderWindow()->GetRenderers()->GetFirstRenderer()->GetWorldPoint();
+
+		IS_MyCanvas3D->Arc(position[0], position[1], z, 1, vtkResult->GetOutput());
+	}
 
 	auto blend = vtkSmartPointer<vtkImageBlend>::New();
-	blend->AddInputData(thconnector->GetOutput());
+	blend->AddInputData(vtkResult->GetOutput());
 	blend->AddInputData(mrconnector->GetOutput());
 	blend->SetOpacity(0.5, 0.5);
 	blend->SetOpacity(1, .5);
