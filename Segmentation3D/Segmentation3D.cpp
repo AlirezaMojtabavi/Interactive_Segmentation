@@ -87,7 +87,7 @@ int main(int argc, char *argv[])
 	typedef itk::Image< OutputPixelType, 2 >  Image2DType;
 	typedef itk::ImageSeriesWriter<OutputImageType, Image2DType >  SeriesWriterType;
 	SeriesWriterType::Pointer seriesResult = SeriesWriterType::New();
-	seriesResult->SetInput(IS_Callback->GetResult());
+	seriesResult->SetInput(IS_Callback->GetFinalResult()->GetOutput());
 	seriesResult->SetImageIO(myOutput);
 
 	OutputImageType::RegionType region =
@@ -99,7 +99,7 @@ int main(int argc, char *argv[])
 	std::string format = outputDirectory;
 	format += "/image%03d.dcm";
 
-	typedef itk::NumericSeriesFileNames             NamesGeneratorType;
+	typedef itk::NumericSeriesFileNames   NamesGeneratorType;
 	NamesGeneratorType::Pointer namesGenerator = NamesGeneratorType::New();
 
 	namesGenerator->SetSeriesFormat(format.c_str());
@@ -112,7 +112,6 @@ int main(int argc, char *argv[])
 	try
 	{
 		seriesResult->Update();
-
 	}
 	catch (itk::ExceptionObject & excp)
 	{

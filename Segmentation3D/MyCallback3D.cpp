@@ -50,11 +50,6 @@ void MyCallback3D::SetWindow(vtkSmartPointer<vtkRenderWindow> _window)
 	window = _window;
 }
 
-OutputImageType* MyCallback3D::GetResult()
-{
-	return IS_Algorithm->GetThresholder();
-}
-
 InternalImageType* MyCallback3D::GetInternalImage()
 {
 	return IS_InternalImage->GetOutput();
@@ -125,14 +120,14 @@ void MyCallback3D::Overlay()
 	mrconnector->SetInput(rescaleFilter->GetOutput());
 	mrconnector->Update();
 
-	typedef itk::CastImageFilter<OutputImageType, ImageType> OutputImageType_2_ImageType;
-	OutputImageType_2_ImageType::Pointer itkResult = OutputImageType_2_ImageType::New();
-	itkResult->SetInput(IS_Algorithm->GetThresholder());
-	itkResult->Update();
+	if ((imageStyle->GetFlag() != 2) || (imageStyle->GetFlag() != 3))
+	{
+		itkResult->SetInput(IS_Algorithm->GetThresholder());
+		itkResult->Update();
 
-	ConnectorType::Pointer vtkResult = ConnectorType::New();
-	vtkResult->SetInput(itkResult->GetOutput());
-	vtkResult->Update();
+		vtkResult->SetInput(itkResult->GetOutput());
+		vtkResult->Update();
+	}
 
 	if (imageStyle->GetFlag() == 2 || imageStyle->GetFlag() == 3)
 	{
@@ -144,6 +139,8 @@ void MyCallback3D::Overlay()
 
 		IS_MyCanvas3D->Arc(position[0], position[1], z, 1, vtkResult->GetOutput());
 	}
+	
+	vtkResult->Update();
 
 	auto blend = vtkSmartPointer<vtkImageBlend>::New();
 	blend->AddInputData(vtkResult->GetOutput());
@@ -159,4 +156,11 @@ void MyCallback3D::Overlay()
 	renderer->AddActor(DataActorOverlay);
 	window->AddRenderer(renderer);
 	window->Render();
+}
+
+VTKImageToImageType::Pointer MyCallback3D::GetFinalResult()
+{
+	itkFinalResult->SetInput(vtkResult->GetOutput());
+	itkFinalResult->Update();
+	return itkFinalResult;
 }

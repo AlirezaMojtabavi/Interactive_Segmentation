@@ -61,7 +61,6 @@ private:
 	std::vector<double>min;
 	std::vector<double>max;
 	double threshold[2];
-
 	std::vector<vtkSmartPointer<vtkActor>>ActorList;
 
 	vtkSmartPointer<vtkRenderer>renderer;
