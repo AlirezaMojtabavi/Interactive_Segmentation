@@ -35,8 +35,8 @@ Red area is my result and white area is gold standard
 when project is running :
 - if (key == "c") // contrast -> by draging mouse you can adjust contrast and brightness
 - if (key == "b") // brush -> by clicking Left Button you can initialaze algorithm before running algorithm
-- if (key == "r") // manual refine -> for 2D Segmentation
-- if (key == "p") // manual erase -> for 2D Segmentation
+- if (key == "r") // manual refine -> after ovelay MRI Image and Result Image you can add pixels as a final result 
+- if (key == "p") // manual erase -> after ovelay MRI Image and Result Image you can erase pixels of the final result 
 - if (key == "g") // go - run -> by clicking Left Button you can initialaze and run algorithm
 - if (key == "o") // remove seed -> by clicking Left Button you can remove last seed and run algorithm
 
