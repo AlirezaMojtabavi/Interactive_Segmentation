@@ -33,12 +33,6 @@ OutputImageType * MyAlgorithm3d::GetThresholder()
 	return thresholder->GetOutput();
 }
 
-
-void MyAlgorithm3d::SetSpeedFunction(itk::SmartPointer<MySpeedFunction3DType> _Function)
-{
-	SegmentationSpeedFunction = _Function;
-}
-
 void MyAlgorithm3d::FastMarching(const double distance)
 {
 	int size = IS_MyCanvas3D->GetVectorOfPoints().size();

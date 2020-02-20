@@ -25,10 +25,6 @@ public:
 	void SetInternalImage(InternalImageType::Pointer _InternalImage);
 
 	void SetCanvas(MyCanvas3D*);
-
-	typedef MySpeedFunction3D< InternalImageType, InternalImageType > MySpeedFunction3DType;
-	void SetSpeedFunction(itk::SmartPointer<MySpeedFunction3DType>);
-
 	void FastMarching(const double);
 	void LevelSet(short int lower, short int upper, double edge, double weight);
 	void LevelSet(double edge, double weight);
@@ -44,6 +40,7 @@ private:
 	MyCanvas3D* IS_MyCanvas3D;
 	MyInteractionStyle3D* style;
 
+	typedef MySpeedFunction3D< InternalImageType, InternalImageType > MySpeedFunction3DType;
 	MySpeedFunction3DType::Pointer SegmentationSpeedFunction = MySpeedFunction3DType::New();
 
 	typedef itk::BinaryThresholdImageFilter<InternalImageType, OutputImageType> // for output image
@@ -54,7 +51,6 @@ private:
 		ThresholdSegmentationLevelSetImageFilterType;
 	ThresholdSegmentationLevelSetImageFilterType::Pointer thresholdSegmentation = 
 		ThresholdSegmentationLevelSetImageFilterType::New();
-
 
 	FastMarchingFilterType::Pointer  fastMarching = FastMarchingFilterType::New();
 	NodeContainer::Pointer seeds = NodeContainer::New();
