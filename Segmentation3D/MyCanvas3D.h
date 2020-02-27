@@ -19,7 +19,7 @@ struct coordinate3D
 {
 	double _x;
 	double _y;
-	int _z;
+	double _z;
 };
 
 typedef itk::VTKImageToImageFilter<ImageType> VTKImageToImageType;
@@ -44,6 +44,7 @@ public:
 	vtkSmartPointer<vtkImageData> GetImage();
 	std::vector<coordinate3D> GetVectorOfPoints();
 	std::vector<vtkSmartPointer<vtkActor>> GetActor();
+	double* GetROI();
 
 	void MouseWheelForward();
 	void MouseWheelBackward();
@@ -54,6 +55,7 @@ private:
 	vtkImageReslice* IS_ResliceDicom3D ;
 	std::vector<coordinate3D>PointList;
 	MyInteractionStyle3D* style;
+	double ROI[6];
 
 	int current;
 	double* pSpacing;

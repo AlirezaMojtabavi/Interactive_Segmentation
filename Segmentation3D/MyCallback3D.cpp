@@ -80,7 +80,7 @@ inline void MyCallback3D::Execute(vtkObject *caller, unsigned long event, void *
 
 			IS_MyCanvas3D->SetLastposition(position[0], position[1], z);
 
-			//cout << "X: " << position[0] << "\t\tY: " << position[1] << "\t\tZ: " << z << "\n\n\n";
+			cout << "X: " << position[0] << "\t\tY: " << position[1] << "\t\tZ: " << z << "\n\n\n";
 			Interactor->Render();
 
 			if (imageStyle->GetFlag() == 1 || imageStyle->GetFlag() == 4 || imageStyle->GetFlag() == 5)
@@ -88,6 +88,7 @@ inline void MyCallback3D::Execute(vtkObject *caller, unsigned long event, void *
 				IS_Algorithm->SetInternalImage(IS_InternalImage->GetOutput());
 				IS_Algorithm->SetCanvas(IS_MyCanvas3D);
 				IS_Algorithm->FastMarching(5);
+				IS_MyCanvas3D->GetROI();
 				IS_Algorithm->LevelSet(428, 741, 0.5, 0.05);
 
 				if (imageStyle->GetFlag() == 4 || imageStyle->GetFlag() == 5)

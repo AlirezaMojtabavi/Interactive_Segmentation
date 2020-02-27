@@ -245,3 +245,59 @@ void MyCanvas3D::MouseWheelBackward()
 	interactor->Render();
 }
 
+double* MyCanvas3D::GetROI()
+{
+	int size = PointList.size();
+
+	double tempMinX = PointList[0]._x;
+	double tempmaxX = PointList[0]._x;
+	double tempMinY = PointList[0]._y;
+	double tempmaxY = PointList[0]._y;
+	double tempMinZ = PointList[0]._z;
+	double tempmaxZ = PointList[0]._z;
+
+	for (int i = 0; i < size; i++)
+	{
+		//-----------------X------------------------
+		if (PointList[i]._x <= tempMinX) // min
+			tempMinX = PointList[i]._x;
+		else
+			tempMinX = tempMinX;
+
+		if (PointList[i]._x >= tempmaxX) // max
+			tempmaxX = PointList[i]._x;
+		else
+			tempmaxX = tempmaxX;
+		//-----------------Y------------------------
+		if (PointList[i]._y <= tempMinY) // min
+			tempMinY = PointList[i]._y;
+		else
+			tempMinY = tempMinY;
+
+		if (PointList[i]._y >= tempmaxY) // max
+			tempmaxY = PointList[i]._y;
+		else
+			tempmaxY = tempmaxY;
+		//-------------------Z-----------------------
+		if (PointList[i]._z <= tempMinZ) // min	
+			tempMinZ = PointList[i]._z;
+		else
+			tempMinZ = tempMinZ;
+
+		if (PointList[i]._z >= tempmaxZ) // max
+			tempmaxZ = PointList[i]._z;
+		else
+			tempmaxZ = tempmaxZ;
+	}
+
+	ROI[0] = tempMinX;
+	ROI[1] = tempmaxX;
+	ROI[2] = tempMinY;
+	ROI[3] = tempmaxY;
+	ROI[4] = tempMinZ;
+	ROI[5] = tempmaxZ;
+
+	cout <<ROI[0]<<" , " <<ROI[1] << " , "<< ROI[2]<<" , "<<ROI[3] << " , " << ROI[4] << " , " << ROI[5] << "\n\n";
+
+	return ROI;
+}
