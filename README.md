@@ -1,10 +1,10 @@
 # Interactive_Segmentation
 
-This project is my Master's thesis which was completed in the Research Center for Biomedical Technology and Robotics (RCBTR) at Tehran University Of Medical Sciences (TUMS).
+This project is my Master thesis which was completed in the Research Center for Biomedical Technology and Robotics (RCBTR) at Tehran University Of Medical Sciences (TUMS).
 
 ![first test](sample/tums.png)                                                      ![first test](sample/rcbtr.png)
 
-At first, this project was defined for segment Glioma brain tumors in MRI T1+C Images, but it can be extent for another dicom images with small changes.
+At first, this project was defined for segment Glioma brain tumors in MRI T1+C Images, but it can be extended for another dicom images with small changes.
 
 In this project a combined level set algorithm consists of both region and boundary terms for Glioma tumor segmentation is proposed. The modified speed function incorporates threshold based level set and the Laplacian filter to highlight the fine details for performing an accurate extraction of the tumor region using multiple seed points selected by the user.(See "sample" folder)
 
