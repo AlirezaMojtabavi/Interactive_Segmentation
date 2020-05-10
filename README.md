@@ -40,6 +40,10 @@ when project is running :
 - if (key == "g") // go - run -> by clicking Left Button you can initialaze and run algorithm
 - if (key == "o") // remove seed -> by clicking Left Button you can remove last seed and run algorithm
 
+## UML
+
+![UML](sample/UML_InteractiveSegmentation.png)  
+
 ### Acknowledgment
 
 Supervisor : Dr.Alireza Ahmadian
