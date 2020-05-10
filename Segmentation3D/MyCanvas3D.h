@@ -7,8 +7,6 @@
 #include "math.h"
 #include <vtkRegularPolygonSource.h>
 #include <vtkPolyDataMapper.h>
-#include "vtkRenderer.h"
-#include "vtkRenderWindow.h"
 #include <vtkProperty.h>
 #include "MyInteractionStyle3D.h"
 #include "ImageDetailsType.h"

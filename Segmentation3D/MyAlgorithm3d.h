@@ -29,7 +29,6 @@ public:
 	void LevelSet(short int lower, short int upper, double edge, double weight);
 	void LevelSet(double edge, double weight);
 
-	void SetStyle(MyInteractionStyle3D*);
 	InternalImageType* GetFastMarching();
 	OutputImageType*  GetThresholder();
 
@@ -38,7 +37,6 @@ private:
 	InternalImageType::Pointer IS_InternalImage;
 	vtkImageReslice* ImageReslice;
 	MyCanvas3D* IS_MyCanvas3D;
-	MyInteractionStyle3D* style;
 
 	typedef MySpeedFunction3D< InternalImageType, InternalImageType > MySpeedFunction3DType;
 	MySpeedFunction3DType::Pointer SegmentationSpeedFunction = MySpeedFunction3DType::New();

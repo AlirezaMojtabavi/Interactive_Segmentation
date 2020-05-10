@@ -11,7 +11,7 @@
 int main(int argc, char *argv[])
 {
 	auto input_reader = vtkSmartPointer<vtkDICOMImageReader>::New();
-	input_reader->SetDirectoryName("E:\\misSoloution\\CreateMISRelease_local\\Images\\brain_tumor_2");
+	input_reader->SetDirectoryName("E:\\Interactive_Segmentation\\input3D");
 	input_reader->Update();
 
 	//---------------------------------------visualization-----------------------------

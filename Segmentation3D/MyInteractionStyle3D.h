@@ -4,9 +4,6 @@
 #include "vtkRenderWindowInteractor.h"
 #include "vtkCommand.h"
 #include "vtkImageProperty.h"
-//#include "vtkRenderer.h"
-//#include "vtkImageData.h"
-//#include "vtkPointData.h"
 
 
 class MyInteractionStyle3D : public vtkInteractorStyleImage

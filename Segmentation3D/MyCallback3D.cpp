@@ -1,5 +1,4 @@
 
-
 #include "stdafx.h"
 #include "MyCallback3D.h"
 #include "MyCanvas3D.h"
@@ -27,7 +26,6 @@ void MyCallback3D::SetImageReslice(vtkSmartPointer<vtkImageReslice> _ResliceDico
 void MyCallback3D::SetStyle(MyInteractionStyle3D*_style)
 {
 	imageStyle = _style;
-	IS_Algorithm->SetStyle(imageStyle);
 }
 
 void MyCallback3D::SetDiagram(MyCanvas3D* _canvas)
@@ -89,7 +87,7 @@ inline void MyCallback3D::Execute(vtkObject *caller, unsigned long event, void *
 				IS_Algorithm->SetCanvas(IS_MyCanvas3D);
 				IS_Algorithm->FastMarching(5);
 				IS_MyCanvas3D->GetROI();
-				IS_Algorithm->LevelSet(428, 741, 0.5, 0.05);
+				IS_Algorithm->LevelSet(185, 410, 0.5, 0.05);
 
 				if (imageStyle->GetFlag() == 4 || imageStyle->GetFlag() == 5)
 				{

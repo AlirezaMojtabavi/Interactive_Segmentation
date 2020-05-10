@@ -1,5 +1,4 @@
 
-
 #include "stdafx.h"
 #include "MyAlgorithm3d.h"
 
@@ -16,11 +15,6 @@ void MyAlgorithm3d::SetInternalImage(InternalImageType::Pointer _InternalImage)
 void MyAlgorithm3d::SetCanvas(MyCanvas3D* _IS_MyCanvas3D)
 {
 	IS_MyCanvas3D = _IS_MyCanvas3D;
-}
-
-void MyAlgorithm3d::SetStyle(MyInteractionStyle3D * _style)
-{
-	style = _style;
 }
 
 InternalImageType * MyAlgorithm3d::GetFastMarching()
