@@ -42,7 +42,7 @@ when project is running :
 
 ## UML
 
-![UML](sample/Class_diagram_3D.pdf)  
+![UML](sample/Class_diagram_3D.jpg)  
 
 ### Acknowledgment
 
