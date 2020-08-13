@@ -42,7 +42,7 @@ when project is running :
 
 ## UML
 
-![UML](sample/UML_InteractiveSegmentation.png)  
+![UML](sample/Class_diagram_3D.pdf)  
 
 ### Acknowledgment
 
